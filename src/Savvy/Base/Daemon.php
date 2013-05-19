@@ -33,7 +33,7 @@ class Daemon extends AbstractSingleton
                 '--daemon --pidfile="%s" --pipefile="%s"%s',
                 Registry::getInstance()->getFilename('daemon.pid'),
                 Registry::getInstance()->getFilename('daemon.pipe'),
-                constant('APPLICATION_MODE') === 'test' ? ' --test' : ''
+                defined('APPLICATION_MODE') && constant('APPLICATION_MODE') === 'test' ? ' --test' : ''
             );
             @exec(Registry::getInstance()->get('root') . '/bin/savvy ' . $parameters . ' >/dev/null 2>&1 &');
             sleep(1);
