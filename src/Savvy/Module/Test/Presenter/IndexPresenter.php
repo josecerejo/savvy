@@ -20,6 +20,5 @@ class IndexPresenter extends GUI\Presenter
     protected function modalAction()
     {
         $this->getResponse()->addCommand()->modal('test', 'modal');
-        $this->getResponse()->setSuccess($success);
     }
 }

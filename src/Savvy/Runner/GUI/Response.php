@@ -15,7 +15,7 @@ class Response
      *
      * @var bool
      */
-    protected $success = false;
+    protected $success = true;
 
     /**
      * Response command list
