@@ -1,0 +1,42 @@
+[default]
+
+name = "Savvy"
+version = "2013/05/19"
+languages = "de,en"
+
+[database]
+
+driver = "mysqli"
+mysqliHost = "localhost"
+mysqliDatabase = "savvy"
+mysqliUser = "savvy"
+mysqliPassword = "savvy"
+
+[cache]
+
+driver = "memcache"
+memcacheHost = "localhost"
+memcachePort = 11211
+
+[extjs]
+
+cdn = "http://cdn.sencha.io/ext-4.2.0-gpl/ext-all.js"
+
+[runner]
+
+webgui = "Savvy\Runner\GUI\HTML\Runner"
+daemon = "Savvy\Runner\Daemon\Runner"
+savvy = "Savvy\Runner\Console\Savvy\Runner"
+doctrine = "Savvy\Runner\Console\Doctrine\Runner"
+gui = "Savvy\Runner\GUI\Native\Runner"
+
+[daemon]
+
+heartbeat = 120
+pipe = "tmp/daemon.fifo"
+pid = "tmp/daemon.pid"
+log = "file:filename=log/daemon.log"
+
+[utility]
+
+isoquery = "isoquery"
