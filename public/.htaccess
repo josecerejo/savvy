@@ -1,0 +1,19 @@
+RewriteEngine On
+RewriteBase /
+RewriteRule ^view(.*)\.js index.php?view=$1 [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule .* index.php?request=$1 [L]
+
+Header unset Etag
+FileETag none
+
+ExpiresActive On
+ExpiresDefault A0
+
+<filesMatch ".(gif|jpg|jpeg|png|css|js|ico)$">
+	ExpiresDefault A604800
+	Header append Cache-Control "public"
+</filesMatch>

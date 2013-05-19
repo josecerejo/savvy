@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<window title="Test" id="testWindow" closable="1" width="200">
+    <layout type="vbox" align="stretch" />
+
+    <item type="form" name="test" layout="inherit">
+        <button caption="Modalfenster" action="modal" />
+    </item>
+</window>

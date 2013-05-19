@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<window width="250" resizable="horizontal" title="Anmeldung" id="loginWindow">
+    <layout type="vbox" align="stretch" />
+
+    <item type="form" name="login" layout="inherit">
+        <item type="text" name="username" label="Benutzername" labelAlign="top" padding="10px 15px 0 15px" focus="true" />
+        <item type="password" name="password" label="Passwort" labelAlign="top" padding="0 15px 10px 15px" />
+
+        <button caption="Anmelden" action="validate" message="Prüfe Zugangsdaten..." />
+    </item>
+</window>
