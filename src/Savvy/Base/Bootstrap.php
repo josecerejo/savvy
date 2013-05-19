@@ -20,9 +20,7 @@ class Bootstrap
     private $classLoaders = array(
         'Savvy'    => '/src',
         'Storage'  => '/src/Savvy',
-        'Proxy'    => '/tmp',
-        'Doctrine' => '/vendor',
-        'Symfony'  => '/vendor'
+        'Proxy'    => '/tmp'
     );
 
     /**
