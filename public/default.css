@@ -7651,9 +7651,9 @@ body.x-nbr .x-window-header-default-collapsed-left {
 	background-image: url(images/form/exclamation.gif);
 }
 
-/* line 14, ../../../ext-theme-neutral/sass/src/form/Labelable.scss */
 div.x-lbl-top-err-icon {
-  margin-bottom: 3px; }
+	margin-bottom: 3px;
+}
 
 .x-form-invalid-icon {
 	width: 16px;
@@ -7663,14 +7663,15 @@ div.x-lbl-top-err-icon {
 	background-repeat: no-repeat;
 }
 
-/* line 26, ../../../ext-theme-neutral/sass/src/form/Labelable.scss */
 .x-form-item-label {
-  color: black;
-  font: normal 12px/22px tahoma, arial, verdana, sans-serif; }
-  /* line 30, ../../../ext-theme-neutral/sass/src/form/Labelable.scss */
-  .x-toolbar-item .x-form-item-label {
-    font-size: 11px;
-    line-height: 20px; }
+	color: black;
+	font: normal 13px/19px sans-serif;
+}
+
+.x-toolbar-item .x-form-item-label {
+	font-size: 11px;
+	line-height: 20px;
+}
 
 /* line 44, ../../../ext-theme-neutral/sass/src/form/Labelable.scss */
 .x-autocontainer-form-item,
