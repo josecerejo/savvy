@@ -17,9 +17,6 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         $this->daemonPipefile = \Savvy\Base\Registry::getInstance()->get('daemon.pipe');
         $this->testPipefile = sprintf('%s/phpunit.%s.daemon.pipe', sys_get_temp_dir(), uniqid());
         \Savvy\Base\Registry::getInstance()->set('daemon.pipe', $this->testPipefile);
-
-        $this->daemonLog = \Savvy\Base\Registry::getInstance()->get('daemon.log');
-        \Savvy\Base\Registry::getInstance()->set('daemon.log', 'null');
     }
 
     public function teardown()
@@ -34,7 +31,6 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
         \Savvy\Base\Registry::getInstance()->set('daemon.pid', $this->daemonPidfile);
         \Savvy\Base\Registry::getInstance()->set('daemon.pipe', $this->daemonPipefile);
-        \Savvy\Base\Registry::getInstance()->set('daemon.log', $this->daemonLog);
     }
 
     public function testInstanceOfDaemonRunner()
