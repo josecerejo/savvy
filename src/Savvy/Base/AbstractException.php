@@ -35,6 +35,11 @@ class AbstractException extends \Exception
             }
         }
 
+        if ($loggerConfiguration = Registry::getInstance()->get('default.log')) {
+            $logger = \Savvy\Component\Logger\Factory::getInstance($loggerConfiguration);
+            $logger->write($message, LOG_ERR);
+        }
+
         parent::__construct($message, $code, $previous);
     }
 }
