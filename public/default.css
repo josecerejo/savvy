@@ -7684,27 +7684,28 @@ div.x-lbl-top-err-icon {
 /* line 52, ../../../ext-theme-neutral/sass/src/form/Labelable.scss */
 .x-ie6 .x-form-form-item td {
   border-top-width: 0; }
-/* line 58, ../../../ext-theme-neutral/sass/src/form/Labelable.scss */
+
 .x-ie6 td.x-form-item-pad {
-  height: 5px; }
+	height: 5px;
+}
 
-/* line 1, ../../../ext-theme-neutral/sass/src/form/field/Base.scss */
 .x-form-field {
-  color: black; }
+	color: black;
+}
 
-/* line 6, ../../../ext-theme-neutral/sass/src/form/field/Base.scss */
 .x-form-item,
 .x-form-field {
-  font: normal 12px tahoma, arial, verdana, sans-serif; }
+	font: normal 12px sans-serif;
+}
 
-/* line 11, ../../../ext-theme-neutral/sass/src/form/field/Base.scss */
 input.x-form-invalid-field,
 textarea.x-form-invalid-field {
-  background-color: white;
-  background-image: url(images/grid/invalid_line.gif);
-  background-repeat: repeat-x;
-  background-position: bottom;
-  border-color: #cc3300; }
+	background-color: white;
+	background-image: url(images/grid/invalid_line.gif);
+	background-repeat: repeat-x;
+	background-position: bottom;
+	border-color: #cc3300;
+}
 
 /* line 26, ../../../ext-theme-neutral/sass/src/form/field/Base.scss */
 .x-item-disabled .x-form-item-label,
