@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<localization>
+    <strings section="EXCEPTION">
+        <string key="E_BASE_SINGLETON_CLONED">It is not allowed to clone instances of \Savvy\Base\AbstractSingleton</string>
+        <string key="E_COMPONENT_LOGGER_FACTORY_UNKNOWN_LOGGER">Specified logging facility "%s" does not exist</string>
+        <string key="E_COMPONENT_UTILITY_EXECUTABLE_NOT_DEFINED">No executable binary specified</string>
+        <string key="E_COMPONENT_UTILITY_EXECUTABLE_NOT_FOUND">Executable binary "%s" was not found</string>
+        <string key="E_RUNNER_FACTORY_UNKNOWN_RUNNER">Failed to create apropriate runner instance</string>
+        <string key="E_RUNNER_GUI_VIEW_NOT_FOUND">Requested view "%s" does not exist</string>
+        <string key="E_RUNNER_GUI_ACTION_NOT_FOUND">Requested action "%s" does not exist</string>
+    </strings>
+</localization>

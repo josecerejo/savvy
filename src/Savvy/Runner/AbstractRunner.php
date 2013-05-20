@@ -11,7 +11,7 @@ namespace Savvy\Runner;
 abstract class AbstractRunner
 {
     /**
-     * Languages for current environment in preferred order
+     * Preferred language for current environment (2-letter ISO code)
      *
      * @var string
      */
@@ -32,9 +32,9 @@ abstract class AbstractRunner
     abstract public function isSuitable();
 
     /**
-     * Set language for current environment
+     * Set preferred language for current environment
      *
-     * @param string $language
+     * @param string $language preferred language (2-letter ISO code)
      * @return \Savvy\Runner\AbstractRunner
      */
     protected function setLanguage($language)
@@ -44,9 +44,9 @@ abstract class AbstractRunner
     }
 
     /**
-     * Get languages for current environment in preferred order
+     * Get preferred language for current environment
      *
-     * @return array languages in preferred order
+     * @return string language code
      */
     public function getLanguage()
     {

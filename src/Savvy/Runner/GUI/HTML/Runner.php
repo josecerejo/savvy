@@ -48,13 +48,15 @@ class Runner extends GUI\AbstractRunner
     }
 
     /**
-     * Get most preferred (and supported) language from browser
+     * Get preferred language from browser
      *
-     * @return string 2-char ISO language code
+     * @return string language code (2-letter ISO code)
      */
     public function getLanguage()
     {
-        if ($this->language === null) {
+        $this->setLanguage(parent::getLanguage());
+
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $pattern = '/([[:alpha:]]{2})(?:-[[:alpha:]]{2}|)(?:;q=([[:digit:]\.]*)|())/i';
             $preferred = array();
             $supported = explode(',', \Savvy\Base\Registry::getInstance()->get('languages'));
@@ -73,8 +75,6 @@ class Runner extends GUI\AbstractRunner
             if (empty($preferred) === false) {
                 arsort($preferred);
                 $this->setLanguage(current(array_keys($preferred)));
-            } else {
-                $this->setLanguage(parent::getLanguage());
             }
         }
 

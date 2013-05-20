@@ -21,19 +21,29 @@ class AbstractException extends \Exception
      * Generate human-readable message from error code
      *
      * @param string $message error message
-     * @param int $code error code
+     * @param int $code error code for localized exceptions
      * @param \Exception $previous previous exception
      */
     public function __construct($message = null, $code = null, \Exception $previous = null)
     {
+        $messageLocalized = false;
+
         if ($code !== null) {
             $reflection = new \ReflectionClass($this);
             $reflectionConstants = array_flip($reflection->getConstants());
 
             if (isset($reflectionConstants[$code])) {
-                $message = sprintf($reflectionConstants[$code], $message);
+                $messageLocalized = Language::getInstance()->get("EXCEPTION\\" . $reflectionConstants[$code]);
+            }
+
+            if ((bool)$messageLocalized) {
+                $message = sprintf($messageLocalized, $message);
+            } else {
+                $message = sprintf('Unknown exception code %d', $code);
             }
         }
+
+        $message .= sprintf(' (%s:%d)', $this->getFile(), $this->getLine());
 
         if ($loggerConfiguration = Registry::getInstance()->get('default.log')) {
             $logger = \Savvy\Component\Logger\Factory::getInstance($loggerConfiguration);

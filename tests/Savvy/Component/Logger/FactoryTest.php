@@ -22,6 +22,6 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testFactoryThrowsExceptionWhenUnknownLoggerIsRequested()
     {
-        $this->assertInstanceOf('\Savvy\Component\Logger\AbstractLogger', $this->testInstance->getInstance(serialize(array('type' => 'foobar'))));
+        $this->assertInstanceOf('\Savvy\Component\Logger\AbstractLogger', $this->testInstance->getInstance('foobar'));
     }
 }

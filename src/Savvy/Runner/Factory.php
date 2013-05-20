@@ -28,7 +28,9 @@ class Factory extends Base\AbstractFactory
                     $runner = new $runnerClass;
 
                     if ($runner instanceof \Savvy\Runner\AbstractRunner) {
-                        $result = $runner->isSuitable();
+                        if ($result = $runner->isSuitable()) {
+                            Base\Registry::getInstance()->set('locale', $runner->getLanguage());
+                        }
                     }
                 } catch (\Exception $e) {
                 }

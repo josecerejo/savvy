@@ -35,8 +35,6 @@ class Bootstrap
             $classLoader = new \Doctrine\Common\ClassLoader($namespace, $rootPath . $classPath);
             $classLoader->register();
         }
-
-        Registry::getInstance()->init();
     }
 
     /**
