@@ -32,7 +32,7 @@ class Syslog extends AbstractLogger
     }
 
     /**
-     * Get ame property
+     * Get name property
      *
      * @return string
      */
