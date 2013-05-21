@@ -1,7 +1,7 @@
 [default]
 
 name = "Savvy"
-version = "2013/05/20"
+version = "2013/05/21"
 languages = "en,de"
 log = "file:filename=log/core.log"
 
@@ -37,6 +37,7 @@ heartbeat = 120
 pipe = "tmp/daemon.fifo"
 pid = "tmp/daemon.pid"
 log = "file:filename=log/daemon.log"
+;log = "syslog"
 
 [utility]
 
