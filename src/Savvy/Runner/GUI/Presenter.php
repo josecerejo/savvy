@@ -106,19 +106,13 @@ class Presenter
                     }
                 }
 
-                if (method_exists($this, $method = $method . 'View')) {
-                    $result = $this->{$method}();
-                }
-
-                if ($result === false) {
-                    if (is_readable($filename)) {
-                        $result = file_get_contents($filename);
-                    } else {
-                        throw new Exception(
-                            implode('/', $this->getRequest()->getRoute()),
-                            Exception::E_RUNNER_GUI_VIEW_NOT_FOUND
-                        );
-                    }
+                if (is_readable($filename)) {
+                    $result = file_get_contents($filename);
+                } else {
+                    throw new Exception(
+                        implode('/', $this->getRequest()->getRoute()),
+                        Exception::E_RUNNER_GUI_VIEW_NOT_FOUND
+                    );
                 }
                 break;
             case Request::TYPE_ACTION:
