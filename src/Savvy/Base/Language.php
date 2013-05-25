@@ -44,10 +44,14 @@ class Language extends AbstractSingleton
                     $xml = simplexml_load_file($filename);
 
                     if ((bool)$xml->strings) {
-                        $section = (string)$xml->strings->attributes()->section;
+                        foreach ($xml->strings as $section) {
+                            $sectionName = (string)$section->attributes()->section;
 
-                        foreach ($xml->strings->children() as $node) {
-                            $this->locale[$section][(string)$node->attributes()->key] = (string)$node;
+                            foreach ($section as $node) {
+                                $keyName = (string)$node->attributes()->key;
+
+                                $this->locale[$sectionName][$keyName] = (string)$node;
+                            }
                         }
                     }
                 }
@@ -60,7 +64,7 @@ class Language extends AbstractSingleton
      * found.
      *
      * @param string $key identifier, e.g. "EXCEPTION\E_SOMETHING_WENT_WRONG"
-     * @return string localized string, or false if key was not found
+     * @return string localized string, or key if string was not found
      */
     public function get($key)
     {
@@ -79,6 +83,10 @@ class Language extends AbstractSingleton
             } else {
                 break;
             }
+        }
+
+        if ($result === false) {
+            $result = $key;
         }
 
         return $result;

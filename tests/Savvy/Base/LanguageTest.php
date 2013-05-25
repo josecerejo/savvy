@@ -11,8 +11,8 @@ class LanguageTest extends \PHPUnit_Framework_TestCase
         $this->testInstance = Language::getInstance();
     }
 
-    public function testLanguageGetterReturnsFalseWhenKeyWasNotFound()
+    public function testLanguageGetterReturnsKeyNameWhenKeyWasNotFound()
     {
-        $this->assertFalse($this->testInstance->get('DOES_NOT_EXIST'));
+        $this->assertEquals('DOES_NOT_EXIST', $this->testInstance->get('DOES_NOT_EXIST'));
     }
 }
