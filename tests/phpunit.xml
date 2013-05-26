@@ -16,10 +16,10 @@
 
     <filter>
         <blacklist>
-            <directory suffix=".php">../vendor</directory>
-            <directory suffix=".php">../config</directory>
+            <directory>../tests</directory>
+            <directory>../vendor</directory>
+            <directory>../src/Savvy/Storage</directory>
             <directory suffix=".phtml">../src</directory>
-            <directory suffix=".php">../src/Savvy/Storage</directory>
             <directory suffix="Command.php">../src/Savvy/Runner/Console</directory>
         </blacklist>
     </filter>
