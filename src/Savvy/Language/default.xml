@@ -15,7 +15,7 @@
         <string key="PIPEFILE_WRITE_ERROR">Failed to open or create named pipe file "%s"</string>
         <string key="UNKNOWN_COMMAND">Received unkown command "%s"</string>
         <string key="STARTED">Service daemon started (PID %d)</string>
-        <string key="TERMINATED">Service daemon terminated"</string>
+        <string key="TERMINATED">Service daemon terminated</string>
         <string key="RELOADED">Reloading schedules</string>
     </strings>
 </localization>
