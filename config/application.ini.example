@@ -21,7 +21,7 @@ memcachePort = 11211
 
 [extjs]
 
-cdn = "http://cdn.sencha.io/ext-4.2.0-gpl/ext-all.js"
+cdn = "http://cdn.sencha.com/ext/gpl/4.2.0/ext-all.js"
 
 [runner]
 
