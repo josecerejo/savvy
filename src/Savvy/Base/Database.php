@@ -41,7 +41,7 @@ class Database extends AbstractSingleton
             $configuration = new \Doctrine\ORM\Configuration();
             $configuration->setMetadataCacheImpl($metadataCache);
             $configuration->setMetadataDriverImpl($metadataDriver);
-            $configuration->setProxyDir(Registry::getInstance()->get('root') .'/tmp/Proxy');
+            $configuration->setProxyDir(Registry::getInstance()->get('root') .'/src/Savvy/Storage/Proxy');
             $configuration->setProxyNamespace('Proxy');
             $configuration->setAutoGenerateProxyClasses(false);
             $configuration->setQueryCacheImpl(\Savvy\Base\Cache::getInstance()->getCacheProvider());
