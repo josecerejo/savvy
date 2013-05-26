@@ -16,15 +16,20 @@ class Button extends AbstractWidget
      * @var array
      */
     protected $configuration = array(
-        'text'      => array(
-            'type'  => self::TYPE_VARIABLE
+        'text'         => array(
+            'type'         => self::TYPE_VARIABLE,
+            'localize'     => true
         ),
-        'scale'     => array(
-            'type'  => self::TYPE_VARIABLE,
-            'value' => 'small'
+        'message'      => array(
+            'type'         => self::TYPE_INTERNAL,
+            'localize'     => true
         ),
-        'handler'   => array(
-            'type'  => self::TYPE_CODE
+        'scale'        => array(
+            'type'         => self::TYPE_VARIABLE,
+            'value'        => 'small'
+        ),
+        'handler'      => array(
+            'type'         => self::TYPE_CODE
         )
     );
 
@@ -67,8 +72,8 @@ class Button extends AbstractWidget
             $result .= "var f=Ext.getCmp('" . $this->currentForm() . "');";
 
             // show loading message
-            if (isset($this->attributes['message'])) {
-                $result .= "var lm=new Ext.LoadMask(f,{msg:'" . $this->attributes['message'] . "'});lm.show();";
+            if ($message = $this->getConfiguration('message')) {
+                $result .= "var lm=new Ext.LoadMask(f,{msg:'" . $message . "'});lm.show();";
             }
 
             $result .= "f.getForm().submit({";
@@ -82,7 +87,7 @@ class Button extends AbstractWidget
             $result .= "success:function(o,r){";
 
             // hide loading message on success
-            if (isset($this->attributes['message'])) {
+            if ((bool)$message) {
                 $result .= "lm.hide();";
             }
 
@@ -92,7 +97,7 @@ class Button extends AbstractWidget
             $result .= "},failure:function(o,r){";
 
             // hide loading message on failure
-            if (isset($this->attributes['message'])) {
+            if ((bool)$message) {
                 $result .= "lm.hide();";
             }
 

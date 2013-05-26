@@ -16,50 +16,51 @@ class Window extends AbstractWidget
      * @var array
      */
     public $configuration = array(
-        'resizable'   => array(
-            'type'    => self::TYPE_VARIABLE,
-            'value'   => '0'
+        'resizable'     => array(
+            'type'          => self::TYPE_VARIABLE,
+            'value'         => '0'
         ),
-        'closable'    => array(
-            'type'    => self::TYPE_VARIABLE,
-            'value'   => '0'
+        'closable'      => array(
+            'type'          => self::TYPE_VARIABLE,
+            'value'         => '0'
         ),
-        'border'      => array(
-            'type'    => self::TYPE_VARIABLE,
-            'value'   => '0'
+        'border'        => array(
+            'type'          => self::TYPE_VARIABLE,
+            'value'         => '0'
         ),
-        'plain'       => array(
-            'type'    => self::TYPE_VARIABLE
+        'plain'         => array(
+            'type'          => self::TYPE_VARIABLE
         ),
-        'id'          => array(
-            'type'    => self::TYPE_VARIABLE
+        'id'            => array(
+            'type'          => self::TYPE_VARIABLE
         ),
-        'width'       => array(
-            'type'    => self::TYPE_VARIABLE
+        'width'         => array(
+            'type'          => self::TYPE_VARIABLE
         ),
-        'height'      => array(
-            'type'    => self::TYPE_VARIABLE
+        'height'        => array(
+            'type'          => self::TYPE_VARIABLE
         ),
         'resizeHandles' => array(
-            'type'    => self::TYPE_VARIABLE
+            'type'          => self::TYPE_VARIABLE
         ),
-        'title'       => array(
-            'type'    => self::TYPE_VARIABLE
+        'title'         => array(
+            'type'          => self::TYPE_VARIABLE,
+            'localize'      => true
         ),
-        'layout'      => array(
-            'type'    => self::TYPE_CHILD,
-            'name'    => 'layout'
+        'layout'        => array(
+            'type'          => self::TYPE_CHILD,
+            'name'          => 'layout'
         ),
-        'buttons'     => array(
-            'type'    => self::TYPE_CHILDS,
-            'name'    => 'button'
+        'buttons'       => array(
+            'type'          => self::TYPE_CHILDS,
+            'name'          => 'button'
         ),
-        'items'       => array(
-            'type'    => self::TYPE_CHILDS,
-            'name'    => 'item'
+        'items'         => array(
+            'type'          => self::TYPE_CHILDS,
+            'name'          => 'item'
         ),
-        'header'      => array(
-            'type'    => self::TYPE_VARIABLE
+        'header'        => array(
+            'type'          => self::TYPE_VARIABLE
         )
     );
 

@@ -2,6 +2,8 @@
 
 namespace Savvy\Runner\GUI\HTML\Widget;
 
+use Savvy\Base as Base;
+
 /**
  * Abstract class for Ext JS widgets
  *
@@ -29,6 +31,11 @@ abstract class AbstractWidget
      * XML child element, repeatable
      */
     const TYPE_CHILDS = 3;
+
+    /**
+     * For internal use only; not (directly) transformed into JavaScript
+     */
+    const TYPE_INTERNAL = 99;
 
     /**
      * XML object
@@ -147,8 +154,8 @@ abstract class AbstractWidget
     /**
      * Prepare widget configuration to generate Ext JS output
      *
-     * @param string $name
-     * @return mixed
+     * @param string $name configuration name
+     * @return mixed output, or false if configuration does not exist
      */
     protected function getConfiguration($name = null)
     {
@@ -158,6 +165,10 @@ abstract class AbstractWidget
             $result = array();
 
             foreach ($this->configuration as $name => $properties) {
+                if (isset($properties['type']) && $properties['type'] === self::TYPE_INTERNAL) {
+                    continue;
+                }
+
                 if ($value = $this->getConfiguration($name)) {
                     $result[] = $value;
                 }
@@ -165,17 +176,21 @@ abstract class AbstractWidget
         } elseif (isset($this->configuration[$name])) {
             $properties = $this->configuration[$name];
 
-            if (isset($properties['value']) === true) {
-                if (is_array($properties['value']) === true) {
+            if (isset($properties['value'])) {
+                if (is_array($properties['value'])) {
                     $value = implode($properties['value'], ',');
                 } else {
                     $value = $properties['value'];
+
+                    if (isset($this->configuration[$name]['localize'])) {
+                        $value = Base\Language::getInstance()->get($value, $this->route[0]);
+                    }
                 }
 
                 if (isset($properties['type'])) {
                     switch ($properties['type']) {
                         case self::TYPE_VARIABLE:
-                            if (is_numeric($value) === true) {
+                            if (is_numeric($value)) {
                                 $result = sprintf('%s:%d', $name, $value);
                             } elseif (($value === 'false') or ($value === 'true')) {
                                 $result = sprintf("%s:%s", $name, $value);
@@ -185,6 +200,9 @@ abstract class AbstractWidget
                             break;
                         case self::TYPE_CHILDS:
                             $result = sprintf('%s:[%s]', $name, $value);
+                            break;
+                        case self::TYPE_INTERNAL:
+                            $result = $value;
                             break;
                         default:
                             $result = sprintf('%s:%s', $name, $value);

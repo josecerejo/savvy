@@ -16,51 +16,52 @@ class Item extends AbstractWidget
      * @var array
      */
     protected $configuration = array(
-        'xtype'      => array(
-            'type'   => self::TYPE_VARIABLE
+        'xtype'        => array(
+            'type'         => self::TYPE_VARIABLE
         ),
-        'inputType'  => array(
-            'type'   => self::TYPE_VARIABLE
+        'inputType'    => array(
+            'type'         => self::TYPE_VARIABLE
         ),
-        'name'       => array(
-            'type'   => self::TYPE_VARIABLE
+        'name'         => array(
+            'type'         => self::TYPE_VARIABLE
         ),
-        'fieldLabel' => array(
-            'type'   => self::TYPE_VARIABLE
+        'fieldLabel'   => array(
+            'type'         => self::TYPE_VARIABLE,
+            'localize'     => true
         ),
-        'labelAlign' => array(
-            'type'   => self::TYPE_VARIABLE
+        'labelAlign'   => array(
+            'type'         => self::TYPE_VARIABLE
         ),
-        'padding'    => array(
-            'type'   => self::TYPE_VARIABLE
+        'padding'      => array(
+            'type'         => self::TYPE_VARIABLE
         ),
-        'id'         => array(
-            'type'   => self::TYPE_VARIABLE
+        'id'           => array(
+            'type'         => self::TYPE_VARIABLE
         ),
-        'width'      => array(
-            'type'   => self::TYPE_VARIABLE
+        'width'        => array(
+            'type'         => self::TYPE_VARIABLE
         ),
-        'border'      => array(
-            'type'    => self::TYPE_VARIABLE,
-            'value'   => '0'
+        'border'       => array(
+            'type'         => self::TYPE_VARIABLE,
+            'value'        => '0'
         ),
-        'allowBlank'  => array(
-            'type'    => self::TYPE_VARIABLE
+        'allowBlank'   => array(
+            'type'         => self::TYPE_VARIABLE
         ),
-        'buttons'     => array(
-            'type'    => self::TYPE_CHILDS,
-            'name'    => 'button'
+        'buttons'      => array(
+            'type'         => self::TYPE_CHILDS,
+            'name'         => 'button'
         ),
-        'items'       => array(
-            'type'    => self::TYPE_CHILDS,
-            'name'    => 'item'
+        'items'        => array(
+            'type'         => self::TYPE_CHILDS,
+            'name'         => 'item'
         ),
-        'layout'      => array(
-            'type'    => self::TYPE_CHILD,
-            'name'    => 'layout'
+        'layout'       => array(
+            'type'         => self::TYPE_CHILD,
+            'name'         => 'layout'
         ),
-        'listeners'   => array(
-            'type'    => self::TYPE_CODE
+        'listeners'    => array(
+            'type'         => self::TYPE_CODE
         )
     );
 

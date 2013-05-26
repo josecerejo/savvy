@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<localization>
+    <strings section="INDEX">
+        <string key="TITLE">Login</string>
+        <string key="BUTTON">Login</string>
+        <string key="USERNAME">Username</string>
+        <string key="PASSWORD">Password</string>
+        <string key="VERIFYING_ACCESS">Verifying access data...</string>
+    </strings>
+</localization>
