@@ -35,7 +35,7 @@ Source Documentation
 and Xdebug to create code coverage reports in "public/doc/tests/"  
 
 * use [PHP_CodeSniffer](http://pear.php.net/package/PHP_CodeSniffer) to check
-whether your code-style is compliant to PSR-2  
+whether your code-style is compliant to [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)
 
 License
 -------
