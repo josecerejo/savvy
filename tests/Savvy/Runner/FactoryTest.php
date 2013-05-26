@@ -9,7 +9,6 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
     public function setup()
     {
-        $this->testInstance = new \Savvy\Runner\Factory();
         $this->server = $_SERVER;
     }
 
@@ -21,39 +20,52 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Savvy\Runner\Exception
      * @expectedExceptionCode \Savvy\Runner\Exception::E_RUNNER_FACTORY_UNKNOWN_RUNNER
+     * @runInSeparateProcess
      */
     public function testFactoryException()
     {
         unset($_SERVER['argv']);
-        $this->testInstance->getInstance();
+        $runner = \Savvy\Runner\Factory::getInstance();
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testFactoryGuiHtmlRunner()
     {
         unset($_SERVER['argv']);
         $_SERVER['REQUEST_URI'] = '/index.php';
-        $runner = $this->testInstance->getInstance();
+        $runner = \Savvy\Runner\Factory::getInstance();
         $this->assertInstanceOf('\Savvy\Runner\GUI\HTML\Runner', $runner);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testFactoryConsoleSavvyRunner()
     {
         $_SERVER['argv'] = array('savvy');
-        $runner = $this->testInstance->getInstance();
+        $runner = \Savvy\Runner\Factory::getInstance();
         $this->assertInstanceOf('\Savvy\Runner\Console\Savvy\Runner', $runner);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testFactoryConsoleDoctrineRunner()
     {
         $_SERVER['argv'] = array('doctrine');
-        $runner = $this->testInstance->getInstance();
+        $runner = \Savvy\Runner\Factory::getInstance();
         $this->assertInstanceOf('\Savvy\Runner\Console\Doctrine\Runner', $runner);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testFactoryDaemonRunner()
     {
         $_SERVER['argv'] = array('savvy', '--daemon');
-        $runner = $this->testInstance->getInstance();
+        $runner = \Savvy\Runner\Factory::getInstance();
         $this->assertInstanceOf('\Savvy\Runner\Daemon\Runner', $runner);
         $this->assertTrue($runner->isSuitable());
     }

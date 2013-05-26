@@ -15,5 +15,5 @@ abstract class AbstractFactory
      *
      * @return \stdClass
      */
-    abstract public function getInstance();
+    abstract public static function getInstance();
 }

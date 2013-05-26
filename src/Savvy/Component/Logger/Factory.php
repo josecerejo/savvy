@@ -8,7 +8,7 @@ namespace Savvy\Component\Logger;
  * @package Savvy
  * @subpackage Component\Logger
  */
-class Factory
+class Factory extends \Savvy\Base\AbstractFactory
 {
     /**
      * Singleton instances

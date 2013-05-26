@@ -44,9 +44,6 @@ class Bootstrap
      */
     public function run()
     {
-        $runnerFactory = new \Savvy\Runner\Factory();
-        $runner = $runnerFactory->getInstance();
-
-        return $runner->run();
+        return \Savvy\Runner\Factory::getInstance()->run();
     }
 }

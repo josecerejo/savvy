@@ -13,38 +13,47 @@ use Savvy\Base as Base;
 class Factory extends Base\AbstractFactory
 {
     /**
+     * @var \Savvy\Runner\AbstractRunner
+     */
+    private static $instance = null;
+
+    /**
      * Create apropriate runner instance for current mode of operation
      *
      * @throws \Savvy\Runner\Exception
      * @return \Savvy\Runner\AbstractRunner runner instance containing main program
      */
-    public function getInstance()
+    public static function getInstance()
     {
-        foreach (Base\Registry::getInstance()->get('runner') as $name => $runnerClass) {
-            $result = false;
+        if (self::$instance === null) {
+            foreach (Base\Registry::getInstance()->get('runner') as $name => $runnerClass) {
+                $result = false;
 
-            if (\Doctrine\Common\ClassLoader::classExists($runnerClass)) {
-                try {
-                    $runner = new $runnerClass;
+                if (\Doctrine\Common\ClassLoader::classExists($runnerClass)) {
+                    try {
+                        $runner = new $runnerClass;
 
-                    if ($runner instanceof \Savvy\Runner\AbstractRunner) {
-                        if ($result = $runner->isSuitable()) {
-                            Base\Registry::getInstance()->set('locale', $runner->getLanguage());
+                        if ($runner instanceof \Savvy\Runner\AbstractRunner) {
+                            if ($result = $runner->isSuitable()) {
+                                Base\Registry::getInstance()->set('locale', $runner->getLanguage());
+                            }
                         }
+                    } catch (\Exception $e) {
                     }
-                } catch (\Exception $e) {
+                }
+
+                if ($result === true) {
+                    break;
                 }
             }
 
-            if ($result === true) {
-                break;
+            if ($result === false) {
+                throw new Exception($runnerClass, Exception::E_RUNNER_FACTORY_UNKNOWN_RUNNER);
             }
+
+            self::$instance = $runner;
         }
 
-        if ($result === false) {
-            throw new Exception($runnerClass, Exception::E_RUNNER_FACTORY_UNKNOWN_RUNNER);
-        }
-
-        return $runner;
+        return self::$instance;
     }
 }
