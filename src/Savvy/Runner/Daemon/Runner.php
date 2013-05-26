@@ -276,7 +276,7 @@ class Runner extends \Savvy\Runner\AbstractRunner
     private function quit($signal = null)
     {
         $this->setStatus(self::STATUS_QUIT);
-        $this->getLogger()->write('Service daemon terminated');
+        $this->getLogger()->write(Base\Language::getInstance()->get('DAEMON\TERMINATED'));
 
         switch ($signal) {
             case SIGTERM:
@@ -306,7 +306,7 @@ class Runner extends \Savvy\Runner\AbstractRunner
      */
     private function reload()
     {
-        $this->getLogger()->write('Reloading schedules', LOG_NOTICE);
+        $this->getLogger()->write(Base\Language::getInstance()->get('DAEMON\RELOADED'));
     }
 
     /**
@@ -345,7 +345,10 @@ class Runner extends \Savvy\Runner\AbstractRunner
                     $this->reload();
                     break;
                 default:
-                    $this->getLogger()->write('Warning: received unknown command "' . $command .'"', LOG_WARNING);
+                    $this->getLogger()->write(
+                        sprintf(Base\Language::getInstance()->get('DAEMON\UNKNOWN_COMMAND'), $command),
+                        LOG_WARNING
+                    );
             }
         }
 
@@ -363,13 +366,17 @@ class Runner extends \Savvy\Runner\AbstractRunner
 
         if ($pid = $this->getPid()) {
             if (is_resource($this->getPipe()) === false) {
-                $this->getLogger()->write('Error opening named pipe "' . $this->getPipeFilename() . '"');
+                $this->getLogger()->write(
+                    sprintf(Base\Language::getInstance()->get('DAEMON\PIPEFILE_WRITE_ERROR'), $this->getPipeFilename())
+                );
                 $result = $this->quit();
             } else {
-                $this->getLogger()->write('Service daemon started (PID ' . $pid . ')');
+                $this->getLogger()->write(sprintf(Base\Language::getInstance()->get('DAEMON\STARTED'), $pid));
             }
         } else {
-            $this->getLogger()->write('Error creating PID file');
+            $this->getLogger()->write(
+                sprintf(Base\Language::getInstance()->get('DAEMON\PIDFILE_WRITE_ERROR'), $this->getPidFilename())
+            );
             $result = $this->quit();
         }
 
