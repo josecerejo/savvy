@@ -10,6 +10,10 @@
         <string key="E_RUNNER_GUI_ACTION_NOT_FOUND">Requested action "%s" does not exist</string>
     </strings>
 
+    <strings section="COMMON">
+        <string key="BUTTON_CLOSE">Close</string>
+    </strings>
+
     <strings section="DAEMON">
         <string key="PIDFILE_WRITE_ERROR">Failed to create PID file "%s"</string>
         <string key="PIPEFILE_WRITE_ERROR">Failed to open or create named pipe file "%s"</string>

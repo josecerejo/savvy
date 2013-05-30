@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<localization>
+    <strings section="COMMON">
+        <string key="BUTTON_CLOSE">Schließen</string>
+    </strings>
+</localization>

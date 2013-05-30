@@ -69,20 +69,24 @@ class Language extends AbstractSingleton
         $segments = explode("\\", $key);
 
         if ($module !== null) {
-            $segments = array_merge(array('MODULES', strtoupper($module)), $segments);
+            if ($key[0] === "\\") {
+                array_shift($segments);
+            } else {
+                $segments = array_merge(array('MODULES', strtoupper($module)), $segments);
 
-            if (isset($this->ldata['MODULES'][strtoupper($module)]) === false) {
-                $this->ldata['MODULES'][strtoupper($module)] = array();
+                if (isset($this->ldata['MODULES'][strtoupper($module)]) === false) {
+                    $this->ldata['MODULES'][strtoupper($module)] = array();
 
-                foreach (array('default', Registry::getInstance()->get('locale')) as $language) {
-                    $filename = sprintf(
-                        '%s/src/Savvy/Module/%s/Language/%s.xml',
-                        Registry::getInstance()->get('root'),
-                        ucfirst($module),
-                        $language
-                    );
+                    foreach (array('default', Registry::getInstance()->get('locale')) as $language) {
+                        $filename = sprintf(
+                            '%s/src/Savvy/Module/%s/Language/%s.xml',
+                            Registry::getInstance()->get('root'),
+                            ucfirst($module),
+                            $language
+                        );
 
-                    $this->loadLocalization($this->ldata['MODULES'][strtoupper($module)], $filename);
+                        $this->loadLocalization($this->ldata['MODULES'][strtoupper($module)], $filename);
+                    }
                 }
             }
         }
