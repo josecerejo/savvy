@@ -8,7 +8,7 @@ a productive manner.
 Installation
 ------------
 
-1. Download core project and install dependencies (requires [Composer](http://getcomposer.org/):<pre>
+1. Download core project and install dependencies (requires [Composer](http://getcomposer.org/)):<pre>
 git clone https://github.com/poliander/savvy && cd savvy && composer.phar install
 </pre>
 
