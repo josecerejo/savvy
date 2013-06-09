@@ -20,7 +20,7 @@ class Bootstrap
     private $classLoaders = array(
         'Savvy'    => '/src',
         'Storage'  => '/src/Savvy',
-        'Proxy'    => '/src/Savvy/Storage'
+        'Proxy'    => '/tmp'
     );
 
     /**
@@ -28,8 +28,7 @@ class Bootstrap
      */
     public function __construct()
     {
-        $rootPath = realpath(dirname(__FILE__) . '/../../..');
-        require_once($rootPath . '/vendor/autoload.php');
+        require_once(($rootPath = realpath(dirname(__FILE__) . '/../../..')) . '/vendor/autoload.php');
 
         foreach ($this->classLoaders as $namespace => $classPath) {
             $classLoader = new \Doctrine\Common\ClassLoader($namespace, $rootPath . $classPath);
