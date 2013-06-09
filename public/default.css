@@ -731,10 +731,9 @@ table.x-form-checkboxgroup {
 .x-fieldset-header-text {
   float: left; }
 
-/*misc*/
-/* line 4, ../../../ext-theme-base/sass/src/form/Panel.scss */
 .x-webkit *:focus {
-  outline: none !important; }
+	outline: none !important;
+}
 
 /* line 11, ../../../ext-theme-base/sass/src/form/Panel.scss */
 .x-form-item {
@@ -1653,17 +1652,16 @@ body.x-nbr .x-btn-default-small {
   background-image: -ms-linear-gradient(top, #fbfbfb, #e9e9e9);
   background-image: linear-gradient(top, #fbfbfb, #e9e9e9); }
 
-/* line 313, ../../../ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-small-focus {
-  border-color: #9d9d9d;
+  border-color: #999;
   background-image: none;
-  background-color: #f3f3f3;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fbfbfb), color-stop(100%, #e9e9e9));
-  background-image: -webkit-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: -moz-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: -o-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: -ms-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: linear-gradient(top, #fbfbfb, #e9e9e9); }
+  background-color: #e8e8e8;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e8e8e8), color-stop(100%, #ddd));
+  background-image: -webkit-linear-gradient(top, #e8e8e8, #ddd);
+  background-image: -moz-linear-gradient(top, #e8e8e8, #ddd);
+  background-image: -o-linear-gradient(top, #e8e8e8, #ddd);
+  background-image: -ms-linear-gradient(top, #e8e8e8, #ddd);
+  background-image: linear-gradient(top, #e8e8e8, #ddd); }
 
 /* line 338, ../../../ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-small-menu-active,
@@ -11787,4 +11785,8 @@ body.x-nbr .x-tab-default-right {
 
 .x-tab-noicon .x-tab-icon {
 	display: none;
+}
+
+.x-btn-focus {
+	outline: none;
 }
