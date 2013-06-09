@@ -4,6 +4,7 @@ name = "Savvy"
 version = "2013/06/09"
 languages = "en,de"
 log = "file:filename=log/core.log"
+authentication = "database"
 
 [database]
 
