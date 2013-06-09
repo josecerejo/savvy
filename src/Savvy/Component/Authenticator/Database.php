@@ -19,16 +19,15 @@ class Database extends AbstractAuthenticator
      */
     protected function authenticate()
     {
+        $result = self::AUTHENTICATION_UNKNOWN;
         $repository = Base\Database::getInstance()->getEntityManager()->getRepository('Savvy\Storage\Model\User');
 
         if ($user = $repository->findOneByUsername($this->getUsername())) {
+            $result = self::AUTHENTICATION_FAILURE;
+
             if (strcmp((string)$user->getPassword(), $this->getPassword()) === 0) {
                 $result = self::AUTHENTICATION_SUCCESS;
-            } else {
-                $result = self::AUTHENTICATION_FAILURE;
             }
-        } else {
-            $result = self::AUTHENTICATION_UNKNOWN;
         }
 
         return $result;

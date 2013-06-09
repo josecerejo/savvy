@@ -47,6 +47,8 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function testFactorySupportsAuthenticatorChaining()
     {
         Base\Registry::getInstance()->set('authentication', 'database,database');
-        $this->assertInstanceOf("Savvy\\Component\\Authenticator\\AbstractAuthenticator", Factory::getInstance());
+        $authenticator = Factory::getInstance();
+        $this->assertInstanceOf("Savvy\\Component\\Authenticator\\AbstractAuthenticator", $authenticator);
+        $this->assertEquals(false, $authenticator->validate("phpUnitTest", "testPhpUnit"));
     }
 }
