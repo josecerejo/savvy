@@ -61,6 +61,13 @@ class Window extends AbstractWidget
         ),
         'header'        => array(
             'type'          => self::TYPE_VARIABLE
+        ),
+        'focus'         => array(
+            'type'          => self::TYPE_INTERNAL,
+            'value'         => null
+        ),
+        'listeners'     => array(
+            'type'          => self::TYPE_CODE
         )
     );
 
@@ -126,6 +133,22 @@ class Window extends AbstractWidget
                 $result = null;
                 break;
             }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get listeners configuration
+     *
+     * @return string|null
+     */
+    protected function getListeners()
+    {
+        $result = null;
+
+        if ($this->configuration['focus']['value'] !== null) {
+            $result = sprintf("{show:function(){Ext.getCmp('%s').focus();}}", $this->getConfiguration('focus'));
         }
 
         return $result;

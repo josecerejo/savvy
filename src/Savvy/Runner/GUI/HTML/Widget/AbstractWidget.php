@@ -95,7 +95,15 @@ abstract class AbstractWidget
 
         if ((bool)$this->xml->attributes() === true) {
             $attributesElement = (array)$this->xml->attributes();
-            $this->attributes = $attributesElement['@attributes'];
+
+            foreach ($attributesElement['@attributes'] as $name => $value)
+            {
+                if (method_exists($this, $setter = sprintf('set%s', ucfirst($name))) === true) {
+                    $value = $this->$setter($value);
+                }
+
+                $this->attributes[$name] = $value;
+            }
         }
 
         foreach ($this->configuration as $name => $properties) {
@@ -132,8 +140,28 @@ abstract class AbstractWidget
     }
 
     /**
-     * Interceptor method calls getter for given attribute, or stores attribute
-     * value directly in widget configuration if getter does not exist
+     * Set configuration value
+     *
+     * @param string $name
+     * @param string $value
+     * @return bool
+     */
+    public function setConfiguration($name, $value)
+    {
+        $result = false;
+
+        if (isset($this->configuration[$name])) {
+            $this->configuration[$name]['value'] = $value;
+            $result = true;
+        }
+
+        return $result;
+    }
+
+    /**
+     * __get() interceptor method calls getter for given attribute, or stores
+     * attribute's value directly in widget configuration if getter does not
+     * exist.
      *
      * @param string $name
      * @return mixed

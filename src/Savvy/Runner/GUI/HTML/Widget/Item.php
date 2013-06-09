@@ -60,10 +60,29 @@ class Item extends AbstractWidget
             'type'         => self::TYPE_CHILD,
             'name'         => 'layout'
         ),
-        'listeners'    => array(
-            'type'         => self::TYPE_CODE
+        'focus'        => array(
+            'type'         => self::TYPE_INTERNAL
         )
     );
+
+    /**
+     * Set focus field
+     *
+     * @param string $enabled
+     * @return void
+     */
+    protected function setFocus($enabled)
+    {
+        if ((bool)$enabled && (strtolower((string)$enabled) !== 'false')) {
+            $rootWidget = $this;
+
+            while ($rootWidget->parent !== null) {
+                $rootWidget = $rootWidget->parent;
+            }
+
+            $rootWidget->setConfiguration('focus', $this->getId());
+        }
+    }
 
     /**
      * Map xtype configuration
@@ -153,22 +172,6 @@ class Item extends AbstractWidget
             if (isset($this->attributes['id']) === false) {
                 $result = $this->attributes['name'];
             }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Generate listeners code
-     *
-     * @return string
-     */
-    protected function getListeners()
-    {
-        $result = null;
-
-        if (isset($this->attributes['focus']) && (bool)$this->attributes['focus']) {
-            $result = "{afterrender:function(f){f.focus(false,100);}}";
         }
 
         return $result;
