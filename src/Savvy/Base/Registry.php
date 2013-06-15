@@ -50,11 +50,18 @@ class Registry extends AbstractSingleton
      * Get value of given key from configuration registry
      *
      * @param string $name key name
+     * @param string $default default value
      * @return string key value, or false if key is undefined
      */
-    public function get($name)
+    public function get($name, $default = false)
     {
-        return $this->getKey($this->getPath($name));
+        $result = $this->getKey($this->getPath($name));
+
+        if ($result === false) {
+            $result = $default;
+        }
+
+        return $result;
     }
 
     /**
