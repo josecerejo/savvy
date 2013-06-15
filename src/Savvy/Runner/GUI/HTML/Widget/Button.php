@@ -85,18 +85,18 @@ class Button extends AbstractWidget
                 $result .= "url:'/" . implode('/', $this->route) . "?action=" . $this->attributes['action'] . "',";
             }
 
+            $fields = array(0 => 'applicationSessionId:Ext.util.session()');
+
             // submit encrypted values
             if ($encryptedFields = $currentForm->getConfiguration('encryptedFields')) {
-                $fields = array();
-
                 foreach ($encryptedFields as $i => $field) {
                     $fields[] = $field . ":Ext.util.md5(" .
                         "Ext.util.md5(f.getForm().findField('" . $field . "').getValue())+Ext.util.session())";
                 }
 
-                $result .= "params:{" . implode(",", $fields) . "},";
             }
 
+            $result .= "params:{" . implode(",", $fields) . "},";
             $result .= "success:function(o,r){";
 
             // hide loading message on success
