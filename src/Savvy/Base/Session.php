@@ -26,9 +26,8 @@ class Session extends AbstractSingleton
     {
         $result = @session_start();
 
-        if (empty($_SESSION) === false) {
-            $sessions = array_keys($_SESSION);
-            $this->setApplicationSessionId($sessions[0]);
+        if (isset($_SERVER['HTTP_APPLICATION_SESSION'])) {
+            $this->setApplicationSessionId($_SERVER['HTTP_APPLICATION_SESSION']);
         }
 
         return $result;

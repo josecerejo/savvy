@@ -35,7 +35,7 @@ class Runner extends GUI\AbstractRunner
             if (isset($_GET['view'])) {
                 $request->setType(GUI\Request::TYPE_VIEW);
                 $request->setRoute($_GET['view']);
-            } elseif (empty($_POST) === false) {
+            } elseif (isset($_SERVER['HTTP_APPLICATION_SESSION'])) {
                 $request->setType(GUI\Request::TYPE_ACTION);
                 $request->setRoute($_SERVER['REQUEST_URI']);
                 $request->setForm($_POST);

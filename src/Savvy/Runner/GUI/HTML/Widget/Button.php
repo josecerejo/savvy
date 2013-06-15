@@ -78,22 +78,25 @@ class Button extends AbstractWidget
                 $result .= "var lm=new Ext.LoadMask(f,{msg:'" . $message . "'});lm.show();";
             }
 
-            $result .= "f.getForm().submit({";
+            $result .= "f.getForm().submit({headers:{'Application-Session':Ext.util.session()},";
 
             if (isset($this->attributes['action'])) {
                 // presenter action
                 $result .= "url:'/" . implode('/', $this->route) . "?action=" . $this->attributes['action'] . "',";
             }
 
-            $fields = array(0 => 'applicationSessionId:Ext.util.session()');
-
             // add encrypted fields to post parameters
-            foreach ($currentForm->getConfiguration('encryptedFields') as $i => $field) {
-                $fields[] = $field .":Ext.util.md5(" .
-                    "Ext.util.md5(f.getForm().findField('" . $field . "').getValue())+Ext.util.session())";
+            if ($encryptedFields = $currentForm->getConfiguration('encryptedFields')) {
+                $fields = array();
+
+                foreach ($currentForm->getConfiguration('encryptedFields') as $i => $field) {
+                    $fields[] = $field .":Ext.util.md5(" .
+                        "Ext.util.md5(f.getForm().findField('" . $field . "').getValue())+Ext.util.session())";
+                }
+
+                $result .= "params:{" . implode(",", $fields) . "},";
             }
 
-            $result .= "params:{" . implode(",", $fields) . "},";
             $result .= "success:function(o,r){";
 
             // hide loading message on success

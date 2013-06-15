@@ -60,6 +60,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
     {
         $_POST['something'] = 'value';
         $_SERVER['REQUEST_URI'] = '/login/index?action=validate';
+        $_SERVER['HTTP_APPLICATION_SESSION'] = sha1(uniqid('', true));
 
         ob_start();
         $this->testInstance->run();
