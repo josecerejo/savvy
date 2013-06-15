@@ -16,57 +16,68 @@ class Item extends AbstractWidget
      * @var array
      */
     protected $configuration = array(
-        'xtype'        => array(
-            'type'         => self::TYPE_VARIABLE
+        'xtype'           => array(
+            'type'            => self::TYPE_VARIABLE,
+            'value'           => null
         ),
-        'inputType'    => array(
-            'type'         => self::TYPE_VARIABLE
+        'inputType'       => array(
+            'type'            => self::TYPE_VARIABLE
         ),
-        'name'         => array(
-            'type'         => self::TYPE_VARIABLE
+        'name'            => array(
+            'type'            => self::TYPE_VARIABLE
         ),
-        'fieldLabel'   => array(
-            'type'         => self::TYPE_VARIABLE,
-            'localize'     => true
+        'fieldLabel'      => array(
+            'type'            => self::TYPE_VARIABLE,
+            'localize'        => true
         ),
-        'labelAlign'   => array(
-            'type'         => self::TYPE_VARIABLE
+        'labelAlign'      => array(
+            'type'            => self::TYPE_VARIABLE
         ),
-        'padding'      => array(
-            'type'         => self::TYPE_VARIABLE
+        'padding'         => array(
+            'type'            => self::TYPE_VARIABLE
         ),
-        'id'           => array(
-            'type'         => self::TYPE_VARIABLE
+        'submitValue'     => array(
+            'type'            => self::TYPE_VARIABLE
         ),
-        'width'        => array(
-            'type'         => self::TYPE_VARIABLE
+        'id'              => array(
+            'type'            => self::TYPE_VARIABLE
         ),
-        'border'       => array(
-            'type'         => self::TYPE_VARIABLE,
-            'value'        => '0'
+        'width'           => array(
+            'type'            => self::TYPE_VARIABLE
         ),
-        'allowBlank'   => array(
-            'type'         => self::TYPE_VARIABLE
+        'border'          => array(
+            'type'            => self::TYPE_VARIABLE,
+            'value'           => '0'
         ),
-        'buttons'      => array(
-            'type'         => self::TYPE_CHILDS,
-            'name'         => 'button'
+        'allowBlank'      => array(
+            'type'            => self::TYPE_VARIABLE
         ),
-        'items'        => array(
-            'type'         => self::TYPE_CHILDS,
-            'name'         => 'item'
+        'items'           => array(
+            'type'            => self::TYPE_CHILDS,
+            'name'            => 'item'
         ),
-        'layout'       => array(
-            'type'         => self::TYPE_CHILD,
-            'name'         => 'layout'
+        'buttons'         => array(
+            'type'            => self::TYPE_CHILDS,
+            'name'            => 'button'
         ),
-        'focus'        => array(
-            'type'         => self::TYPE_INTERNAL
+        'layout'          => array(
+            'type'            => self::TYPE_CHILD,
+            'name'            => 'layout'
+        ),
+        'focus'           => array(
+            'type'            => self::TYPE_INTERNAL
+        ),
+        'encrypt'         => array(
+            'type'            => self::TYPE_INTERNAL
+        ),
+        'encryptedFields' => array(
+            'type'            => self::TYPE_INTERNAL,
+            'value'           => array()
         )
     );
 
     /**
-     * Set focus field
+     * Set focus for current input field
      *
      * @param string $enabled
      * @return void
@@ -85,15 +96,32 @@ class Item extends AbstractWidget
     }
 
     /**
+     * Set MD5 encryption for current input field
+     *
+     * @param string $enabled
+     * @return void
+     */
+    protected function setEncrypt($enabled)
+    {
+        if ((bool)$enabled && (strtolower((string)$enabled) !== 'false')) {
+            $this->setConfiguration('submitValue', 'false');
+
+            if ($currentForm = $this->currentForm(true)) {
+                $currentForm->setConfiguration('encryptedFields', $this->getId());
+            }
+        }
+    }
+
+    /**
      * Map xtype configuration
      *
-     * @return string
+     * @return string|null
      */
     protected function getXtype()
     {
         $result = null;
 
-        if (isset($this->attributes['type']) === true) {
+        if (isset($this->attributes['type'])) {
             switch ($this->attributes['type']) {
                 case 'text':
                 case 'password':
@@ -116,7 +144,7 @@ class Item extends AbstractWidget
     {
         $result = null;
 
-        if (isset($this->attributes['type']) === true) {
+        if (isset($this->attributes['type'])) {
             if ($this->attributes['type'] === 'password') {
                 $result = 'password';
             }

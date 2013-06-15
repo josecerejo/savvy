@@ -73,7 +73,7 @@ abstract class AbstractWidget
     protected $route = array();
 
     /**
-     * ExtJS compatible Widget configuration
+     * Widget configuration
      *
      * @var array
      */
@@ -93,12 +93,11 @@ abstract class AbstractWidget
         $this->parent = $parent;
         $this->widget = join('', array_slice(explode('\\', get_called_class()), -1));
 
-        if ((bool)$this->xml->attributes() === true) {
+        if ((bool)$this->xml->attributes()) {
             $attributesElement = (array)$this->xml->attributes();
 
-            foreach ($attributesElement['@attributes'] as $name => $value)
-            {
-                if (method_exists($this, $setter = sprintf('set%s', ucfirst($name))) === true) {
+            foreach ($attributesElement['@attributes'] as $name => $value) {
+                if (method_exists($this, $setter = sprintf('set%s', ucfirst($name)))) {
                     $value = $this->$setter($value);
                 }
 
@@ -115,7 +114,7 @@ abstract class AbstractWidget
                     case self::TYPE_CHILDS:
                         $childElements = (array)$this->xml->children();
 
-                        if (isset($childElements[$properties['name']]) === true) {
+                        if (isset($childElements[$properties['name']])) {
                             $this->configuration[$name]['value'] = array();
 
                             if (is_array($childElements[$properties['name']]) === false) {
@@ -151,7 +150,14 @@ abstract class AbstractWidget
         $result = false;
 
         if (isset($this->configuration[$name])) {
-            $this->configuration[$name]['value'] = $value;
+            if (isset($this->configuration[$name]['value']) && is_array($this->configuration[$name]['value'])) {
+                if (in_array($value, $this->configuration[$name]['value']) === false) {
+                    $this->configuration[$name]['value'][] = $value;
+                }
+            } else {
+                $this->configuration[$name]['value'] = $value;
+            }
+
             $result = true;
         }
 
@@ -170,9 +176,9 @@ abstract class AbstractWidget
     {
         $result = null;
 
-        if (method_exists($this, $getter = sprintf('get%s', ucfirst($name))) === true) {
+        if (method_exists($this, $getter = sprintf('get%s', ucfirst($name)))) {
             $result = $this->$getter();
-        } elseif (isset($this->attributes[$name]) === true) {
+        } elseif (isset($this->attributes[$name])) {
             $result = $this->attributes[$name];
         }
 
@@ -180,7 +186,7 @@ abstract class AbstractWidget
     }
 
     /**
-     * Prepare widget configuration to generate Ext JS output
+     * Get (and process) widget configurations
      *
      * @param string $name configuration name
      * @return mixed output, or false if configuration does not exist
@@ -206,7 +212,11 @@ abstract class AbstractWidget
 
             if (isset($properties['value'])) {
                 if (is_array($properties['value'])) {
-                    $value = implode($properties['value'], ',');
+                    if ($properties['type'] === self::TYPE_INTERNAL) {
+                        $value = $properties['value'];
+                    } else {
+                        $value = implode($properties['value'], ',');
+                    }
                 } else {
                     $value = $properties['value'];
 
@@ -243,6 +253,29 @@ abstract class AbstractWidget
     }
 
     /**
+     * Get name of form we're currently nested in
+     *
+     * @param bool $instance true to get instance
+     * @return string current form name/object or false
+     */
+    protected function currentForm($instance = false)
+    {
+        $result = false;
+
+        if ($this->widget === 'Item' && $this->configuration['xtype']['value'] === 'form') {
+            if ($instance) {
+                $result = $this;
+            } else {
+                $result = $this->configuration['name']['value'];
+            }
+        } elseif ($this->parent !== null) {
+            $result = $this->parent->currentForm($instance);
+        }
+
+        return $result;
+    }
+
+    /**
      * Generate browser output
      *
      * @return string
@@ -253,24 +286,6 @@ abstract class AbstractWidget
 
         if ($configuration = $this->getConfiguration()) {
             $result = '{' . implode($this->getConfiguration(), ',') . '}';
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get name of form we're currently nested in
-     *
-     * @return string current form name or false
-     */
-    protected function currentForm()
-    {
-        $result = false;
-
-        if ($this->widget === 'Item' && $this->configuration['xtype']['value'] === 'form') {
-            $result = $this->configuration['name']['value'];
-        } elseif ($this->parent !== null) {
-            $result = $this->parent->currentForm();
         }
 
         return $result;

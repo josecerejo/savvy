@@ -26,7 +26,24 @@ class Session extends AbstractSingleton
     {
         $result = @session_start();
 
+        if (empty($_SESSION) === false) {
+            $sessions = array_keys($_SESSION);
+            $this->setApplicationSessionId($sessions[0]);
+        }
+
         return $result;
+    }
+
+    /**
+     * Set application session ID
+     *
+     * @param string $applicationSessionId
+     * @return \Savvy\Base\Session
+     */
+    private function setApplicationSessionId($applicationSessionId)
+    {
+        $this->applicationSessionId = (string)$applicationSessionId;
+        return $this;
     }
 
     /**
@@ -39,11 +56,12 @@ class Session extends AbstractSingleton
         if ($this->applicationSessionId === null) {
             $applicationSessionId = null;
 
-            while ($applicationSessionId === null || isset($_SESSION[$applicationSessionId])) {
+            while ($applicationSessionId === null || isset($_SESSION[(string)$applicationSessionId])) {
                 $applicationSessionId = sha1(uniqid('', true));
             }
 
-            $this->applicationSessionId = $applicationSessionId;
+            $this->setApplicationSessionId($applicationSessionId);
+            $_SESSION[(string)$applicationSessionId] = array();
         }
 
         return $this->applicationSessionId;

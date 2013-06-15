@@ -11,6 +11,18 @@ Ext.onReady(function() {
   Ext.util.open('login', 'index');
 });
 
+/* get application session id */
+
+Ext.util.session = function() {
+  var meta = document.getElementsByTagName("meta");
+
+  for (var i=0; i<meta.length; i++) {
+    if (meta[i].getAttribute('name') == 'application-session-id') {
+      return meta[i].getAttribute('content');
+    }
+  }
+}
+
 /* calculate md5 hash */
 
 Ext.util.md5 = function(s, raw, hexcase, chrsz) {

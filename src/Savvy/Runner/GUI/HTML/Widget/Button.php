@@ -69,6 +69,8 @@ class Button extends AbstractWidget
                     $result .= 'this.close();';
             }
         } else {
+            $currentForm = $this->currentForm(true);
+
             $result .= "var f=Ext.getCmp('" . $this->currentForm() . "');";
 
             // show loading message
@@ -78,10 +80,21 @@ class Button extends AbstractWidget
 
             $result .= "f.getForm().submit({";
 
-            // presenter action
             if (isset($this->attributes['action'])) {
+                // presenter action
                 $result .= "url:'/" . implode('/', $this->route) . "?action=" . $this->attributes['action'] . "',";
-                $result .= "params:{applicationSessionId:'" . \Savvy\Base\Session::getApplicationSessionId() . "'},";
+            }
+
+            // submit encrypted values
+            if ($encryptedFields = $currentForm->getConfiguration('encryptedFields')) {
+                $fields = array();
+
+                foreach ($encryptedFields as $i => $field) {
+                    $fields[] = $field . ":Ext.util.md5(" .
+                        "Ext.util.md5(f.getForm().findField('" . $field . "').getValue())+Ext.util.session())";
+                }
+
+                $result .= "params:{" . implode(",", $fields) . "},";
             }
 
             $result .= "success:function(o,r){";
@@ -91,7 +104,7 @@ class Button extends AbstractWidget
                 $result .= "lm.hide();";
             }
 
-            // invoke RPC processor
+            // invoke RPC processor for "success" responses
             $result .= "if(r.result.rpc){var rpc=new Ext.util.rpc(r.result.rpc);}";
 
             $result .= "},failure:function(o,r){";
@@ -101,7 +114,7 @@ class Button extends AbstractWidget
                 $result .= "lm.hide();";
             }
 
-            // invoke RPC processor
+            // invoke RPC processor for "failure" responses
             $result .= "if(r.result.rpc){var rpc=new Ext.util.rpc(r.result.rpc);}";
 
             $result .= '}});';

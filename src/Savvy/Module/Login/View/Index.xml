@@ -4,7 +4,7 @@
 
     <item type="form" name="login" layout="inherit">
         <item type="text" name="username" label="INDEX\USERNAME" labelAlign="top" padding="10px 15px 0 15px" focus="true" />
-        <item type="password" name="password" label="INDEX\PASSWORD" labelAlign="top" padding="0 15px 10px 15px" />
+        <item type="password" name="password" label="INDEX\PASSWORD" labelAlign="top" padding="0 15px 10px 15px" encrypt="true" />
 
         <button caption="INDEX\BUTTON" action="validate" message="INDEX\VERIFYING_ACCESS" />
     </item>
