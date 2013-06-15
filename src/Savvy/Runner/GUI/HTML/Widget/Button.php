@@ -87,13 +87,10 @@ class Button extends AbstractWidget
 
             $fields = array(0 => 'applicationSessionId:Ext.util.session()');
 
-            // submit encrypted values
-            if ($encryptedFields = $currentForm->getConfiguration('encryptedFields')) {
-                foreach ($encryptedFields as $i => $field) {
-                    $fields[] = $field . ":Ext.util.md5(" .
-                        "Ext.util.md5(f.getForm().findField('" . $field . "').getValue())+Ext.util.session())";
-                }
-
+            // add encrypted fields to post parameters
+            foreach ($currentForm->getConfiguration('encryptedFields') as $i => $field) {
+                $fields[] = $field .":Ext.util.md5(" .
+                    "Ext.util.md5(f.getForm().findField('" . $field . "').getValue())+Ext.util.session())";
             }
 
             $result .= "params:{" . implode(",", $fields) . "},";
