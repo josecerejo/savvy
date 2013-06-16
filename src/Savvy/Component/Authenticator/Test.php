@@ -5,7 +5,7 @@ namespace Savvy\Component\Authenticator;
 use Savvy\Base as Base;
 
 /**
- * This authenticator is used by unit tests
+ * Dummy authentication facility used in unit tests
  *
  * @package Savvy
  * @subpackage Component\Authenticator
@@ -15,7 +15,7 @@ class Test extends AbstractAuthenticator
     /**
      * Actual authenticator implementation
      *
-     * @return int internal authentication result
+     * @return int result
      */
     protected function authenticate()
     {

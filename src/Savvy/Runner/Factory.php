@@ -13,6 +13,8 @@ use Savvy\Base as Base;
 class Factory extends Base\AbstractFactory
 {
     /**
+     * Runner instance
+     *
      * @var \Savvy\Runner\AbstractRunner
      */
     private static $instance = null;

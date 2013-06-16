@@ -11,12 +11,12 @@ namespace Savvy\Component\Authenticator;
 abstract class AbstractAuthenticator
 {
     /**
-     * Username unknown, e.g. not yet validated
+     * Username unknown
      */
     const AUTHENTICATION_UNKNOWN = -1;
 
     /**
-     * Authentication failed, e.g. wrong password
+     * Authentication failed
      */
     const AUTHENTICATION_FAILURE = 0;
 
@@ -136,7 +136,7 @@ abstract class AbstractAuthenticator
     /**
      * Actual authenticator implementation
      *
-     * @return int internal authentication result
+     * @return int result
      */
     abstract protected function authenticate();
 }

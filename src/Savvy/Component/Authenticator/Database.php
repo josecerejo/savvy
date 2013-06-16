@@ -5,7 +5,7 @@ namespace Savvy\Component\Authenticator;
 use Savvy\Base as Base;
 
 /**
- * Authenticate against username/password stored in database
+ * Authenticate using a MD5 password stored in database
  *
  * @package Savvy
  * @subpackage Component\Authenticator
@@ -15,7 +15,7 @@ class Database extends AbstractAuthenticator
     /**
      * Actual authenticator implementation
      *
-     * @return int internal authentication result
+     * @return int result
      */
     protected function authenticate()
     {
