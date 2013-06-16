@@ -27,13 +27,7 @@ class Database extends AbstractSingleton
     public function init()
     {
         if ($this->entityManager === null) {
-            $database = array(
-                'driver'   => Registry::getInstance()->get('database.driver'),
-                'host'     => Registry::getInstance()->get('database.host'),
-                'user'     => Registry::getInstance()->get('database.user'),
-                'password' => Registry::getInstance()->get('database.password'),
-                'dbname'   => Registry::getInstance()->get('database.database')
-            );
+            $database = Registry::getInstance()->get('database');
 
             $metadataCache = \Savvy\Base\Cache::getInstance()->getCacheProvider();
             $metadataDriver = new \Doctrine\ORM\Mapping\Driver\XmlDriver($this->getSchemaDirectories());

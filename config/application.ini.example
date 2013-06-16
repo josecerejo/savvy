@@ -10,7 +10,7 @@ authentication = "database"
 
 driver = "mysqli"
 host = "localhost"
-database = "savvy"
+dbname = "savvy"
 user = "savvy"
 password = "savvy"
 

@@ -21,7 +21,8 @@ git clone https://github.com/poliander/savvy && cd savvy && composer.phar instal
 cp config/application.ini.example config/application.ini
 </pre>
 
-5. Create an empty MySQL database and customize application.ini accordingly
+5. Create an empty database (whatever Doctrine [supports](http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connection-details))
+and customize application.ini accordingly
 
 6. Use "doctrine-update.sh" to update database schema, generate proxy classes etc.
 
