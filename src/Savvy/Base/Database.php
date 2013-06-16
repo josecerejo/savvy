@@ -29,10 +29,10 @@ class Database extends AbstractSingleton
         if ($this->entityManager === null) {
             $database = array(
                 'driver'   => Registry::getInstance()->get('database.driver'),
-                'host'     => Registry::getInstance()->get('database.mysqliHost'),
-                'user'     => Registry::getInstance()->get('database.mysqliUser'),
-                'password' => Registry::getInstance()->get('database.mysqliPassword'),
-                'dbname'   => Registry::getInstance()->get('database.mysqliDatabase')
+                'host'     => Registry::getInstance()->get('database.host'),
+                'user'     => Registry::getInstance()->get('database.user'),
+                'password' => Registry::getInstance()->get('database.password'),
+                'dbname'   => Registry::getInstance()->get('database.database')
             );
 
             $metadataCache = \Savvy\Base\Cache::getInstance()->getCacheProvider();

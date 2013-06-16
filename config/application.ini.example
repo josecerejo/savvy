@@ -1,7 +1,7 @@
 [default]
 
 name = "Savvy"
-version = "2013/06/09"
+version = "2013/06/16"
 languages = "en,de"
 log = "file:filename=log/core.log"
 authentication = "database"
@@ -9,16 +9,16 @@ authentication = "database"
 [database]
 
 driver = "mysqli"
-mysqliHost = "localhost"
-mysqliDatabase = "savvy"
-mysqliUser = "savvy"
-mysqliPassword = "savvy"
+host = "localhost"
+database = "savvy"
+user = "savvy"
+password = "savvy"
 
 [cache]
 
 driver = "memcache"
-memcacheHost = "localhost"
-memcachePort = 11211
+host = "localhost"
+port = 11211
 
 [extjs]
 

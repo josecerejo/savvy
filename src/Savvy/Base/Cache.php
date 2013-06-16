@@ -29,8 +29,8 @@ class Cache extends AbstractSingleton
         if ($this->cacheProvider === null) {
             $memcache = new \Memcache();
             $memcache->connect(
-                Registry::getInstance()->get('cache.memcacheHost'),
-                Registry::getInstance()->get('cache.memcachePort')
+                Registry::getInstance()->get('cache.host'),
+                Registry::getInstance()->get('cache.port')
             );
 
             $cacheProvider = new \Doctrine\Common\Cache\MemcacheCache();
