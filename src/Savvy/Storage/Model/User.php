@@ -12,12 +12,17 @@ class User
     /**
      * @var string
      */
-    private $login;
+    private $username;
 
     /**
      * @var string
      */
     private $password;
+
+    /**
+     * @var \DateTime
+     */
+    private $lastLogin;
 
     /**
      * @var integer
@@ -26,26 +31,26 @@ class User
 
 
     /**
-     * Set login
+     * Set username
      *
-     * @param string $login
+     * @param string $username
      * @return User
      */
-    public function setLogin($login)
+    public function setUsername($username)
     {
-        $this->login = $login;
+        $this->username = $username;
     
         return $this;
     }
 
     /**
-     * Get login
+     * Get username
      *
      * @return string 
      */
-    public function getLogin()
+    public function getUsername()
     {
-        return $this->login;
+        return $this->username;
     }
 
     /**
@@ -72,6 +77,29 @@ class User
     }
 
     /**
+     * Set lastLogin
+     *
+     * @param \DateTime $lastLogin
+     * @return User
+     */
+    public function setLastLogin($lastLogin)
+    {
+        $this->lastLogin = $lastLogin;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastLogin
+     *
+     * @return \DateTime 
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -79,33 +107,5 @@ class User
     public function getId()
     {
         return $this->id;
-    }
-    /**
-     * @var string
-     */
-    private $username;
-
-
-    /**
-     * Set username
-     *
-     * @param string $username
-     * @return User
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-    
-        return $this;
-    }
-
-    /**
-     * Get username
-     *
-     * @return string 
-     */
-    public function getUsername()
-    {
-        return $this->username;
     }
 }

@@ -45,6 +45,6 @@ class Factory extends \Savvy\Base\AbstractFactory
             throw new Exception(null, Exception::E_COMPONENT_AUTHENTICATOR_FACTORY_NO_FACILITY);
         }
 
-        return $authenticatorInstance;
+        return $authenticatorInstance->setFirst(true);
     }
 }

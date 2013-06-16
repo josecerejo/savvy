@@ -2,6 +2,8 @@
 
 namespace Savvy\Component\Authenticator;
 
+use Savvy\Base as Base;
+
 /**
  * Abstract class for authentication facilities
  *
@@ -45,6 +47,13 @@ abstract class AbstractAuthenticator
      * @var string
      */
     private $password;
+
+    /**
+     * First authenticator in chain
+     *
+     * @var bool
+     */
+    private $first = false;
 
     /**
      * Set next authenticator instance in chain
@@ -113,6 +122,28 @@ abstract class AbstractAuthenticator
     }
 
     /**
+     * Mark this authenticator as first in chain
+     *
+     * @param bool $first
+     * @return \Savvy\Component\Authenticator\AbstractAuthenticator
+     */
+    public function setFirst($first)
+    {
+        $this->first = (bool)$first;
+        return $this;
+    }
+
+    /**
+     * Get first property
+     *
+     * @return bool
+     */
+    protected function getFirst()
+    {
+        return $this->first;
+    }
+
+    /**
      * Validate username and password using chain of authentication methods
      *
      * @param string $username username
@@ -128,6 +159,16 @@ abstract class AbstractAuthenticator
             if (($authenticator = $this->getSuccessor()) !== null) {
                 $result = $authenticator->validate($username, $password);
             }
+        }
+
+        if ($this->getFirst() && $result === self::AUTHENTICATION_SUCCESS) {
+            $em = Base\Database::getInstance()->getEntityManager();
+
+            $user = $em->getRepository('Savvy\Storage\Model\User')->findOneByUsername($this->getUsername());
+            $user->setLastLogin(new \DateTime);
+
+            $em->persist($user);
+            $em->flush();
         }
 
         return ($result === self::AUTHENTICATION_SUCCESS);

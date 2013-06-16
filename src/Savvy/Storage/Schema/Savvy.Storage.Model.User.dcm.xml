@@ -12,5 +12,6 @@
 
 		<field name="username" column="username" type="string" length="32" nullable="false" unique="true" />
 		<field name="password" column="password" type="string" length="64" nullable="true" />
+		<field name="lastLogin" column="last_login" type="datetime" nullable="true" />
 	</entity>
 </doctrine-mapping>
