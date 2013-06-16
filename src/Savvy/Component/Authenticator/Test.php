@@ -13,6 +13,17 @@ use Savvy\Base as Base;
 class Test extends AbstractAuthenticator
 {
     /**
+     * Never mark this authenticator as first in chain
+     *
+     * @param bool $first
+     * @return \Savvy\Component\Authenticator\AbstractAuthenticator
+     */
+    public function setFirst($first)
+    {
+        return $this;
+    }
+
+    /**
      * Actual authenticator implementation
      *
      * @return int result
