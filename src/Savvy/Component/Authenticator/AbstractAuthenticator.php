@@ -161,11 +161,22 @@ abstract class AbstractAuthenticator
             }
         }
 
+        return $this->hook($result);
+    }
+
+    /**
+     * Default post-login hook updates users last_login field after login
+     *
+     * @param int $result authentication result
+     * @return bool
+     */
+    protected function hook($result)
+    {
         if ($this->getFirst() && $result === self::AUTHENTICATION_SUCCESS) {
             $em = Base\Database::getInstance()->getEntityManager();
 
             $user = $em->getRepository('Savvy\Storage\Model\User')->findOneByUsername($this->getUsername());
-            $user->setLastLogin(new \DateTime);
+            $user->setLastLogin(new \DateTime());
 
             $em->persist($user);
             $em->flush();

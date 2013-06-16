@@ -13,17 +13,6 @@ use Savvy\Base as Base;
 class Test extends AbstractAuthenticator
 {
     /**
-     * Never mark this authenticator as first in chain
-     *
-     * @param bool $first
-     * @return \Savvy\Component\Authenticator\AbstractAuthenticator
-     */
-    public function setFirst($first)
-    {
-        return $this;
-    }
-
-    /**
      * Actual authenticator implementation
      *
      * @return int result
@@ -41,5 +30,16 @@ class Test extends AbstractAuthenticator
         }
 
         return $result;
+    }
+
+    /**
+     * Override default post-login hook to prevent database access
+     *
+     * @param int $result authentication result
+     * @return bool
+     */
+    protected function hook($result)
+    {
+        return ($result === self::AUTHENTICATION_SUCCESS);
     }
 }
