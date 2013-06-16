@@ -37,10 +37,20 @@ class Database extends AbstractSingleton
             $configuration->setMetadataDriverImpl($metadataDriver);
             $configuration->setProxyDir(Registry::getInstance()->get('root') .'/tmp/Proxy');
             $configuration->setProxyNamespace('Proxy');
-            $configuration->setAutoGenerateProxyClasses(false);
             $configuration->setQueryCacheImpl(\Savvy\Base\Cache::getInstance()->getCacheProvider());
 
-            $this->setEntityManager(\Doctrine\ORM\EntityManager::create($database, $configuration));
+            $configuration->setAutoGenerateProxyClasses(
+                (bool)Registry::getInstance()->get('doctrine.auto_generate_proxy_classes', false)
+            );
+
+            $entityManager = \Doctrine\ORM\EntityManager::create($database, $configuration);
+
+            if ((bool)Registry::getInstance()->get('doctrine.auto_generate_schema', false)) {
+                $schemaTool = new \Doctrine\ORM\Tools\SchemaTool($entityManager);
+                $schemaTool->createSchema($entityManager->getMetadataFactory()->getAllMetadata());
+            }
+
+            $this->setEntityManager($entityManager);
         }
     }
 

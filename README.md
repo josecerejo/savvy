@@ -32,11 +32,14 @@ Source Documentation
 * generate your own API documentation in "public/doc/api/" with "savvy-api.sh"
 (requires [phpDocumentor 2](http://www.phpdoc.org/))  
 
-* same thing with "savvy-tests.sh" which uses [PHPUnit](http://phpunit.de/manual/current/en/)
-and Xdebug to create code coverage reports in "public/doc/tests/"  
-
 * use [PHP_CodeSniffer](http://pear.php.net/package/PHP_CodeSniffer) to check
 whether your code-style is compliant to [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)
+
+Automated testing
+-----------------
+
+Run "savvy-tests.sh" to perform automated unit tests using [PHPUnit](http://phpunit.de/manual/current/en/). This
+requires "php5-xdebug" and "php5-sqlite" (a non-persistent in-memory database is used for testing).
 
 License
 -------
