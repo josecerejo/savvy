@@ -28,8 +28,7 @@ class Database extends AbstractAuthenticator
 
             if ((string)$user->getPassword() === '' && $this->getPassword() === '') {
                 $result = self::AUTHENTICATION_SUCCESS;
-            }
-            elseif (strcmp(md5($user->getPassword() . $salt), $this->getPassword()) === 0) {
+            } elseif (strcmp(md5($user->getPassword() . $salt), $this->getPassword()) === 0) {
                 $result = self::AUTHENTICATION_SUCCESS;
             }
         }

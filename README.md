@@ -1,9 +1,9 @@
 Savvy
 =====
 
-Savvy is a MVP framework for database-driven GUI applications written in PHP.
-It is currently in an early stage of development and far from being usable in
-a productive manner.
+Savvy is a MVP (MVC-like) framework for database-driven GUI applications
+written in PHP. It is currently in an early stage of development and thus far
+from being usable in a productive manner.
 
 ###Installation
 
@@ -20,12 +20,11 @@ git clone https://github.com/poliander/savvy && cd savvy && composer.phar instal
 cp config/application.ini.example config/application.ini
 </pre>
 
-5. Create an empty database (whatever Doctrine [supports](http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connection-details))
-and customize application.ini accordingly
+5. Create an empty database (whatever Doctrine [supports](http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connection-details)) and customize application.ini accordingly
 
 6. Use "doctrine-update.sh" to update database schema, generate proxy classes etc.
 
-###Source documentation
+###Source code
 
 * generate your own API documentation in "public/doc/api/" with "savvy-api.sh"
 (requires [phpDocumentor 2](http://www.phpdoc.org/))  
@@ -36,7 +35,7 @@ whether your code-style is compliant to [PSR-2](https://github.com/php-fig/fig-s
 ###Automated testing
 
 Run "savvy-tests.sh" to perform automated unit tests using [PHPUnit](http://phpunit.de/manual/current/en/); this
-requires installing "php5-xdebug" and "php5-sqlite". A non-persistent in-memory database is used while unit tests
+requires "php5-xdebug" and "php5-sqlite". A non-persistent in-memory database is used while unit tests
 are performed. Code coverage reports will be created in "public/doc/tests/".
 
 ###License
