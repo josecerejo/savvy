@@ -19,7 +19,7 @@ class Runner extends GUI\AbstractRunner
      */
     public function isSuitable()
     {
-        return isset($_SERVER['REQUEST_URI']) || empty($_GET) === false;
+        return isset($_REQUEST['api']) === false && (isset($_SERVER['REQUEST_URI']) || empty($_GET) === false);
     }
 
     /**
