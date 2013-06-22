@@ -1,6 +1,7 @@
 RewriteEngine On
 RewriteBase /
 RewriteRule ^view(.*)\.js index.php?view=$1 [L]
+RewriteRule ^api(.*) index.php?api=$1 [L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
