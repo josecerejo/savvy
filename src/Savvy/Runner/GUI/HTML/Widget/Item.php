@@ -36,6 +36,9 @@ class Item extends AbstractWidget
         'padding'         => array(
             'type'            => self::TYPE_VARIABLE
         ),
+        'margin'          => array(
+            'type'            => self::TYPE_VARIABLE
+        ),
         'submitValue'     => array(
             'type'            => self::TYPE_VARIABLE
         ),
@@ -45,9 +48,11 @@ class Item extends AbstractWidget
         'width'           => array(
             'type'            => self::TYPE_VARIABLE
         ),
+        'height'          => array(
+            'type'            => self::TYPE_VARIABLE
+        ),
         'border'          => array(
-            'type'            => self::TYPE_VARIABLE,
-            'value'           => '0'
+            'type'            => self::TYPE_VARIABLE
         ),
         'allowBlank'      => array(
             'type'            => self::TYPE_VARIABLE
@@ -63,6 +68,14 @@ class Item extends AbstractWidget
         'layout'          => array(
             'type'            => self::TYPE_CHILD,
             'name'            => 'layout'
+        ),
+        'title'           => array(
+            'type'            => self::TYPE_VARIABLE,
+            'localize'        => true
+        ),
+        'text'            => array(
+            'type'            => self::TYPE_VARIABLE,
+            'localize'        => true
         ),
         'focus'           => array(
             'type'            => self::TYPE_INTERNAL
@@ -113,7 +126,22 @@ class Item extends AbstractWidget
     }
 
     /**
-     * Map xtype configuration
+     * Set type property
+     *
+     * @param string $type
+     * @return void
+     */
+    protected function setType($type)
+    {
+        if ($type === 'button') {
+            $this->configuration['handler'] = array(
+                'type' => self::TYPE_CODE
+            );
+        }
+    }
+
+    /**
+     * Get Xtype property
      *
      * @return string|null
      */
@@ -136,7 +164,7 @@ class Item extends AbstractWidget
     }
 
     /**
-     * Map inputType configuration
+     * Get inputType property
      *
      * @return string
      */
@@ -154,7 +182,7 @@ class Item extends AbstractWidget
     }
 
     /**
-     * Map fieldLabel configuration
+     * Get fieldLabel property
      *
      * @return string
      */
@@ -162,7 +190,7 @@ class Item extends AbstractWidget
     {
         $result = null;
 
-        if (isset($this->attributes['label']) === true) {
+        if (isset($this->attributes['label'])) {
             $result = $this->attributes['label'];
         }
 
@@ -170,15 +198,15 @@ class Item extends AbstractWidget
     }
 
     /**
-     * Map layout configuration
+     * Get layout property
      *
-     * @return string
+     * @return string|null
      */
     protected function getLayout()
     {
         $result = null;
 
-        if (isset($this->attributes['layout']) === true) {
+        if (isset($this->attributes['layout'])) {
             if ($this->attributes['layout'] === 'inherit') {
                 $result = $this->parent->configuration['layout']['value'];
             }
@@ -188,15 +216,40 @@ class Item extends AbstractWidget
     }
 
     /**
-     * Map id configuration
+     * Get border property default
      *
-     * @return string
+     * @return string|null
+     */
+    protected function getBorder()
+    {
+        $result = null;
+
+        if (isset($this->attributes['border'])) {
+            $result = $this->attributes['border'];
+        } elseif (isset($this->attributes['type'])) {
+            switch ($this->attributes['type']) {
+                case 'form':
+                    $result = 0;
+                    break;
+                case 'fieldset':
+                    $result = 1;
+                    break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get widget id
+     *
+     * @return string|null
      */
     protected function getId()
     {
         $result = null;
 
-        if (isset($this->attributes['name']) === true) {
+        if (isset($this->attributes['name'])) {
             if (isset($this->attributes['id']) === false) {
                 $result = $this->attributes['name'];
             }

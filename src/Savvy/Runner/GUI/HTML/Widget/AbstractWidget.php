@@ -98,7 +98,9 @@ abstract class AbstractWidget
 
             foreach ($attributesElement['@attributes'] as $name => $value) {
                 if (method_exists($this, $setter = sprintf('set%s', ucfirst($name)))) {
-                    $value = $this->$setter($value);
+                    if (($result = $this->$setter($value)) !== null) {
+                        $value = $result;
+                    }
                 }
 
                 $this->attributes[$name] = $value;
@@ -271,6 +273,82 @@ abstract class AbstractWidget
         } elseif ($this->parent !== null) {
             $result = $this->parent->currentForm($instance);
         }
+
+        return $result;
+    }
+
+    /**
+     * Get handler for button action
+     *
+     * @return string
+     */
+    protected function getHandler()
+    {
+        $result = "function(){";
+
+        if ($this->currentForm() === false) {
+            $this->configuration['scope'] = array(
+                'type'  => self::TYPE_CODE,
+                'value' => 'this'
+            );
+
+            switch ($this->attributes['action']) {
+                case 'close':
+                    $result .= 'this.close();';
+            }
+        } else {
+            $currentForm = $this->currentForm(true);
+
+            $result .= "var f=Ext.getCmp('" . $this->currentForm() . "');";
+
+            // show loading message
+            if ($message = $this->getConfiguration('message')) {
+                $result .= "var lm=new Ext.LoadMask(f,{msg:'" . $message . "'});lm.show();";
+            }
+
+            $result .= "f.getForm().submit({headers:{'Application-Session':Ext.util.session()},";
+
+            if (isset($this->attributes['action'])) {
+                // presenter action
+                $result .= "url:'/" . implode('/', $this->route) . "?action=" . $this->attributes['action'] . "',";
+            }
+
+            // add encrypted fields to post parameters
+            if ($encryptedFields = $currentForm->getConfiguration('encryptedFields')) {
+                $fields = array();
+
+                foreach ($currentForm->getConfiguration('encryptedFields') as $i => $field) {
+                    $fields[] = $field .":Ext.util.md5(" .
+                        "Ext.util.md5(f.getForm().findField('" . $field . "').getValue())+Ext.util.session())";
+                }
+
+                $result .= "params:{" . implode(",", $fields) . "},";
+            }
+
+            $result .= "success:function(o,r){";
+
+            // hide loading message on success
+            if ((bool)$message) {
+                $result .= "lm.hide();";
+            }
+
+            // invoke RPC processor for "success" responses
+            $result .= "if(r.result.rpc){var rpc=new Ext.util.rpc(r.result.rpc);}";
+
+            $result .= "},failure:function(o,r){";
+
+            // hide loading message on failure
+            if ((bool)$message) {
+                $result .= "lm.hide();";
+            }
+
+            // invoke RPC processor for "failure" responses
+            $result .= "if(r.result.rpc){var rpc=new Ext.util.rpc(r.result.rpc);}";
+
+            $result .= '}});';
+        }
+
+        $result .= '}';
 
         return $result;
     }

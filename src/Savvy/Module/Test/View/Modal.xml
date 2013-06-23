@@ -1,3 +1,3 @@
 <window width="320" height="200">
-    <button action="close" caption="\COMMON\BUTTON_CLOSE" />
+    <button action="close" text="\COMMON\BUTTON_CLOSE" />
 </window>

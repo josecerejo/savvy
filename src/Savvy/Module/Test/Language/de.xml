@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<localization>
+    <strings section="INDEX">
+        <string key="TITLE">Widget-Testmodul</string>
+        <string key="TITLE_FIELDSET">Beispiel-Fieldset</string>
+
+        <string key="SHOW_MODAL_WINDOW">Modalfenster</string>
+    </strings>
+</localization>

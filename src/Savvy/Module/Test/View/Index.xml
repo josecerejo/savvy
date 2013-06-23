@@ -1,8 +1,14 @@
 <?xml version="1.0"?>
-<window title="Test" id="testWindow" closable="1" width="200">
-    <layout type="vbox" align="stretch" />
+<window title="INDEX\TITLE" id="testWindow" closable="1" width="320" resizable="1">
+    <layout type="fit" />
 
     <item type="form" name="test" layout="inherit">
-        <button caption="Modalfenster" action="modal" />
+        <item type="fieldset" title="INDEX\TITLE_FIELDSET" margin="0 6 6 6" height="100" border="1">
+            <item type="container">
+                <item type="button" text="INDEX\SHOW_MODAL_WINDOW" action="modal" />
+            </item>
+        </item>
     </item>
+
+    <button text="\COMMON\BUTTON_CLOSE" action="close" />
 </window>
