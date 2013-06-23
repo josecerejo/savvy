@@ -98,9 +98,7 @@ abstract class AbstractWidget
 
             foreach ($attributesElement['@attributes'] as $name => $value) {
                 if (method_exists($this, $setter = sprintf('set%s', ucfirst($name)))) {
-                    if (($result = $this->$setter($value)) !== null) {
-                        $value = $result;
-                    }
+                    $this->$setter($value);
                 }
 
                 $this->attributes[$name] = $value;
