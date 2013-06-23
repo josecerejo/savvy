@@ -5,16 +5,19 @@ namespace Savvy\Runner;
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {
     private $testInstance;
-    private $argv;
+    private $server;
+    private $request;
 
     public function setup()
     {
         $this->server = $_SERVER;
+        $this->request = $_REQUEST;
     }
 
     public function teardown()
     {
         $_SERVER = $this->server;
+        $_REQUEST = $this->request;
     }
 
     /**
@@ -24,17 +27,16 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testFactoryException()
     {
-        unset($_SERVER['argv']);
         $runner = \Savvy\Runner\Factory::getInstance();
     }
 
     /**
      * @runInSeparateProcess
      */
-    public function testFactoryGuiHtmlRunner()
+    public function testFactoryGuiRunner()
     {
-        unset($_SERVER['argv']);
         $_SERVER['REQUEST_URI'] = '/index.php';
+
         $runner = \Savvy\Runner\Factory::getInstance();
         $this->assertInstanceOf('\Savvy\Runner\GUI\Runner', $runner);
     }
@@ -45,6 +47,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function testFactoryConsoleSavvyRunner()
     {
         $_SERVER['argv'] = array('savvy');
+
         $runner = \Savvy\Runner\Factory::getInstance();
         $this->assertInstanceOf('\Savvy\Runner\Console\Savvy\Runner', $runner);
     }
@@ -55,6 +58,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function testFactoryConsoleDoctrineRunner()
     {
         $_SERVER['argv'] = array('doctrine');
+
         $runner = \Savvy\Runner\Factory::getInstance();
         $this->assertInstanceOf('\Savvy\Runner\Console\Doctrine\Runner', $runner);
     }
@@ -65,8 +69,21 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function testFactoryDaemonRunner()
     {
         $_SERVER['argv'] = array('savvy', '--daemon');
+
         $runner = \Savvy\Runner\Factory::getInstance();
         $this->assertInstanceOf('\Savvy\Runner\Daemon\Runner', $runner);
+        $this->assertTrue($runner->isSuitable());
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testFactoryRESTRunner()
+    {
+        $_REQUEST['api'] = '';
+
+        $runner = \Savvy\Runner\Factory::getInstance();
+        $this->assertInstanceOf('\Savvy\Runner\REST\Runner', $runner);
         $this->assertTrue($runner->isSuitable());
     }
 }

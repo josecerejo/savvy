@@ -16,6 +16,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
     public function testObjectIsInstanceOfRunner()
     {
         $this->assertInstanceOf('\Savvy\Runner\GUI\Runner', $this->testInstance);
+        $this->assertInstanceOf('\Savvy\Runner\AbstractRunner', $this->testInstance);
     }
 
     public function testRunnerCreatesPresenter()

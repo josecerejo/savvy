@@ -33,7 +33,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         \Savvy\Base\Registry::getInstance()->set('daemon.pipe', $this->daemonPipefile);
     }
 
-    public function testInstanceOfDaemonRunner()
+    public function testObjectIsInstanceOfRunner()
     {
         $this->assertInstanceOf('\Savvy\Runner\Daemon\Runner', $this->testInstance);
         $this->assertInstanceOf('\Savvy\Runner\AbstractRunner', $this->testInstance);
