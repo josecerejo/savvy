@@ -45,9 +45,6 @@ class Item extends AbstractWidget
         'id'              => array(
             'type'            => self::TYPE_VARIABLE
         ),
-        'width'           => array(
-            'type'            => self::TYPE_VARIABLE
-        ),
         'height'          => array(
             'type'            => self::TYPE_VARIABLE
         ),
@@ -69,11 +66,18 @@ class Item extends AbstractWidget
             'type'            => self::TYPE_CHILD,
             'name'            => 'layout'
         ),
+        'columnWidth'         => array(
+            'type'            => self::TYPE_VARIABLE
+        ),
         'title'           => array(
             'type'            => self::TYPE_VARIABLE,
             'localize'        => true
         ),
         'text'            => array(
+            'type'            => self::TYPE_VARIABLE,
+            'localize'        => true
+        ),
+        'html'            => array(
             'type'            => self::TYPE_VARIABLE,
             'localize'        => true
         ),
@@ -209,6 +213,26 @@ class Item extends AbstractWidget
         if (isset($this->attributes['layout'])) {
             if ($this->attributes['layout'] === 'inherit') {
                 $result = $this->parent->configuration['layout']['value'];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get columnWidth property from width attribute
+     *
+     * @return string|null
+     */
+    protected function getColumnWidth()
+    {
+        $result = null;
+
+        if (isset($this->attributes['width'])) {
+            $result = $this->attributes['width'];
+
+            if (strpos($result, '%') !== false) {
+                $result = substr($result, 0, strpos($result, '%')) / 100;
             }
         }
 

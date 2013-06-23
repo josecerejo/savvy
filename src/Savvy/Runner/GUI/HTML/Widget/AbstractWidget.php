@@ -230,9 +230,7 @@ abstract class AbstractWidget
                 if (isset($properties['type'])) {
                     switch ($properties['type']) {
                         case self::TYPE_VARIABLE:
-                            if (is_numeric($value)) {
-                                $result = sprintf('%s:%d', $name, $value);
-                            } elseif (($value === 'false') or ($value === 'true')) {
+                            if (($value === 'false') || ($value === 'true') || is_numeric($value)) {
                                 $result = sprintf("%s:%s", $name, $value);
                             } else {
                                 $result = sprintf("%s:'%s'", $name, $value);

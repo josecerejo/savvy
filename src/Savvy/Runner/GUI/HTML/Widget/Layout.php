@@ -17,10 +17,10 @@ class Layout extends AbstractWidget
      */
     protected $configuration = array(
         'type'      => array(
-            'type'  => self::TYPE_VARIABLE
+            'type'      => self::TYPE_VARIABLE
         ),
         'align'     => array(
-            'type'  => self::TYPE_VARIABLE
+            'type'      => self::TYPE_VARIABLE
         )
     );
 }
