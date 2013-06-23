@@ -2,5 +2,7 @@
 <localization>
     <strings section="COMMON">
         <string key="BUTTON_CLOSE">Schließen</string>
+        <string key="BUTTON_OPEN">Öffnen</string>
+        <string key="BUTTON_SHOW">Anzeigen</string>
     </strings>
 </localization>
