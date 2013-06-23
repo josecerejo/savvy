@@ -2,8 +2,8 @@
 <localization>
     <strings section="INDEX">
         <string key="TITLE">Widget-Testmodul</string>
-        <string key="TITLE_FIELDSET">Beispiel-Fieldset</string>
+        <string key="TITLE_FIELDSET">Beispiele</string>
 
-        <string key="SHOW_MODAL_WINDOW">Modalfenster</string>
+        <string key="SHOW_MODAL_WINDOW">Modalfenster öffnen</string>
     </strings>
 </localization>

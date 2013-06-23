@@ -2,8 +2,10 @@
 <localization>
     <strings section="INDEX">
         <string key="TITLE">Widget Test Module</string>
-        <string key="TITLE_FIELDSET">Example Fieldset</string>
+        <string key="TITLE_FIELDSET">Examples</string>
 
-        <string key="SHOW_MODAL_WINDOW">Modal window</string>
+        <string key="SHOW_MODAL_WINDOW">Open modal window</string>
+
+        <string key="LOREM_IPSUM"><![CDATA[Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. <b>At vero eos et accusam et justo duo dolores et ea rebum.</b> <i>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. <b>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</b></i>]]></string>
     </strings>
 </localization>
