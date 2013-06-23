@@ -1,6 +1,6 @@
 <?php
 
-namespace Savvy\Runner\GUI\HTML\Widget;
+namespace Savvy\Runner\GUI\Widget;
 
 class WindowTest extends \PHPUnit_Framework_TestCase
 {

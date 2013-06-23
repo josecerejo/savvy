@@ -1,12 +1,12 @@
 <?php
 
-namespace Savvy\Runner\GUI\HTML\Widget;
+namespace Savvy\Runner\GUI\Widget;
 
 /**
  * Item Ext JS widget
  *
  * @package Savvy
- * @subpackage Runner\GUI\HTML\Widget
+ * @subpackage Runner\GUI\Widget
  */
 class Item extends AbstractWidget
 {
@@ -64,7 +64,8 @@ class Item extends AbstractWidget
         ),
         'layout'          => array(
             'type'            => self::TYPE_CHILD,
-            'name'            => 'layout'
+            'name'            => 'layout',
+            'value'           => 'null'
         ),
         'columnWidth'         => array(
             'type'            => self::TYPE_VARIABLE

@@ -36,7 +36,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         unset($_SERVER['argv']);
         $_SERVER['REQUEST_URI'] = '/index.php';
         $runner = \Savvy\Runner\Factory::getInstance();
-        $this->assertInstanceOf('\Savvy\Runner\GUI\HTML\Runner', $runner);
+        $this->assertInstanceOf('\Savvy\Runner\GUI\Runner', $runner);
     }
 
     /**

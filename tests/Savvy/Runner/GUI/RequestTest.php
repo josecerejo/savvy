@@ -1,6 +1,6 @@
 <?php
 
-namespace Savvy\Runner\GUI\HTML;
+namespace Savvy\Runner\GUI;
 
 use Savvy\Runner\GUI as GUI;
 

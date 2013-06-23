@@ -1,12 +1,12 @@
 <?php
 
-namespace Savvy\Runner\GUI\HTML\Widget;
+namespace Savvy\Runner\GUI\Widget;
 
 /**
  * Button Ext JS widget
  *
  * @package Savvy
- * @subpackage Runner\GUI\HTML\Widget
+ * @subpackage Runner\GUI\Widget
  */
 class Button extends AbstractWidget
 {

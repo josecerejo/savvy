@@ -1,6 +1,6 @@
 <?php
 
-namespace Savvy\Runner\GUI\HTML\Widget;
+namespace Savvy\Runner\GUI\Widget;
 
 use Savvy\Base as Base;
 
@@ -8,7 +8,7 @@ use Savvy\Base as Base;
  * Abstract class for Ext JS widgets
  *
  * @package Savvy
- * @subpackage Runner\GUI\HTML\Widget
+ * @subpackage Runner\GUI\Widget
  */
 abstract class AbstractWidget
 {
@@ -54,7 +54,7 @@ abstract class AbstractWidget
     /**
      * Parent widget
      *
-     * @var \Savvy\Runner\GUI\HTML\Widget\AbstractWidget
+     * @var \Savvy\Runner\GUI\Widget\AbstractWidget
      */
     protected $parent = null;
 
@@ -84,7 +84,7 @@ abstract class AbstractWidget
      *
      * @param \SimpleXMLElement $xml XML view to be rendered
      * @param array $route route to current view
-     * @param \Savvy\Runner\GUI\HTML\Widget\AbstractWidget $parent parent widget object
+     * @param \Savvy\Runner\GUI\Widget\AbstractWidget $parent parent widget object
      */
     public function __construct(\SimpleXMLElement $xml, $route = array(), $parent = null)
     {
@@ -127,7 +127,7 @@ abstract class AbstractWidget
 
                             foreach ($children as $childElement) {
                                 $widgetClass = sprintf(
-                                    "\\Savvy\\Runner\\GUI\\HTML\\Widget\\%s",
+                                    "\\Savvy\\Runner\\GUI\\Widget\\%s",
                                     ucfirst($properties['name'])
                                 );
 

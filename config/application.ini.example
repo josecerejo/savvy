@@ -26,12 +26,11 @@ cdn = "http://cdn.sencha.com/ext/gpl/4.2.1/ext-all.js"
 
 [runner]
 
-webgui = "Savvy\Runner\GUI\HTML\Runner"
+gui = "Savvy\Runner\GUI\Runner"
 rest = "Savvy\Runner\REST\Runner"
 daemon = "Savvy\Runner\Daemon\Runner"
 savvy = "Savvy\Runner\Console\Savvy\Runner"
 doctrine = "Savvy\Runner\Console\Doctrine\Runner"
-gui = "Savvy\Runner\GUI\Native\Runner"
 
 [daemon]
 

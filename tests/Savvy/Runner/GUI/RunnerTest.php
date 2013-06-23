@@ -1,6 +1,6 @@
 <?php
 
-namespace Savvy\Runner\GUI\HTML;
+namespace Savvy\Runner\GUI;
 
 use Savvy\Runner\GUI as GUI;
 
@@ -15,7 +15,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
     public function testObjectIsInstanceOfRunner()
     {
-        $this->assertInstanceOf('\Savvy\Runner\GUI\HTML\Runner', $this->testInstance);
+        $this->assertInstanceOf('\Savvy\Runner\GUI\Runner', $this->testInstance);
     }
 
     public function testRunnerCreatesPresenter()
