@@ -7,10 +7,17 @@ use Savvy\Runner\GUI as GUI;
 class RunnerTest extends \PHPUnit_Framework_TestCase
 {
     private $testInstance;
+    private $languages;
 
     public function setup()
     {
         $this->testInstance = new Runner();
+        $this->languages = \Savvy\Base\Registry::getInstance()->get('languages');
+    }
+
+    public function teardown()
+    {
+        \Savvy\Base\Registry::getInstance()->set('languages', $this->languages);
     }
 
     public function testObjectIsInstanceOfRunner()
@@ -27,7 +34,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
     /**
      * @runInSeparateProcess
      */
-    public function testRunnerViewFromFileRequest()
+    public function testRunnerViewLoginIndex()
     {
         $_GET['view'] = '/login/index';
         ob_start();
@@ -42,7 +49,22 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
     /**
      * @runInSeparateProcess
      */
-    public function testRunnerViewFromMethodRequest()
+    public function testRunnerViewTestIndex()
+    {
+        $_GET['view'] = '/test/index';
+        ob_start();
+        $this->testInstance->run();
+        $output = ob_get_contents();
+        ob_end_clean();
+        unset($_GET['view']);
+
+        $this->assertTrue(strlen($output) > 0);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testRunnerViewTestModal()
     {
         $_GET['view'] = '/test/modal';
         ob_start();
@@ -85,5 +107,11 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = null;
         $languages = explode(',', \Savvy\Base\Registry::getInstance()->get('languages'));
         $this->assertEquals($languages[0], $this->testInstance->getLanguage());
+    }
+
+    public function testRunnerUsesEnglishAsLastFallback()
+    {
+        \Savvy\Base\Registry::getInstance()->set('languages');
+        $this->assertEquals('en', $this->testInstance->getLanguage());
     }
 }

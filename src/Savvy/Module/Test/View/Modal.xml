@@ -1,4 +1,4 @@
 <window width="320">
-    <item type="component" html="INDEX\LOREM_IPSUM" margin="10 10 10 10" />
+    <item type="component" html="INDEX\LOREM_IPSUM" margin="10 10 10 10" border="0" />
     <button action="close" text="\COMMON\BUTTON_CLOSE" />
 </window>
