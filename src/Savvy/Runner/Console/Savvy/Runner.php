@@ -41,6 +41,7 @@ class Runner extends Console\AbstractRunner
             new Daemon\StatusCommand(),
             new Daemon\StopCommand(),
             new User\ListCommand(),
+            new User\AddCommand()
         );
 
         return $commands;
