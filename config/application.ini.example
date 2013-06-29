@@ -1,7 +1,7 @@
 [default]
 
 name = "Savvy"
-version = "2013/06/22"
+version = "2013/06/29"
 languages = "en,de"
 log = "file:filename=log/core.log"
 authentication = "database"
