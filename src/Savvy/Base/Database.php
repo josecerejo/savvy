@@ -27,8 +27,8 @@ class Database extends AbstractSingleton
     public function init()
     {
         if ($this->entityManager === null) {
-            $databaseDriverName = Registry::getInstance()->get('database');
-            $metadataDriverInstance = new \Doctrine\ORM\Mapping\Driver\XmlDriver($this->getSchemaDirectories());
+            $databaseConfiguration = Registry::getInstance()->get('database');
+            $metadataDriverInstance = new \Doctrine\ORM\Mapping\Driver\XmlDriver(self::getSchemaDirectories());
             $cacheDriverInstance = \Savvy\Base\Cache::getInstance()->getCacheProvider();
 
             $configuration = new \Doctrine\ORM\Configuration();
@@ -45,7 +45,7 @@ class Database extends AbstractSingleton
                 (bool)Registry::getInstance()->get('doctrine.auto_generate_proxy_classes', false)
             );
 
-            $entityManager = \Doctrine\ORM\EntityManager::create($databaseDriverName, $configuration);
+            $entityManager = \Doctrine\ORM\EntityManager::create($databaseConfiguration, $configuration);
 
             if ((bool)Registry::getInstance()->get('doctrine.auto_generate_schema', false)) {
                 $schemaTool = new \Doctrine\ORM\Tools\SchemaTool($entityManager);
@@ -79,16 +79,15 @@ class Database extends AbstractSingleton
     }
 
     /**
-     * Get list of schema directories
+     * Get list of schema directories contained in core and modules
      *
      * @return array
      */
-    private function getSchemaDirectories()
+    private static function getSchemaDirectories()
     {
-        $schemaDirectories = array(
-            Registry::getInstance()->get('root') . '/src/Savvy/Storage/Schema'
+        return array_merge(
+            array(Registry::getInstance()->get('root') . '/src/Savvy/Storage/Schema'),
+            glob(Registry::getInstance()->get('root') . '/src/Savvy/Module/*/Storage/Schema', GLOB_ONLYDIR)
         );
-
-        return $schemaDirectories;
     }
 }
