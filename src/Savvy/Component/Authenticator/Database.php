@@ -26,9 +26,7 @@ class Database extends AbstractAuthenticator
             $result = self::AUTHENTICATION_FAILURE;
             $salt = Base\Session::getInstance()->getApplicationSessionId();
 
-            if ((string)$user->getPassword() === '' && $this->getPassword() === '') {
-                $result = self::AUTHENTICATION_SUCCESS;
-            } elseif (strcmp(md5($user->getPassword() . $salt), $this->getPassword()) === 0) {
+            if (strcmp(md5((string)$user->getPassword() . $salt), $this->getPassword()) === 0) {
                 $result = self::AUTHENTICATION_SUCCESS;
             }
         }

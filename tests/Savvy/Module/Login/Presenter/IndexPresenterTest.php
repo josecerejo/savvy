@@ -20,7 +20,7 @@ class IndexPresenterTest extends \PHPUnit_Framework_TestCase
 
         $this->testUser = new Model\User();
         $this->testUser->setUsername('testuser');
-        $this->testUser->setPassword(null);
+        $this->testUser->setPassword(md5('testuser'));
 
         Base\Database::getInstance()->getEntityManager()->persist($this->testUser);
         Base\Database::getInstance()->getEntityManager()->flush();
@@ -41,9 +41,11 @@ class IndexPresenterTest extends \PHPUnit_Framework_TestCase
 
     public function testIndexPresenterValidateActionSucceeds()
     {
+        $password = md5(md5('testuser') . Base\Session::getInstance()->getApplicationSessionId());
+
         $request = new GUI\Request();
         $request->setRoute('login/index?action=validate');
-        $request->setForm(array('username' => 'testuser', 'password' => ''));
+        $request->setForm(array('username' => 'testuser', 'password' => $password));
 
         $this->testInstance->setRequest($request);
         $response = json_decode($this->testInstance->dispatch());
