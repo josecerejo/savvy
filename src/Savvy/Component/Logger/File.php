@@ -54,6 +54,6 @@ class File extends AbstractLogger
      */
     public function write($msg, $priority = LOG_INFO)
     {
-        return (bool)file_put_contents($this->getFilename(), date('Y-m-d H:i:s') . ' ' . $msg . "\n", FILE_APPEND);
+        return (bool)file_put_contents($this->getFilename(), sprintf("%s %s\n", $this->getDateTimeString(), $msg), FILE_APPEND);
     }
 }

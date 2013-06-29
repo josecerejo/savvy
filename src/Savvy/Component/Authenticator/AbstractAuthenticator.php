@@ -176,7 +176,7 @@ abstract class AbstractAuthenticator
             $em = Base\Database::getInstance()->getEntityManager();
 
             $user = $em->getRepository('Savvy\Storage\Model\User')->findOneByUsername($this->getUsername());
-            $user->setLastLogin(new \DateTime());
+            $user->setLastLogin(new \DateTime('now', new \DateTimeZone(Base\Registry::getInstance()->get('timezone'))));
 
             $em->persist($user);
             $em->flush();

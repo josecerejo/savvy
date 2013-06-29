@@ -5,6 +5,7 @@ version = "2013/06/22"
 languages = "en,de"
 log = "file:filename=log/core.log"
 authentication = "database"
+timezone = "Europe/Berlin"
 
 [database]
 
