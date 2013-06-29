@@ -22,7 +22,7 @@ cp config/application.ini.example config/application.ini
 
 5. Use "doctrine-update.sh" to update database schema, generate proxy classes etc.
 
-6. Create an user account with "savvy user:add <username>" and "savvy user:passwd <username> <password>"
+6. Create user account with "savvy user:add username" and set password with "savvy user:passwd username password"
 
 ###Source code
 
