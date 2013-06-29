@@ -31,4 +31,13 @@ class RegistryTest extends \PHPUnit_Framework_TestCase
         Registry::getInstance()->set('phpunitTestConfiguration', 'tests/phpunit.xml');
         $this->assertTrue(file_exists(Registry::getInstance()->getFilename('phpunitTestConfiguration')));
     }
+
+    /**
+     * @expectedException \Savvy\Base\Exception
+     * @expectedExceptionCode \Savvy\Base\Exception::E_BASE_SINGLETON_CLONED
+     */
+    public function testWhetherRegistryCanBeCloned()
+    {
+        $clonedInstance = clone \Savvy\Base\Registry::getInstance();
+    }
 }

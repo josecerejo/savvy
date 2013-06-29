@@ -13,15 +13,10 @@ class CacheTest extends \PHPUnit_Framework_TestCase
 
     public function testCacheProvider()
     {
-        $this->assertInstanceOf('\Doctrine\Common\Cache\CacheProvider', $this->testInstance->getCacheProvider());
-    }
-
-    /**
-     * @expectedException \Savvy\Base\Exception
-     * @expectedExceptionCode \Savvy\Base\Exception::E_BASE_SINGLETON_CLONED
-     */
-    public function testWhetherCacheProviderCanBeCloned()
-    {
-        $clonedCacheProvider = clone \Savvy\Base\Cache::getInstance();
+        if (Registry::getInstance()->get('cache.driver') !== false) {
+            $this->assertInstanceOf('\Doctrine\Common\Cache\CacheProvider', $this->testInstance->getCacheProvider());
+        } else {
+            $this->assertEquals(null, $this->testInstance->getCacheProvider());
+        }
     }
 }
