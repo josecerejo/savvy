@@ -26,7 +26,7 @@ class Cache extends AbstractSingleton
      */
     public function init()
     {
-        if ($this->cacheProvider === null) {
+        if ($this->cacheProvider === null && Registry::getInstance()->get('cache.driver') !== false) {
             $memcache = new \Memcache();
             $memcache->connect(
                 Registry::getInstance()->get('cache.host'),

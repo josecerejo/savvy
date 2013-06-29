@@ -27,23 +27,25 @@ class Database extends AbstractSingleton
     public function init()
     {
         if ($this->entityManager === null) {
-            $database = Registry::getInstance()->get('database');
-
-            $metadataCache = \Savvy\Base\Cache::getInstance()->getCacheProvider();
-            $metadataDriver = new \Doctrine\ORM\Mapping\Driver\XmlDriver($this->getSchemaDirectories());
+            $databaseDriverName = Registry::getInstance()->get('database');
+            $metadataDriverInstance = new \Doctrine\ORM\Mapping\Driver\XmlDriver($this->getSchemaDirectories());
+            $cacheDriverInstance = \Savvy\Base\Cache::getInstance()->getCacheProvider();
 
             $configuration = new \Doctrine\ORM\Configuration();
-            $configuration->setMetadataCacheImpl($metadataCache);
-            $configuration->setMetadataDriverImpl($metadataDriver);
+            $configuration->setMetadataDriverImpl($metadataDriverInstance);
             $configuration->setProxyDir(Registry::getInstance()->get('root') .'/tmp/Proxy');
             $configuration->setProxyNamespace('Proxy');
-            $configuration->setQueryCacheImpl(\Savvy\Base\Cache::getInstance()->getCacheProvider());
+
+            if ($cacheDriverInstance !== null) {
+                $configuration->setMetadataCacheImpl($cacheDriverInstance);
+                $configuration->setQueryCacheImpl($cacheDriverInstance);
+            }
 
             $configuration->setAutoGenerateProxyClasses(
                 (bool)Registry::getInstance()->get('doctrine.auto_generate_proxy_classes', false)
             );
 
-            $entityManager = \Doctrine\ORM\EntityManager::create($database, $configuration);
+            $entityManager = \Doctrine\ORM\EntityManager::create($databaseDriverName, $configuration);
 
             if ((bool)Registry::getInstance()->get('doctrine.auto_generate_schema', false)) {
                 $schemaTool = new \Doctrine\ORM\Tools\SchemaTool($entityManager);

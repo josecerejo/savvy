@@ -17,9 +17,9 @@ password = "savvy"
 
 [cache]
 
-driver = "memcache"
-host = "localhost"
-port = 11211
+;driver = "memcache"
+;host = "localhost"
+;port = 11211
 
 [extjs]
 
