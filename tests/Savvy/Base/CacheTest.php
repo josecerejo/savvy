@@ -28,11 +28,6 @@ class CacheTest extends \PHPUnit_Framework_TestCase
     public function testCacheProviderConfigured()
     {
         $this->testInstance->init();
-
-        if (Registry::getInstance()->get('cache.driver')) {
-            $this->assertInstanceOf('\Doctrine\Common\Cache\CacheProvider', $this->testInstance->getCacheProvider());
-        } else {
-            $this->assertEquals(null, $this->testInstance->getCacheProvider());
-        }
+        $this->assertInstanceOf('\Doctrine\Common\Cache\CacheProvider', $this->testInstance->getCacheProvider());
     }
 }

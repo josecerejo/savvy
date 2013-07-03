@@ -16,3 +16,6 @@ Base\Registry::getInstance()->set('database.driver', 'pdo_sqlite');
 Base\Registry::getInstance()->set('database.memory', '1');
 Base\Registry::getInstance()->set('doctrine.auto_generate_proxy_classes', '1');
 Base\Registry::getInstance()->set('doctrine.auto_generate_schema', '1');
+
+// reset possible cached contents
+Base\Cache::getInstance()->getCacheProvider()->deleteAll();
