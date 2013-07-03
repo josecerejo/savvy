@@ -18,16 +18,9 @@ class CacheTest extends \PHPUnit_Framework_TestCase
         Registry::getInstance()->set('cache.driver', $this->cacheDriver);
     }
 
-    public function testCacheProviderNull()
+    public function testCacheProviderDefault()
     {
         Registry::getInstance()->set('cache.driver');
-        $this->testInstance->init();
-        $this->assertEquals(null, $this->testInstance->getCacheProvider());
-    }
-
-    public function testCacheProviderArray()
-    {
-        Registry::getInstance()->set('cache.driver', 'array');
         $this->testInstance->init();
         $this->assertInstanceOf('\Doctrine\Common\Cache\CacheProvider', $this->testInstance->getCacheProvider());
     }

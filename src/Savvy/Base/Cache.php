@@ -38,11 +38,8 @@ class Cache extends AbstractSingleton
                     $cacheProvider = new \Doctrine\Common\Cache\MemcacheCache();
                     $cacheProvider->setMemcache($memcache);
                     break;
-                case 'array':
-                    $cacheProvider = new \Doctrine\Common\Cache\ArrayCache();
-                    break;
                 default:
-                    $cacheProvider = null;
+                    $cacheProvider = new \Doctrine\Common\Cache\ArrayCache();
             }
 
             $this->setCacheProvider($cacheProvider);
