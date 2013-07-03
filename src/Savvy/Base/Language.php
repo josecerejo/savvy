@@ -35,7 +35,7 @@ class Language extends AbstractSingleton
      *
      * @var array
      */
-    private $ldata = null;
+    private $ldata = array();
 
     /**
      * Initialize base localization; module localization files will be loaded
@@ -45,7 +45,9 @@ class Language extends AbstractSingleton
      */
     public function init()
     {
-        if ($this->ldata === null) {
+        $this->ldata = Cache::getInstance()->getCacheProvider()->fetch('ldata');
+
+        if (empty($this->ldata)) {
             $this->ldata = array('MODULES' => array());
 
             foreach (array('default', Registry::getInstance()->get('locale')) as $language) {
@@ -85,7 +87,9 @@ class Language extends AbstractSingleton
                             $language
                         );
 
-                        $this->loadLocalization($this->ldata['MODULES'][strtoupper($module)], $filename);
+                        if ($this->loadLocalization($this->ldata['MODULES'][strtoupper($module)], $filename)) {
+                            Cache::getInstance()->getCacheProvider()->save('ldata', $this->ldata);
+                        }
                     }
                 }
             }
