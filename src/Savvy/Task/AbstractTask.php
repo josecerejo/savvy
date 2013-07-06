@@ -1,12 +1,12 @@
 <?php
 
-namespace Savvy\Component\Task;
+namespace Savvy\Task;
 
 /**
  * Abstract class for scheduler tasks
  *
  * @package Savvy
- * @subpackage Component\Task
+ * @subpackage Task
  */
 abstract class AbstractTask
 {
@@ -36,7 +36,7 @@ abstract class AbstractTask
      * Set result code
      *
      * @param int $result
-     * @return \Savvy\Component\Task\AbstractTask
+     * @return \Savvy\Task\AbstractTask
      */
     protected function setResult($result)
     {
@@ -57,7 +57,7 @@ abstract class AbstractTask
     /**
      * Run task
      *
-     * @throws \Savvy\Component\Task\Exception
+     * @throws \Savvy\Task\Exception
      * @return void
      */
     abstract public function execute();

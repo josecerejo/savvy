@@ -1,12 +1,12 @@
 <?php
 
-namespace Savvy\Component\Task;
+namespace Savvy\Task;
 
 /**
  * Exceptions for scheduler tasks
  *
  * @package Savvy
- * @subpackage Component\Task
+ * @subpackage Task
  */
 class Exception extends \Savvy\Base\AbstractException
 {
