@@ -10,6 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 class User
 {
     /**
+     * @var int
+     */
+    private $id;
+
+    /**
      * @var string
      */
     private $username;
@@ -25,10 +30,14 @@ class User
     private $lastLogin;
 
     /**
-     * @var integer
+     * Get id
+     *
+     * @return int
      */
-    private $id;
-
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set username
@@ -39,7 +48,6 @@ class User
     public function setUsername($username)
     {
         $this->username = $username;
-    
         return $this;
     }
 
@@ -62,7 +70,6 @@ class User
     public function setPassword($password)
     {
         $this->password = $password;
-    
         return $this;
     }
 
@@ -85,7 +92,6 @@ class User
     public function setLastLogin($lastLogin)
     {
         $this->lastLogin = $lastLogin;
-    
         return $this;
     }
 
@@ -97,15 +103,5 @@ class User
     public function getLastLogin()
     {
         return $this->lastLogin;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 }
