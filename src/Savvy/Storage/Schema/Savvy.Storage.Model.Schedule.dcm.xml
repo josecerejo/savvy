@@ -11,6 +11,6 @@
 		</id>
 
 		<field name="cron" column="cron" type="string" length="128" nullable="false" />
-		<field name="task" column="task" type="string" length="128" nullable="false" />
+		<field name="task" column="task" type="string" length="128" nullable="false" unique="true" />
 	</entity>
 </doctrine-mapping>
