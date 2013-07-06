@@ -7,7 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 
 /**
- * Send SIGHUP/reload command to service daemon
+ * Reload service daemon ("savvy daemon:reload")
  *
  * @ignore
  * @package Savvy
@@ -23,7 +23,7 @@ class ReloadCommand extends Command
     protected function configure()
     {
         $this->setName('daemon:reload');
-        $this->setDescription('Reload schedules and configuration.');
+        $this->setDescription('Reload service daemon.');
     }
 
     /**

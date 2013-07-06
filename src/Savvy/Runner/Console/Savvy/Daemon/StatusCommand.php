@@ -7,7 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 
 /**
- * Show status of service daemon
+ * Show status of service daemon ("savvy daemon:status")
  *
  * @ignore
  * @package Savvy

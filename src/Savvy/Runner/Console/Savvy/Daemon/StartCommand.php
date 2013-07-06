@@ -7,7 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 
 /**
- * Start service daemon
+ * Start service daemon ("savvy daemon:start")
  *
  * @ignore
  * @package Savvy

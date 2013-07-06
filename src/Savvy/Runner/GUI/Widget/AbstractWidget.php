@@ -165,12 +165,10 @@ abstract class AbstractWidget
     }
 
     /**
-     * __get() interceptor method calls getter for given attribute, or stores
-     * attribute's value directly in widget configuration if getter does not
-     * exist.
+     * Get attribute value, inherit getter if possible
      *
-     * @param string $name
-     * @return mixed
+     * @param string $name attribute name
+     * @return mixed attribute value
      */
     public function __get($name)
     {

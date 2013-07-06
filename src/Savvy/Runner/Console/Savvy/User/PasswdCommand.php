@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 
 /**
- * Set password for user command
+ * Set password for specified user ("savvy user:passwd")
  *
  * @ignore
  * @package Savvy

@@ -7,7 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 
 /**
- * List users command
+ * List all users ("savvy user:list")
  *
  * @ignore
  * @package Savvy

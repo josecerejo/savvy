@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 
 /**
- * Add new user command
+ * Create a new user ("savvy user:add")
  *
  * @ignore
  * @package Savvy
@@ -24,7 +24,7 @@ class AddCommand extends Command
     protected function configure()
     {
         $this->setName('user:add');
-        $this->setDescription('Add new user.');
+        $this->setDescription('Create a new user.');
         $this->addArgument('username', InputArgument::REQUIRED, 'Username for new user account.');
     }
 
