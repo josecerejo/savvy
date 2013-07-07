@@ -12,5 +12,6 @@
 
 		<field name="cron" column="cron" type="string" length="128" nullable="false" />
 		<field name="task" column="task" type="string" length="128" nullable="false" unique="true" />
+		<field name="active" column="active" type="boolean" />
 	</entity>
 </doctrine-mapping>

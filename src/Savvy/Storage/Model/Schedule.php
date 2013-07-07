@@ -25,6 +25,11 @@ class Schedule
     private $task;
 
     /**
+     * @var bool
+     */
+    private $active;
+
+    /**
      * Get id
      *
      * @return int
@@ -76,5 +81,27 @@ class Schedule
     public function getTask()
     {
         return $this->task;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return Schedule
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean 
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 }
