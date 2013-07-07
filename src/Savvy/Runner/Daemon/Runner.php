@@ -59,6 +59,13 @@ class Runner extends \Savvy\Runner\AbstractRunner
     private $pipeFilename = null;
 
     /**
+     * Scheduler instance
+     *
+     * @var \Savvy\Base\Scheduler
+     */
+    private $scheduler = null;
+
+    /**
      * Returns true if this runner is suitable for current mode of operation
      *
      * @return bool
@@ -85,7 +92,8 @@ class Runner extends \Savvy\Runner\AbstractRunner
     {
         $loggingFacility = \Savvy\Base\Registry::getInstance()->get('daemon.log');
 
-        if (constant('APPLICATION_MODE') === 'test' || in_array('--test', $_SERVER['argv'])) {
+        if (defined('APPLICATION_MODE') && APPLICATION_MODE === 'test' || in_array('--test', $_SERVER['argv']))
+        {
             $loggingFacility = 'null';
         }
 
@@ -306,14 +314,15 @@ class Runner extends \Savvy\Runner\AbstractRunner
      */
     private function reload()
     {
-        Base\Scheduler::getInstance()->init();
+        if ($this->scheduler === null) {
+            $this->scheduler = Base\Scheduler::getInstance();
+            $message = Base\Language::getInstance()->get('DAEMON\SCHEDULER_INITIALIZED');
+        } else {
+            $this->scheduler->init();
+            $message = Base\Language::getInstance()->get('DAEMON\SCHEDULER_RELOADED');
+        }
 
-        $this->getLogger()->write(
-            sprintf(
-                Base\Language::getInstance()->get('DAEMON\RELOAD'),
-                count(Base\Scheduler::getInstance()->getTasks())
-            )
-        );
+        $this->getLogger()->write(sprintf($message, count($this->scheduler->getTasks())));
     }
 
     /**

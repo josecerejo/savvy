@@ -27,10 +27,17 @@ class Scheduler extends AbstractSingleton
     public function init()
     {
         $this->tasks = array();
-        $schedule = Database::getInstance()->getEntityManager()->getRepository('Savvy\Storage\Model\Schedule');
 
-        foreach ($schedule->findByActive(true) as $task) {
-            $this->tasks[] = Task\Factory::getInstance($task);
+        $em = Database::getInstance()->getEntityManager();
+        $em->clear('Savvy\Storage\Model\Schedule');
+
+        $schedules = $em->getRepository('Savvy\Storage\Model\Schedule');
+
+        foreach ($schedules->findByActive(true) as $task) {
+            try {
+                $this->tasks[] = Task\Factory::getInstance($task);
+            } catch (Task\Exception $e) {
+            }
         }
 
         return true;
