@@ -37,14 +37,21 @@ abstract class AbstractTask
      *
      * @var int
      */
-    protected $result = self::RESULT_UNKNOWN;
+    protected $result;
+
+    /**
+     * Initialize task
+     */
+    public function __construct()
+    {
+        $this->setResult(self::RESULT_UNKNOWN);
+    }
 
     /**
      * Set cron schedule
      *
-     * @throws \Savvy\Task\Exception
      * @param string $cron
-     * @return \Savvy\Task\AbstractTask
+     * @return \Savvy\Component\Task\AbstractTask
      */
     public function setCron($cron)
     {
@@ -56,7 +63,7 @@ abstract class AbstractTask
      * Set result code
      *
      * @param int $result
-     * @return \Savvy\Task\AbstractTask
+     * @return \Savvy\Component\Task\AbstractTask
      */
     protected function setResult($result)
     {
@@ -77,7 +84,7 @@ abstract class AbstractTask
     /**
      * Run task
      *
-     * @throws \Savvy\Task\Exception
+     * @throws \Savvy\Component\Task\Exception
      * @return void
      */
     abstract public function execute();

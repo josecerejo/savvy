@@ -15,9 +15,9 @@ class Factory extends Base\AbstractFactory
     /**
      * Create task instance from given schedule entity
      *
-     * @throws \Savvy\Task\Exception
+     * @throws \Savvy\Component\Task\Exception
      * @param \Savvy\Storage\Model\Schedule $task
-     * @return \Savvy\Task\AbstractTask
+     * @return \Savvy\Component\Task\AbstractTask
      */
     public static function getInstance(\Savvy\Storage\Model\Schedule $task = null)
     {
@@ -32,9 +32,14 @@ class Factory extends Base\AbstractFactory
                 throw new Exception($task->getCron(), Exception::E_COMPONENT_TASK_FACTORY_CRON_EXPRESSION_INVALID);
             }
 
-            $taskClass = sprintf("\\Savvy\\Component\\Task\\%s", $task->getTask());
-            $instance = new $taskClass;
-            $instance->setCron(trim($task->getCron()));
+            $taskClass = sprintf("Savvy\\Component\\Task\\%s", $task->getTask());
+
+            if (\Doctrine\Common\ClassLoader::classExists($taskClass)) {
+                $instance = new $taskClass;
+                $instance->setCron(trim($task->getCron()));
+            } else {
+                throw new Exception($task->getTask(), Exception::E_COMPONENT_TASK_FACTORY_TASK_NOT_FOUND);
+            }
         }
 
         return $instance;

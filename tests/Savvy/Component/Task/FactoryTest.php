@@ -12,8 +12,33 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     {
         $schedule = new \Savvy\Storage\Model\Schedule;
         $schedule->setCron('wrong');
+        $schedule->setTask('foobar');
+
+        $task = Factory::getInstance($schedule);
+    }
+
+    /**
+     * @expectedException \Savvy\Component\Task\Exception
+     * @expectedExceptionCode \Savvy\Component\Task\Exception::E_COMPONENT_TASK_FACTORY_TASK_NOT_FOUND
+     */
+    public function testFactoryThrowsExceptionOnUnknownTasks()
+    {
+        $schedule = new \Savvy\Storage\Model\Schedule;
+        $schedule->setCron('* * * * *');
+        $schedule->setTask('foobar');
+
+        $task = Factory::getInstance($schedule);
+    }
+
+    public function testFactoryTaskDefaultsToUnknownStatus()
+    {
+        $schedule = new \Savvy\Storage\Model\Schedule;
+        $schedule->setCron('* * * * *');
         $schedule->setTask('Maintenance');
 
         $task = Factory::getInstance($schedule);
+
+        $this->assertInstanceof('\Savvy\Component\Task\AbstractTask', $task);
+        $this->assertEquals(AbstractTask::RESULT_UNKNOWN, $task->getResult());
     }
 }

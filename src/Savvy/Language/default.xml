@@ -9,6 +9,7 @@
         <string key="E_COMPONENT_AUTHENTICATOR_FACTORY_NO_FACILITY">No authentication facility available, check configuration</string>
         <string key="E_COMPONENT_AUTHENTICATOR_FACTORY_UNKNOWN_FACILITY">Unknown authentication facility "%s"</string>
         <string key="E_COMPONENT_TASK_FACTORY_CRON_EXPRESSION_INVALID">Invalid cron expression "%s"</string>
+        <string key="E_COMPONENT_TASK_FACTORY_TASK_NOT_FOUND">Task not found "%s"</string>
 
         <string key="E_RUNNER_FACTORY_UNKNOWN_RUNNER">Failed to create apropriate runner instance</string>
         <string key="E_RUNNER_GUI_VIEW_NOT_FOUND">Requested view "%s" does not exist</string>
