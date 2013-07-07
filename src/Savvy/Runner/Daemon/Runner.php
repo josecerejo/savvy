@@ -306,13 +306,12 @@ class Runner extends \Savvy\Runner\AbstractRunner
      */
     private function reload()
     {
-        Base\Scheduler::getInstance()->reload();
-        $tasks = Base\Scheduler::getInstance()->getTasks();
+        Base\Scheduler::getInstance()->init();
 
         $this->getLogger()->write(
             sprintf(
                 Base\Language::getInstance()->get('DAEMON\RELOAD'),
-                count($tasks)
+                count(Base\Scheduler::getInstance()->getTasks())
             )
         );
     }

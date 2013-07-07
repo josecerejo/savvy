@@ -1,19 +1,19 @@
 <?php
 
-namespace Savvy\Task;
+namespace Savvy\Component\Task;
 
 /**
  * Maintenance task
  *
  * @package Savvy
- * @subpackage Task
+ * @subpackage Component\Task
  */
 class Maintenance extends AbstractTask
 {
     /**
      * Run task
      *
-     * @throws \Savvy\Task\Exception
+     * @throws \Savvy\Component\Task\Exception
      * @return void
      */
     public function execute()

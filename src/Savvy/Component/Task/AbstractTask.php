@@ -1,12 +1,12 @@
 <?php
 
-namespace Savvy\Task;
+namespace Savvy\Component\Task;
 
 /**
  * Abstract class for scheduler tasks
  *
  * @package Savvy
- * @subpackage Task
+ * @subpackage Component\Task
  */
 abstract class AbstractTask
 {
@@ -26,11 +26,31 @@ abstract class AbstractTask
     const RESULT_ERROR_UNKNOWN = 255;
 
     /**
+     * Cron schedule, e.g. "30 23 * * *"
+     *
+     * @var string
+     */
+    protected $cron = '';
+
+    /**
      * Result property
      *
      * @var int
      */
     protected $result = self::RESULT_UNKNOWN;
+
+    /**
+     * Set cron schedule
+     *
+     * @throws \Savvy\Task\Exception
+     * @param string $cron
+     * @return \Savvy\Task\AbstractTask
+     */
+    public function setCron($cron)
+    {
+        $this->cron = (string)$cron;
+        return $this;
+    }
 
     /**
      * Set result code
@@ -45,7 +65,7 @@ abstract class AbstractTask
     }
 
     /**
-     * Get result
+     * Get result code
      *
      * @return int task result, see RESULT_* constants
      */

@@ -2,6 +2,8 @@
 
 namespace Savvy\Base;
 
+use Savvy\Component\Task as Task;
+
 /**
  * Task scheduler
  *
@@ -18,28 +20,24 @@ class Scheduler extends AbstractSingleton
     private $tasks = array();
 
     /**
-     * Initialize scheduler
+     * Initialize schedule
      *
      * @return bool
      */
     public function init()
     {
-        $this->reload();
+        $this->tasks = array();
+        $schedule = Database::getInstance()->getEntityManager()->getRepository('Savvy\Storage\Model\Schedule');
+
+        foreach ($schedule->findByActive(true) as $task) {
+            $this->tasks[] = Task\Factory::getInstance($task);
+        }
+
         return true;
     }
 
     /**
-     * Load tasks from schedule table
-     * 
-     * @return void
-     */
-    public function reload()
-    {
-        $this->tasks = array();
-    }
-
-    /**
-     * Get schedules tasks
+     * Get list of active tasks
      *
      * @return array
      */
