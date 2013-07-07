@@ -1,16 +1,17 @@
 <?php
 
-namespace Savvy\Base;
+namespace Savvy\Runner\Daemon;
 
+use Savvy\Base as Base;
 use Savvy\Component\Task as Task;
 
 /**
  * Task scheduler
  *
  * @package Savvy
- * @subpackage Base
+ * @subpackage Runner\Daemon
  */
-class Scheduler extends AbstractSingleton
+class Scheduler extends Base\AbstractSingleton
 {
     /**
      * Scheduled tasks
@@ -28,12 +29,10 @@ class Scheduler extends AbstractSingleton
     {
         $this->tasks = array();
 
-        $em = Database::getInstance()->getEntityManager();
+        $em = Base\Database::getInstance()->getEntityManager();
         $em->clear('Savvy\Storage\Model\Schedule');
 
-        $schedules = $em->getRepository('Savvy\Storage\Model\Schedule');
-
-        foreach ($schedules->findByActive(true) as $task) {
+        foreach ($em->getRepository('Savvy\Storage\Model\Schedule')->findByActive(true) as $task) {
             try {
                 $this->tasks[] = Task\Factory::getInstance($task);
             } catch (Task\Exception $e) {

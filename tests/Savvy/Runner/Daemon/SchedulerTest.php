@@ -1,23 +1,24 @@
 <?php
 
-namespace Savvy\Base;
+namespace Savvy\Runner\Daemon;
 
+use Savvy\Base as Base;
 use Savvy\Storage\Model as Model;
 
 class SchedulerTest extends \PHPUnit_Framework_TestCase
 {
     public function testObjectInheritance()
     {
-        $this->assertInstanceOf('\Savvy\Base\Scheduler', Scheduler::getInstance());
+        $this->assertInstanceOf('\Savvy\Runner\Daemon\Scheduler', Scheduler::getInstance());
         $this->assertInstanceOf('\Savvy\Base\AbstractSingleton', Scheduler::getInstance());
     }
 
     public function testSchedulerHasOneActiveTask()
     {
+        $em = Base\Database::getInstance()->getEntityManager();
+
         $scheduler = Scheduler::getInstance();
         $this->assertEquals(0, count($scheduler->getTasks()));
-
-        $em = Database::getInstance()->getEntityManager();
 
         $schedule = new Model\Schedule();
         $schedule->setCron('1 * * * *');

@@ -61,7 +61,7 @@ class Runner extends \Savvy\Runner\AbstractRunner
     /**
      * Scheduler instance
      *
-     * @var \Savvy\Base\Scheduler
+     * @var \Savvy\Runner\Daemon\Scheduler
      */
     private $scheduler = null;
 
@@ -92,8 +92,7 @@ class Runner extends \Savvy\Runner\AbstractRunner
     {
         $loggingFacility = \Savvy\Base\Registry::getInstance()->get('daemon.log');
 
-        if (defined('APPLICATION_MODE') && APPLICATION_MODE === 'test' || in_array('--test', $_SERVER['argv']))
-        {
+        if (defined('APPLICATION_MODE') && APPLICATION_MODE === 'test' || in_array('--test', $_SERVER['argv'])) {
             $loggingFacility = 'null';
         }
 
@@ -315,7 +314,7 @@ class Runner extends \Savvy\Runner\AbstractRunner
     private function reload()
     {
         if ($this->scheduler === null) {
-            $this->scheduler = Base\Scheduler::getInstance();
+            $this->scheduler = Scheduler::getInstance();
             $message = Base\Language::getInstance()->get('DAEMON\SCHEDULER_INITIALIZED');
         } else {
             $this->scheduler->init();
