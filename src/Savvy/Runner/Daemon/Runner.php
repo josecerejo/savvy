@@ -77,7 +77,7 @@ class Runner extends \Savvy\Runner\AbstractRunner
     }
 
     /**
-     * Get logger
+     * Get logger instance
      *
      * @return \Savvy\Component\Logger\AbstractLogger
      */
@@ -300,13 +300,21 @@ class Runner extends \Savvy\Runner\AbstractRunner
     }
 
     /**
-     * Reload configuration, e.g. schedules table
+     * Reload command (re-)initializes scheduler
      *
      * @return void
      */
     private function reload()
     {
-        $this->getLogger()->write(Base\Language::getInstance()->get('DAEMON\RELOADED'));
+        Base\Scheduler::getInstance()->reload();
+        $tasks = Base\Scheduler::getInstance()->getTasks();
+
+        $this->getLogger()->write(
+            sprintf(
+                Base\Language::getInstance()->get('DAEMON\RELOAD'),
+                count($tasks)
+            )
+        );
     }
 
     /**
@@ -386,6 +394,7 @@ class Runner extends \Savvy\Runner\AbstractRunner
         pcntl_signal(SIGHUP, array(&$this, 'reload'));
 
         $heartbeat = (60 / intval(\Savvy\Base\Registry::getInstance()->get('daemon.heartbeat'))) * 1000000;
+        $this->reload();
 
         while ($this->getStatus() === self::STATUS_RUNNING) {
             $result = $this->handle($this->read());

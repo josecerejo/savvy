@@ -24,6 +24,6 @@
         <string key="UNKNOWN_COMMAND">Received unkown command "%s"</string>
         <string key="STARTED">Service daemon started (PID %d)</string>
         <string key="TERMINATED">Service daemon terminated</string>
-        <string key="RELOADED">Reloading schedules</string>
+        <string key="RELOAD">Scheduler reloaded, %d task(s) active</string>
     </strings>
 </localization>
