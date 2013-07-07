@@ -23,7 +23,7 @@ class ListCommand extends Command
     protected function configure()
     {
         $this->setName('user:list');
-        $this->setDescription('List all users.');
+        $this->setDescription('List all users');
     }
 
     /**

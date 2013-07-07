@@ -23,7 +23,7 @@ class ReloadCommand extends Command
     protected function configure()
     {
         $this->setName('daemon:reload');
-        $this->setDescription('Reload service daemon.');
+        $this->setDescription('Reload service daemon');
     }
 
     /**

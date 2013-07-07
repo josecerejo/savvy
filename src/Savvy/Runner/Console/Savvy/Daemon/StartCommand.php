@@ -23,7 +23,7 @@ class StartCommand extends Command
     protected function configure()
     {
         $this->setName('daemon:start');
-        $this->setDescription('Start service daemon.');
+        $this->setDescription('Start service daemon');
     }
 
     /**

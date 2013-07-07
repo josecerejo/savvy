@@ -24,7 +24,7 @@ class PasswdCommand extends Command
     protected function configure()
     {
         $this->setName('user:passwd');
-        $this->setDescription('Set password for specified user.');
+        $this->setDescription('Set password for specified user');
         $this->addArgument('username', InputArgument::REQUIRED, 'Username to set password for.');
         $this->addArgument('password', InputArgument::REQUIRED, 'Password.');
     }

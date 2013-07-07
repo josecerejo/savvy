@@ -24,7 +24,7 @@ class AddCommand extends Command
     protected function configure()
     {
         $this->setName('user:add');
-        $this->setDescription('Create a new user.');
+        $this->setDescription('Create a new user');
         $this->addArgument('username', InputArgument::REQUIRED, 'Username for new user account.');
     }
 

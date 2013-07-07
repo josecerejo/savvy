@@ -23,7 +23,7 @@ class StopCommand extends Command
     protected function configure()
     {
         $this->setName('daemon:stop');
-        $this->setDescription('Shut down service daemon.');
+        $this->setDescription('Shut down service daemon');
     }
 
     /**

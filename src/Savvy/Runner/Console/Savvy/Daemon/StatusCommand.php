@@ -23,7 +23,7 @@ class StatusCommand extends Command
     protected function configure()
     {
         $this->setName('daemon:status');
-        $this->setDescription('Show status of service daemon.');
+        $this->setDescription('Show status of service daemon');
     }
 
     /**
