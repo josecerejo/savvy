@@ -21,25 +21,22 @@ class Scheduler extends Base\AbstractSingleton
     private $tasks = array();
 
     /**
-     * Initialize schedule
+     * Internal timer
      *
-     * @return bool
+     * @var int
      */
-    public function init()
+    private $timer = null;
+
+    /**
+     * Set list of active tasks
+     *
+     * @param array $tasks
+     * @return \Savvy\Runner\Daemon\Scheduler
+     */
+    protected function setTasks($tasks)
     {
-        $this->tasks = array();
-
-        $em = Base\Database::getInstance()->getEntityManager();
-        $em->clear('Savvy\Storage\Model\Schedule');
-
-        foreach ($em->getRepository('Savvy\Storage\Model\Schedule')->findByActive(true) as $task) {
-            try {
-                $this->tasks[] = Task\Factory::getInstance($task);
-            } catch (Task\Exception $e) {
-            }
-        }
-
-        return true;
+        $this->tasks = $tasks;
+        return $this;
     }
 
     /**
@@ -50,5 +47,70 @@ class Scheduler extends Base\AbstractSingleton
     public function getTasks()
     {
         return $this->tasks;
+    }
+
+    /**
+     * Set (or reset) internal timer
+     *
+     * @param int|null $timer
+     * @return \Savvy\Runner\Daemon\Scheduler
+     */
+    protected function setTimer($timer = null)
+    {
+        $this->timer = $timer;
+        return $this;
+    }
+
+    /**
+     * Get internal timer
+     *
+     * @return int
+     */
+    protected function getTimer()
+    {
+        if ($this->timer === null) {
+            $this->setTimer(time());
+        }
+
+        return $this->timer;
+    }
+
+    /**
+     * Initialize scheduler
+     *
+     * @return void
+     */
+    public function init()
+    {
+        $this->setTimer();
+
+        $em = Base\Database::getInstance()->getEntityManager();
+        $em->clear('Savvy\Storage\Model\Schedule');
+
+        $tasks = array();
+
+        foreach ($em->getRepository('Savvy\Storage\Model\Schedule')->findByActive(true) as $task) {
+            try {
+                $tasks[] = Task\Factory::getInstance($task)->calculateStart($this->getTimer());
+            } catch (Task\Exception $e) {
+            }
+        }
+
+        $this->setTasks($tasks);
+    }
+
+    /**
+     * Start task(s)
+     *
+     * @return void
+     */
+    public function tick()
+    {
+        foreach ($this->getTasks() as $task) {
+            if ($task->getStart() < $this->getTimer()) {
+            }
+        }
+
+        $this->setTimer(time());
     }
 }

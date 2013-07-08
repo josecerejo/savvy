@@ -23,6 +23,11 @@ class Runner extends \Savvy\Runner\AbstractRunner
     const CMD_RELOAD = 'reload';
 
     /**
+     * Command "trigger scheduler"
+     */
+    const CMD_TICK = 'tick';
+
+    /**
      * Status "daemon is shutting down"
      */
     const STATUS_QUIT = 0;
@@ -332,7 +337,7 @@ class Runner extends \Savvy\Runner\AbstractRunner
      */
     private function handle($input)
     {
-        static $commands = array();
+        static $commands = array(0 => self::CMD_TICK);
         static $buffer = '';
 
         $p = 0;
@@ -353,11 +358,14 @@ class Runner extends \Savvy\Runner\AbstractRunner
             $command = array_shift($commands);
 
             switch (strtolower($command)) {
-                case self::CMD_QUIT:
-                    $result = $this->quit(self::CMD_QUIT);
+                case self::CMD_TICK:
+                    Scheduler::getInstance()->tick();
                     break;
                 case self::CMD_RELOAD:
                     $this->reload();
+                    break;
+                case self::CMD_QUIT:
+                    $result = $this->quit(self::CMD_QUIT);
                     break;
                 default:
                     $this->getLogger()->write(

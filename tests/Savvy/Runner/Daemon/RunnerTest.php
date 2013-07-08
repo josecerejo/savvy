@@ -68,7 +68,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
     public function testDaemonGetsCommandsFromNamedPipe()
     {
         $r = fopen($this->testPipefile, 'x+');
-        fwrite($r, "foo\nreload\nquit\n");
+        fwrite($r, "foo\nreload\ntick\nquit\n");
         fseek($r, 0);
 
         $this->testInstance->setPipe($r);

@@ -33,6 +33,13 @@ abstract class AbstractTask
     protected $cron = '';
 
     /**
+     * Start time of next run
+     *
+     * @var int
+     */
+    protected $start = null;
+
+    /**
      * Result property
      *
      * @var int
@@ -57,6 +64,28 @@ abstract class AbstractTask
     {
         $this->cron = (string)$cron;
         return $this;
+    }
+
+    /**
+     * Calculate start time of next run from cron schedule definition
+     *
+     * @param int $timer
+     * @return \Savvy\Component\Task\AbstractTask
+     */
+    public function calculateStart($timer)
+    {
+        $this->start = (int)$timer;
+        return $this;
+    }
+
+    /**
+     * Get start time of next run
+     *
+     * @return int
+     */
+    public function getStart()
+    {
+        return $this->start;
     }
 
     /**
