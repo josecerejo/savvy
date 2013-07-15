@@ -18,6 +18,5 @@ class Maintenance extends AbstractTask
      */
     public function execute()
     {
-        $this->setResult(self::RESULT_SUCCESS);
     }
 }

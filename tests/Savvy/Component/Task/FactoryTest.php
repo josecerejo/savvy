@@ -2,6 +2,8 @@
 
 namespace Savvy\Component\Task;
 
+use Savvy\Runner\Daemon as Daemon;
+
 class TaskTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -12,9 +14,10 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     {
         $schedule = new \Savvy\Storage\Model\Schedule;
         $schedule->setCron('wrong');
-        $schedule->setTask('foobar');
+        $schedule->setTask('Maintenance');
 
         $task = Factory::getInstance($schedule);
+        $task->setCron(new Daemon\Cron($schedule->getCron()));
     }
 
     /**

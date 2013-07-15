@@ -26,18 +26,11 @@ abstract class AbstractTask
     const RESULT_ERROR_UNKNOWN = 255;
 
     /**
-     * Cron schedule, e.g. "30 23 * * *"
+     * Cron schedule instance
      *
-     * @var string
+     * @var \Savvy\Runner\Daemon\Cron
      */
-    protected $cron = '';
-
-    /**
-     * Start time of next run
-     *
-     * @var int
-     */
-    protected $start = null;
+    protected $cron = null;
 
     /**
      * Result property
@@ -55,37 +48,20 @@ abstract class AbstractTask
     }
 
     /**
-     * Set cron schedule
+     * Set cron schedule instance
      *
-     * @param string $cron
+     * @param \Savvy\Runner\Daemon\Cron $cron
      * @return \Savvy\Component\Task\AbstractTask
      */
-    public function setCron($cron)
+    public function setCron(\Savvy\Runner\Daemon\Cron $cron)
     {
-        $this->cron = (string)$cron;
-        return $this;
-    }
+        if ($cron->valid()) {
+            $this->cron = $cron;
+        } else {
+            throw new Exception($cron->getExpression(), Exception::E_COMPONENT_TASK_FACTORY_CRON_EXPRESSION_INVALID);
+        }
 
-    /**
-     * Calculate start time of next run from cron schedule definition
-     *
-     * @param int $timer
-     * @return \Savvy\Component\Task\AbstractTask
-     */
-    public function calculateStart($timer)
-    {
-        $this->start = (int)$timer;
         return $this;
-    }
-
-    /**
-     * Get start time of next run
-     *
-     * @return int
-     */
-    public function getStart()
-    {
-        return $this->start;
     }
 
     /**

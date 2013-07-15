@@ -82,8 +82,6 @@ class Scheduler extends Base\AbstractSingleton
      */
     public function init()
     {
-        $this->setTimer();
-
         $em = Base\Database::getInstance()->getEntityManager();
         $em->clear('Savvy\Storage\Model\Schedule');
 
@@ -91,11 +89,12 @@ class Scheduler extends Base\AbstractSingleton
 
         foreach ($em->getRepository('Savvy\Storage\Model\Schedule')->findByActive(true) as $task) {
             try {
-                $tasks[] = Task\Factory::getInstance($task)->calculateStart($this->getTimer());
+                $tasks[] = Task\Factory::getInstance($task)->setCron(new Cron($task->getCron()));
             } catch (Task\Exception $e) {
             }
         }
 
+        $this->setTimer();
         $this->setTasks($tasks);
     }
 
@@ -106,9 +105,9 @@ class Scheduler extends Base\AbstractSingleton
      */
     public function tick()
     {
+        $timer = $this->getTimer();
+
         foreach ($this->getTasks() as $task) {
-            if ($task->getStart() < $this->getTimer()) {
-            }
         }
 
         $this->setTimer(time());
