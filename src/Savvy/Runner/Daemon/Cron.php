@@ -126,6 +126,8 @@ class Cron
             if (sizeof($segments = preg_split('/\s+/', $this->expression)) !== 5) {
                 $result = false;
             } else {
+                $register = array();
+
                 $minv = array(0, 0, 1, 1, 0);
                 $maxv = array(59, 23, 31, 12, 7);
                 $strv = array(false, false, false, self::$months, self::$weekdays);
@@ -144,8 +146,6 @@ class Cron
 
                         // parse steps notation
                         if (strpos($listsegment, '/') !== false) {
-                            $steps = false;
-
                             if (sizeof($stepsegments = explode('/', $listsegment)) === 2) {
                                 $listsegment = $stepsegments[0];
 
@@ -157,10 +157,12 @@ class Cron
                                         $result = false;
                                         break 2;
                                     }
+                                } else {
+                                    // invalid (non-numeric) steps notation
+                                    $result = false;
+                                    break 2;
                                 }
-                            }
-
-                            if ($steps === false) {
+                            } else {
                                 // invalid steps notation
                                 $result = false;
                                 break 2;
@@ -180,7 +182,7 @@ class Cron
                             if ($steps !== 1) {
                                 // single value cannot be combined with steps notation
                                 $result = false;
-                                break;
+                                break 2;
                             }
 
                             $register[$s][intval($listsegment)] = true;
@@ -237,7 +239,7 @@ class Cron
 
                         // list segment cannot be parsed
                         $result = false;
-                        break 1;
+                        break 2;
                     }
                 }
 
