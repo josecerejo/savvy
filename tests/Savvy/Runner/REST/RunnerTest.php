@@ -2,6 +2,7 @@
 
 namespace Savvy\Runner\REST;
 
+use Savvy\Base as Base;
 use Savvy\Runner\REST as REST;
 
 class RunnerTest extends \PHPUnit_Framework_TestCase
@@ -22,8 +23,23 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
     /**
      * @runInSeparateProcess
      */
+    public function testRunnerWithoutSession()
+    {
+        $this->assertEquals(false, Base\Session::getInstance()->init());
+        $this->assertEquals(1, $this->testInstance->run());
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
     public function testRunner()
     {
-        $this->assertEquals(1, $this->testInstance->run());
+        $applicationSessionId = sha1(uniqid('', true));
+
+        $_SERVER['HTTP_APPLICATION_SESSION'] = $applicationSessionId;
+        $_SESSION[$applicationSessionId] = array('username' => 'foobar');
+
+        $this->assertEquals(true, Base\Session::getInstance()->init());
+        $this->assertEquals(0, $this->testInstance->run());
     }
 }

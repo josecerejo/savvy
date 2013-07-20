@@ -20,23 +20,17 @@ class Session extends AbstractSingleton
     /**
      * Start or resume existing session
      *
-     * @return bool true if an existing application session was picked up
+     * @return bool true if we have picked up a valid application session
      */
     public function init()
     {
-        $result = false;
-
         @session_start();
 
         if (isset($_SERVER['HTTP_APPLICATION_SESSION'])) {
             $this->setApplicationSessionId($_SERVER['HTTP_APPLICATION_SESSION']);
-
-            if (isset($_SESSION[$_SERVER['HTTP_APPLICATION_SESSION']])) {
-                $result = true;
-            }
         }
 
-        return $result;
+        return $this->valid();
     }
 
     /**
@@ -58,6 +52,26 @@ class Session extends AbstractSingleton
 
         $em->persist($user);
         $em->flush();
+    }
+
+    /**
+     * Do we have a valid application session?
+     *
+     * @return bool
+     */
+    public function valid()
+    {
+        $result = false;
+
+        if (isset($_SESSION[$this->getApplicationSessionId()])) {
+            $applicationSession = $_SESSION[$this->getApplicationSessionId()];
+
+            if (is_array($applicationSession) && isset($applicationSession['username'])) {
+                $result = true;
+            }
+        }
+
+        return $result;
     }
 
     /**

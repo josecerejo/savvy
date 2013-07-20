@@ -2,6 +2,8 @@
 
 namespace Savvy\Runner\REST;
 
+use Savvy\Base as Base;
+
 /**
  * Runner for RESTful services
  *
@@ -27,9 +29,14 @@ class Runner extends \Savvy\Runner\AbstractRunner
      */
     public function run()
     {
-        header('HTTP/1.1 401 Unauthorized', true, 401);
-        $result = 1;
+        if (Base\Session::getInstance()->valid()) {
+            $result = 0;
+            header('HTTP/1.1 200 OK', true, 200);
+        } else {
+            $result = 1;
+            header('HTTP/1.1 401 Unauthorized', true, 401);
+        }
 
-        return $resutl;
+        return $result;
     }
 }
