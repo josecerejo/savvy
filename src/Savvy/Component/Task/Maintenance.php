@@ -16,7 +16,8 @@ class Maintenance extends AbstractTask
      * @throws \Savvy\Component\Task\Exception
      * @return void
      */
-    public function execute()
+    public function run()
     {
+        $this->setResult(self::RESULT_SUCCESS);
     }
 }

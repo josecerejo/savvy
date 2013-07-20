@@ -8,40 +8,28 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException \Savvy\Component\Task\Exception
-     * @expectedExceptionCode \Savvy\Component\Task\Exception::E_COMPONENT_TASK_FACTORY_CRON_EXPRESSION_INVALID
-     */
-    public function testFactoryThrowsExceptionOnInvalidCronExpressions()
-    {
-        $schedule = new \Savvy\Storage\Model\Schedule;
-        $schedule->setCron('wrong');
-        $schedule->setTask('Maintenance');
-
-        $task = Factory::getInstance($schedule);
-        $task->setCron(new Daemon\Cron($schedule->getCron()));
-    }
-
-    /**
-     * @expectedException \Savvy\Component\Task\Exception
      * @expectedExceptionCode \Savvy\Component\Task\Exception::E_COMPONENT_TASK_FACTORY_TASK_NOT_FOUND
      */
     public function testFactoryThrowsExceptionOnUnknownTasks()
     {
-        $schedule = new \Savvy\Storage\Model\Schedule;
-        $schedule->setCron('* * * * *');
-        $schedule->setTask('foobar');
-
-        $task = Factory::getInstance($schedule);
+        $task = Factory::getInstance('invalid');
     }
 
     public function testFactoryTaskDefaultsToUnknownStatus()
     {
-        $schedule = new \Savvy\Storage\Model\Schedule;
-        $schedule->setCron('* * * * *');
-        $schedule->setTask('Maintenance');
-
-        $task = Factory::getInstance($schedule);
+        $task = Factory::getInstance('Maintenance');
 
         $this->assertInstanceof('\Savvy\Component\Task\AbstractTask', $task);
         $this->assertEquals(AbstractTask::RESULT_UNKNOWN, $task->getResult());
+    }
+
+    /**
+     * @expectedException \Savvy\Component\Task\Exception
+     * @expectedExceptionCode \Savvy\Component\Task\Exception::E_COMPONENT_TASK_FACTORY_CRON_EXPRESSION_INVALID
+     */
+    public function testFactoryThrowsExceptionOnInvalidCronExpressions()
+    {
+        $task = Factory::getInstance('Maintenance');
+        $task->setCron(new Daemon\Cron('invalid'));
     }
 }

@@ -78,7 +78,7 @@ class CronTest extends \PHPUnit_Framework_TestCase
             array("* * 0 * *"),
             array("* * * * 8"),
             array("*/ * * * "),
-            array("*/b * * * "),
+            array("*/b * * * *"),
             array("* * */32 * *"),
             array("* * * 32 *"),
             array("// * * * *"),

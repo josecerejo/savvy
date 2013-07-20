@@ -92,5 +92,5 @@ abstract class AbstractTask
      * @throws \Savvy\Component\Task\Exception
      * @return void
      */
-    abstract public function execute();
+    abstract public function run();
 }

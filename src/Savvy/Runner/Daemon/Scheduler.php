@@ -89,7 +89,7 @@ class Scheduler extends Base\AbstractSingleton
 
         foreach ($em->getRepository('Savvy\Storage\Model\Schedule')->findByActive(true) as $task) {
             try {
-                $tasks[] = Task\Factory::getInstance($task)->setCron(new Cron($task->getCron()));
+                $tasks[] = Task\Factory::getInstance($task->getTask())->setCron(new Cron($task->getCron()));
             } catch (Task\Exception $e) {
             }
         }
