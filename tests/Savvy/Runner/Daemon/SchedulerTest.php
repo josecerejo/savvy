@@ -23,7 +23,7 @@ class SchedulerTest extends \PHPUnit_Framework_TestCase
         $schedule = new Model\Schedule();
         $schedule->setCron('1 * * * *');
         $schedule->setTask('Maintenance');
-        $schedule->setActive(true);
+        $schedule->setEnabled(true);
 
         $em->persist($schedule);
         $em->flush();

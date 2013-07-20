@@ -25,9 +25,14 @@ class Schedule
     private $task;
 
     /**
-     * @var bool
+     * @var boolean
      */
-    private $active;
+    private $enabled;
+
+    /**
+     * @var \DateTime
+     */
+    private $lastRun;
 
     /**
      * Get id
@@ -84,24 +89,48 @@ class Schedule
     }
 
     /**
-     * Set active
+     * Set enabled
      *
-     * @param boolean $active
+     * @param boolean $enabled
      * @return Schedule
      */
-    public function setActive($active)
+    public function setEnabled($enabled)
     {
-        $this->active = $active;
+        $this->enabled = $enabled;
+    
         return $this;
     }
 
     /**
-     * Get active
+     * Get enabled
      *
      * @return boolean 
      */
-    public function getActive()
+    public function getEnabled()
     {
-        return $this->active;
+        return $this->enabled;
+    }
+
+    /**
+     * Set lastRun
+     *
+     * @param \DateTime $lastRun
+     * @return Schedule
+     */
+    public function setLastRun($lastRun)
+    {
+        $this->lastRun = $lastRun;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastRun
+     *
+     * @return \DateTime 
+     */
+    public function getLastRun()
+    {
+        return $this->lastRun;
     }
 }

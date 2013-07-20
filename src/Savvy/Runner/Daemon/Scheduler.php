@@ -28,7 +28,7 @@ class Scheduler extends Base\AbstractSingleton
     private $timer = null;
 
     /**
-     * Set list of active tasks
+     * Set list of enabled tasks
      *
      * @param array $tasks
      * @return \Savvy\Runner\Daemon\Scheduler
@@ -40,7 +40,7 @@ class Scheduler extends Base\AbstractSingleton
     }
 
     /**
-     * Get list of active tasks
+     * Get list of enabled tasks
      *
      * @return array
      */
@@ -87,7 +87,7 @@ class Scheduler extends Base\AbstractSingleton
 
         $tasks = array();
 
-        foreach ($em->getRepository('Savvy\Storage\Model\Schedule')->findByActive(true) as $task) {
+        foreach ($em->getRepository('Savvy\Storage\Model\Schedule')->findByEnabled(true) as $task) {
             try {
                 $tasks[] = Task\Factory::getInstance($task->getTask())->setCron(new Cron($task->getCron()));
             } catch (Task\Exception $e) {
