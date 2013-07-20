@@ -20,17 +20,44 @@ class Session extends AbstractSingleton
     /**
      * Start or resume existing session
      *
-     * @return bool true if existing session was resumed
+     * @return bool true if an existing application session was picked up
      */
     public function init()
     {
-        $result = @session_start();
+        $result = false;
+
+        @session_start();
 
         if (isset($_SERVER['HTTP_APPLICATION_SESSION'])) {
             $this->setApplicationSessionId($_SERVER['HTTP_APPLICATION_SESSION']);
+
+            if (isset($_SESSION[$_SERVER['HTTP_APPLICATION_SESSION']])) {
+                $result = true;
+            }
         }
 
         return $result;
+    }
+
+    /**
+     * Start session for given user
+     *
+     * @param string $username
+     * @return void
+     */
+    public function start($username)
+    {
+        $_SESSION[$this->getApplicationSessionId()] = array(
+            'username' => (string)$username
+        );
+
+        $em = Database::getInstance()->getEntityManager();
+
+        $user = $em->getRepository('Savvy\Storage\Model\User')->findOneByUsername($username);
+        $user->setLastLogin(new \DateTime('now', new \DateTimeZone(Registry::getInstance()->get('timezone'))));
+
+        $em->persist($user);
+        $em->flush();
     }
 
     /**
@@ -60,7 +87,6 @@ class Session extends AbstractSingleton
             }
 
             $this->setApplicationSessionId($applicationSessionId);
-            $_SESSION[(string)$applicationSessionId] = array();
         }
 
         return $this->applicationSessionId;

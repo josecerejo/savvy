@@ -161,25 +161,8 @@ abstract class AbstractAuthenticator
             }
         }
 
-        return $this->hook($result);
-    }
-
-    /**
-     * Default post-login hook updates users last_login field after login
-     *
-     * @param int $result authentication result
-     * @return bool
-     */
-    protected function hook($result)
-    {
         if ($this->getFirst() && $result === self::AUTHENTICATION_SUCCESS) {
-            $em = Base\Database::getInstance()->getEntityManager();
-
-            $user = $em->getRepository('Savvy\Storage\Model\User')->findOneByUsername($this->getUsername());
-            $user->setLastLogin(new \DateTime('now', new \DateTimeZone(Base\Registry::getInstance()->get('timezone'))));
-
-            $em->persist($user);
-            $em->flush();
+            Base\Session::getInstance()->start($this->getUsername());
         }
 
         return ($result === self::AUTHENTICATION_SUCCESS);

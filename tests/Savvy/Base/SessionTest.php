@@ -18,7 +18,10 @@ class SessionTest extends \PHPUnit_Framework_TestCase
 
     public function testSessionInitializationSucceeds()
     {
-        $_SERVER['HTTP_APPLICATION_SESSION'] = sha1(uniqid('', true));
+        $applicationSessionId = sha1(uniqid('', true));
+        $_SERVER['HTTP_APPLICATION_SESSION'] = $applicationSessionId;
+        $_SESSION[$applicationSessionId] = array();
+
         $this->assertEquals(true, $this->testInstance->init());
     }
 

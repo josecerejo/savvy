@@ -28,6 +28,8 @@ class Runner extends \Savvy\Runner\AbstractRunner
     public function run()
     {
         header('HTTP/1.1 401 Unauthorized', true, 401);
-        return 1;
+        $result = 1;
+
+        return $resutl;
     }
 }
