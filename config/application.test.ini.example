@@ -15,6 +15,11 @@ dbname = "savvy-test"
 user = "savvy-test"
 password = "savvy-test"
 
+[doctrine]
+
+auto_generate_schema = 1
+auto_generate_proxy_classes = 1
+
 [cache]
 
 ;driver = "memcache"
