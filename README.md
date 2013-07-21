@@ -28,7 +28,7 @@ Created new user "example" with ID 1.
 someone@www:~$ savvy user:passwd example examplePassword
 Password for user "example" updated.</pre>
 
-###Source code
+###Documentation
 
 * generate your own API documentation in "public/doc/api/" with "savvy-api.sh"
 (requires [phpDocumentor 2](http://www.phpdoc.org/))  
@@ -36,12 +36,9 @@ Password for user "example" updated.</pre>
 * use [PHP_CodeSniffer](http://pear.php.net/package/PHP_CodeSniffer) to check
 whether your code-style is compliant to [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)
 
-###Automated testing
-
-Run "savvy-tests.sh" to perform automated unit tests using [PHPUnit](http://phpunit.de/manual/current/en/); this
-requires both "php5-xdebug" and "php5-sqlite" to be installed. A non-persistent
-in-memory database is used while unit tests are performed. Code coverage
-reports will be created in "public/doc/tests/".
+* run "savvy-tests.sh" to perform automated unit tests using [PHPUnit](http://phpunit.de/manual/current/en/). For testing,
+an alternative configuration file ("application.test.ini") will be used in which logging is disabled and an alternative
+testing database is specified. Code coverage reports will be created in "public/doc/tests/".
 
 ###License
 
