@@ -4,15 +4,16 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
 
-    <entity name="Savvy\Storage\Model\Schedule" table="schedule">
+    <entity name="Savvy\Storage\Model\Session" table="session">
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO" />
             <sequence-generator sequence-name="tablename_seq" allocation-size="100" initial-value="1" />
         </id>
 
-        <field name="cron" column="cron" type="string" length="128" nullable="false" />
-        <field name="task" column="task" type="string" length="128" nullable="false" unique="true" />
-        <field name="enabled" column="enabled" type="boolean" />
-        <field name="lastRun" column="last_run" type="datetime" nullable="true" />
+        <many-to-one field="userId" target-entity="User">
+            <join-column name="user_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
+        </many-to-one>
+
+        <field name="applicationSessionId" column="application_session_id" type="string" length="40" nullable="false" unique="true" />
     </entity>
 </doctrine-mapping>

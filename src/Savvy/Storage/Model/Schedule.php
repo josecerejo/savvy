@@ -25,7 +25,7 @@ class Schedule
     private $task;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $enabled;
 
@@ -91,7 +91,7 @@ class Schedule
     /**
      * Set enabled
      *
-     * @param boolean $enabled
+     * @param bool $enabled
      * @return Schedule
      */
     public function setEnabled($enabled)
@@ -104,7 +104,7 @@ class Schedule
     /**
      * Get enabled
      *
-     * @return boolean 
+     * @return bool
      */
     public function getEnabled()
     {
