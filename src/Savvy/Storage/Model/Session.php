@@ -15,9 +15,9 @@ class Session
     private $id;
 
     /**
-     * @var int
+     * @var \Savvy\Storage\Model\User
      */
-    private $userId;
+    private $user;
 
     /**
      * @var string
@@ -35,25 +35,25 @@ class Session
     }
 
     /**
-     * Set userId
+     * Set user
      *
-     * @param int $userId
+     * @param \Savvy\Storage\Model\User $user
      * @return Session
      */
-    public function setUserId($userId)
+    public function setUser(\Savvy\Storage\Model\User $user)
     {
-        $this->userId = $userId;
+        $this->user = $user;
         return $this;
     }
 
     /**
-     * Get userId
+     * Get user
      *
-     * @return int 
+     * @return \Savvy\Storage\Model\User 
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->userId;
+        return $this->user;
     }
 
     /**
