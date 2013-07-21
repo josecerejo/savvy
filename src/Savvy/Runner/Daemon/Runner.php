@@ -337,7 +337,7 @@ class Runner extends \Savvy\Runner\AbstractRunner
      */
     private function handle($input)
     {
-        static $commands = array(0 => self::CMD_TICK);
+        static $commands = array();
         static $buffer = '';
 
         $p = 0;
@@ -359,7 +359,7 @@ class Runner extends \Savvy\Runner\AbstractRunner
 
             switch (strtolower($command)) {
                 case self::CMD_TICK:
-                    Scheduler::getInstance()->tick();
+                    Scheduler::getInstance()->tick(true);
                     break;
                 case self::CMD_RELOAD:
                     $this->reload();
@@ -416,6 +416,7 @@ class Runner extends \Savvy\Runner\AbstractRunner
 
             if ($result === 0) {
                 usleep($heartbeat);
+                Scheduler::getInstance()->tick();
                 pcntl_signal_dispatch();
             }
         }

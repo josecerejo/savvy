@@ -3,6 +3,7 @@
 namespace Savvy\Component\Task;
 
 use Savvy\Runner\Daemon as Daemon;
+use Savvy\Storage\Model as Model;
 
 class TaskTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,12 +13,22 @@ class TaskTest extends \PHPUnit_Framework_TestCase
      */
     public function testFactoryThrowsExceptionOnUnknownTasks()
     {
-        $task = Factory::getInstance('invalid');
+        $schedule = new Model\Schedule();
+        $schedule->setCron('* * * * *');
+        $schedule->setTask('UnknownTask');
+        $schedule->setEnabled(true);
+
+        $task = Factory::getInstance($schedule);
     }
 
     public function testFactoryTaskDefaultsToUnknownStatus()
     {
-        $task = Factory::getInstance('Maintenance');
+        $schedule = new Model\Schedule();
+        $schedule->setCron('* * * * *');
+        $schedule->setTask('Maintenance');
+        $schedule->setEnabled(true);
+
+        $task = Factory::getInstance($schedule);
 
         $this->assertInstanceof('\Savvy\Component\Task\AbstractTask', $task);
         $this->assertEquals(AbstractTask::RESULT_UNKNOWN, $task->getResult());
@@ -29,7 +40,11 @@ class TaskTest extends \PHPUnit_Framework_TestCase
      */
     public function testFactoryThrowsExceptionOnInvalidCronExpressions()
     {
-        $task = Factory::getInstance('Maintenance');
-        $task->setCron(new Daemon\Cron('invalid'));
+        $schedule = new Model\Schedule();
+        $schedule->setCron('garbage');
+        $schedule->setTask('Maintenance');
+        $schedule->setEnabled(true);
+
+        $task = Factory::getInstance($schedule);
     }
 }

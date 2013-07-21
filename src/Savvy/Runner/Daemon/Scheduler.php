@@ -68,10 +68,6 @@ class Scheduler extends Base\AbstractSingleton
      */
     protected function getTimer()
     {
-        if ($this->timer === null) {
-            $this->setTimer(time());
-        }
-
         return $this->timer;
     }
 
@@ -87,9 +83,9 @@ class Scheduler extends Base\AbstractSingleton
 
         $tasks = array();
 
-        foreach ($em->getRepository('Savvy\Storage\Model\Schedule')->findByEnabled(true) as $task) {
+        foreach ($em->getRepository('Savvy\Storage\Model\Schedule')->findByEnabled(true) as $schedule) {
             try {
-                $tasks[] = Task\Factory::getInstance($task->getTask())->setCron(new Cron($task->getCron()));
+                $tasks[] = Task\Factory::getInstance($schedule);
             } catch (Task\Exception $e) {
             }
         }
@@ -99,17 +95,21 @@ class Scheduler extends Base\AbstractSingleton
     }
 
     /**
-     * Start task(s)
+     * Queue overdue tasks
      *
+     * @param bool $responsive
      * @return void
      */
-    public function tick()
+    public function tick($responsive = false)
     {
-        $timer = $this->getTimer();
+        if ($this->getTimer() === null || (time() - $this->getTimer()) > 59 || $responsive) {
+            $this->setTimer(time());
 
-        foreach ($this->getTasks() as $task) {
+            foreach ($this->getTasks() as $task) {
+                if ($task->getCron()->matching($this->getTimer())) {
+                    $em = Base\Database::getInstance()->getEntityManager();
+                }
+            }
         }
-
-        $this->setTimer(time());
     }
 }

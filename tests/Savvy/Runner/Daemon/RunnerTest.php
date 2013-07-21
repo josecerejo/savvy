@@ -2,11 +2,14 @@
 
 namespace Savvy\Runner\Daemon;
 
+use Savvy\Base as Base;
+use Savvy\Storage\Model as Model;
+
 class RunnerTest extends \PHPUnit_Framework_TestCase
 {
     private $testInstance;
 
-    public function setup()
+    public function setUp()
     {
         $this->testInstance = new Runner();
 
@@ -19,7 +22,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         \Savvy\Base\Registry::getInstance()->set('daemon.pipe', $this->testPipefile);
     }
 
-    public function teardown()
+    public function tearDown()
     {
         if (file_exists($this->testPidfile)) {
             unlink($this->testPidfile);
@@ -67,6 +70,20 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
     public function testDaemonGetsCommandsFromNamedPipe()
     {
+        $em = Base\Database::getInstance()->getEntityManager();
+
+        if ($schedule = $em->getRepository('Savvy\Storage\Model\Schedule')->findByTask('Maintenance')) {
+        } else {
+            $schedule = new Model\Schedule();
+            $schedule->setCron('* * * * *');
+            $schedule->setTask('Maintenance');
+            $schedule->setEnabled(true);
+
+            $em->persist($schedule);
+        }
+
+        $em->flush();
+
         $r = fopen($this->testPipefile, 'x+');
         fwrite($r, "foo\nreload\ntick\nquit\n");
         fseek($r, 0);

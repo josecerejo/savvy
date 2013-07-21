@@ -17,22 +17,20 @@ class SchedulerTest extends \PHPUnit_Framework_TestCase
     {
         $em = Base\Database::getInstance()->getEntityManager();
 
-        $scheduler = Scheduler::getInstance();
-        $this->assertEquals(0, count($scheduler->getTasks()));
+        if ($schedule = $em->getRepository('Savvy\Storage\Model\Schedule')->findByTask('Maintenance')) {
+        } else {
+            $schedule = new Model\Schedule();
+            $schedule->setCron('1 * * * *');
+            $schedule->setTask('Maintenance');
+            $schedule->setEnabled(true);
 
-        $schedule = new Model\Schedule();
-        $schedule->setCron('1 * * * *');
-        $schedule->setTask('Maintenance');
-        $schedule->setEnabled(true);
+            $em->persist($schedule);
+            $em->flush();
+        }
 
-        $em->persist($schedule);
-        $em->flush();
-
+        $scheduler = new Scheduler();
         $scheduler->init();
-        $this->assertEquals(1, count($scheduler->getTasks()));
 
-        $schedule = $em->getRepository('Savvy\Storage\Model\Schedule')->findOneByTask('Maintenance');
-        $em->remove($schedule);
-        $em->flush();
+        $this->assertEquals(1, count($scheduler->getTasks()));
     }
 }

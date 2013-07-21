@@ -65,6 +65,16 @@ abstract class AbstractTask
     }
 
     /**
+     * Get cron schedule instance
+     *
+     * @return \Savvy\Runner\Daemon\Cron
+     */
+    public function getCron()
+    {
+        return $this->cron;
+    }
+
+    /**
      * Set result code
      *
      * @param int $result

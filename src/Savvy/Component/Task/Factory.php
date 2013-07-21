@@ -17,23 +17,24 @@ class Factory extends Base\AbstractFactory
      * Create task instance from given schedule entity
      *
      * @throws \Savvy\Component\Task\Exception
-     * @param string $taskName
+     * @param \Savvy\Storage\Model\Schedule $schedule
      * @return \Savvy\Component\Task\AbstractTask
      */
-    public static function getInstance($taskName = null)
+    public static function getInstance(\Savvy\Storage\Model\Schedule $schedule = null)
     {
         $taskInstance = null;
 
-        if ($taskName !== null) {
-            $taskClass = sprintf("Savvy\\Component\\Task\\%s", $taskName);
+        if ($schedule !== null) {
+            $taskClass = sprintf("Savvy\\Component\\Task\\%s", $schedule->getTask());
 
             if (\Doctrine\Common\ClassLoader::classExists($taskClass)) {
                 $taskInstance = new $taskClass;
+                $taskInstance->setCron(new Daemon\Cron($schedule->getCron()));
             }
         }
 
         if ($taskInstance instanceof AbstractTask === false) {
-            throw new Exception($taskName, Exception::E_COMPONENT_TASK_FACTORY_TASK_NOT_FOUND);
+            throw new Exception($schedule->getTask(), Exception::E_COMPONENT_TASK_FACTORY_TASK_NOT_FOUND);
         }
 
         return $taskInstance;
