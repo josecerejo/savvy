@@ -8,35 +8,32 @@ use Savvy\Runner\GUI as GUI;
 
 class IndexPresenterTest extends \PHPUnit_Framework_TestCase
 {
-    private $authentication;
-    private $testInstance;
-    private $testUser;
-
     public function setup()
     {
-        $this->authentication = Base\Registry::getInstance()->get('authentication');
         Base\Registry::getInstance()->set('authentication', 'database');
-        $this->testInstance = new IndexPresenter();
 
-        $this->testUser = new Model\User();
-        $this->testUser->setUsername('testuser');
-        $this->testUser->setPassword(md5('testuser'));
+        $em = Base\Database::getInstance()->getEntityManager();
 
-        Base\Database::getInstance()->getEntityManager()->persist($this->testUser);
-        Base\Database::getInstance()->getEntityManager()->flush();
-    }
+        if ($user = $em->getRepository('Savvy\Storage\Model\User')->findByUsername('testuser')) {
+        } else {
+            $user = new Model\User();
+            $user->setUsername('testuser');
+            $user->setPassword(md5('testuser'));
 
-    public function teardown()
-    {
-        Base\Registry::getInstance()->set('authentication', $this->authentication);
+            $em->persist($user);
+        }
 
-        Base\Database::getInstance()->getEntityManager()->remove($this->testUser);
-        Base\Database::getInstance()->getEntityManager()->flush();
+        foreach ($em->getRepository('Savvy\Storage\Model\Session')->findAll() as $session) {
+            $em->remove($session);
+        }
+
+        $em->flush();
     }
 
     public function testWhetherIndexPresenterIsInstanceOfGUIPresenter()
     {
-        $this->assertInstanceOf('\Savvy\Runner\GUI\Presenter', $this->testInstance);
+        $testInstance = new IndexPresenter();
+        $this->assertInstanceOf('\Savvy\Runner\GUI\Presenter', $testInstance);
     }
 
     public function testIndexPresenterValidateActionSucceeds()
@@ -47,8 +44,10 @@ class IndexPresenterTest extends \PHPUnit_Framework_TestCase
         $request->setRoute('login/index?action=validate');
         $request->setForm(array('username' => 'testuser', 'password' => $password));
 
-        $this->testInstance->setRequest($request);
-        $response = json_decode($this->testInstance->dispatch());
+        $testInstance = new IndexPresenter();
+        $testInstance->setRequest($request);
+
+        $response = json_decode($testInstance->dispatch());
 
         $this->assertInstanceOf('stdClass', $response);
         $this->assertEquals(true, $response->success);
@@ -60,8 +59,10 @@ class IndexPresenterTest extends \PHPUnit_Framework_TestCase
         $request->setRoute('login/index?action=validate');
         $request->setForm(array('username' => 'fakeuser', 'password' => 'totallywrong'));
 
-        $this->testInstance->setRequest($request);
-        $response = json_decode($this->testInstance->dispatch());
+        $testInstance = new IndexPresenter();
+        $testInstance->setRequest($request);
+
+        $response = json_decode($testInstance->dispatch());
 
         $this->assertInstanceOf('stdClass', $response);
         $this->assertEquals(false, $response->success);

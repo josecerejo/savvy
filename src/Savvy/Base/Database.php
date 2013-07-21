@@ -49,7 +49,7 @@ class Database extends AbstractSingleton
 
             if ((bool)Registry::getInstance()->get('doctrine.auto_generate_schema', false)) {
                 $schemaTool = new \Doctrine\ORM\Tools\SchemaTool($entityManager);
-                $schemaTool->createSchema($entityManager->getMetadataFactory()->getAllMetadata());
+                $schemaTool->updateSchema($entityManager->getMetadataFactory()->getAllMetadata());
             }
 
             $this->setEntityManager($entityManager);

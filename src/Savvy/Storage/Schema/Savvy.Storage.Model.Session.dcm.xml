@@ -7,11 +7,15 @@
     <entity name="Savvy\Storage\Model\Session" table="session">
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO" />
-            <sequence-generator sequence-name="tablename_seq" allocation-size="100" initial-value="1" />
+            <sequence-generator sequence-name="session_seq" allocation-size="100" initial-value="1" />
         </id>
 
         <many-to-one field="user" target-entity="User">
             <join-column name="user_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
+
+            <cascade>
+                <cascade-persist />
+            </cascade>
         </many-to-one>
 
         <field name="applicationSessionId" column="application_session_id" type="string" length="40" nullable="false" unique="true" />

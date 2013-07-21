@@ -11,6 +11,9 @@ class AbstractRunnerTest extends \PHPUnit_Framework_TestCase
         $this->testInstance = $this->getMockForAbstractClass('\Savvy\Runner\Console\AbstractRunner');
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testBasicConsoleRunnerExecution()
     {
         $input = new \Symfony\Component\Console\Input\ArgvInput(array('savvy', '--quiet'));

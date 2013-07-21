@@ -23,6 +23,9 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Savvy\Runner\Console\AbstractRunner', $this->testInstance);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testApplication()
     {
         $argv = array('doctrine', '--quiet');

@@ -20,18 +20,21 @@ class Registry extends AbstractSingleton
     /**
      * Initialize configuration registry
      *
-     * @return void
+     * @return bool
      */
     public function init()
     {
-        $rootPath = realpath(dirname(__FILE__) . '/../../..');
-
-        $this->configuration = parse_ini_file($rootPath . '/config/application.ini', true);
-        $this->set('root', $rootPath);
+        $root = realpath(dirname(__FILE__) . '/../../..');
+        $configuration = $root . '/config/application.ini';
 
         if (defined('APPLICATION_MODE')) {
-            $this->set('mode', APPLICATION_MODE);
+            $configuration = $root . '/config/application.' . APPLICATION_MODE . '.ini';
         }
+
+        $this->configuration = parse_ini_file($configuration, true);
+        $this->set('root', $root);
+
+        return true;
     }
 
     /**

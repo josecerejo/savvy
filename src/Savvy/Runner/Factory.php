@@ -28,9 +28,9 @@ class Factory extends Base\AbstractFactory
     public static function getInstance()
     {
         if (self::$instance === null) {
-            foreach (Base\Registry::getInstance()->get('runner') as $name => $runnerClass) {
-                $result = false;
+            $result = false;
 
+            foreach (Base\Registry::getInstance()->get('runner') as $name => $runnerClass) {
                 if (\Doctrine\Common\ClassLoader::classExists($runnerClass)) {
                     try {
                         $runner = new $runnerClass;

@@ -4,41 +4,28 @@ namespace Savvy\Runner;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {
-    private $testInstance;
-    private $server;
-    private $request;
-
-    public function setup()
-    {
-        $this->server = $_SERVER;
-        $this->request = $_REQUEST;
-    }
-
-    public function teardown()
-    {
-        $_SERVER = $this->server;
-        $_REQUEST = $this->request;
-    }
-
     /**
+     * @runInSeparateProcess
      * @expectedException \Savvy\Runner\Exception
      * @expectedExceptionCode \Savvy\Runner\Exception::E_RUNNER_FACTORY_UNKNOWN_RUNNER
-     * @runInSeparateProcess
      */
     public function testFactoryException()
     {
-        $runner = \Savvy\Runner\Factory::getInstance();
+        unset($_SERVER['REQUEST_URI']);
+        unset($_GET);
+
+        $runnerFactory = new \Savvy\Runner\Factory();
+        $runner = $runnerFactory->getInstance();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testFactoryGuiRunner()
     {
         $_SERVER['REQUEST_URI'] = '/index.php';
 
         $runner = \Savvy\Runner\Factory::getInstance();
         $this->assertInstanceOf('\Savvy\Runner\GUI\Runner', $runner);
+
+        unset($_SERVER['REQUEST_URI']);
     }
 
     /**
@@ -50,6 +37,8 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
         $runner = \Savvy\Runner\Factory::getInstance();
         $this->assertInstanceOf('\Savvy\Runner\Console\Savvy\Runner', $runner);
+
+        unset($_SERVER['argv']);
     }
 
     /**
@@ -61,6 +50,8 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
         $runner = \Savvy\Runner\Factory::getInstance();
         $this->assertInstanceOf('\Savvy\Runner\Console\Doctrine\Runner', $runner);
+
+        unset($_SERVER['argv']);
     }
 
     /**
@@ -73,6 +64,8 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $runner = \Savvy\Runner\Factory::getInstance();
         $this->assertInstanceOf('\Savvy\Runner\Daemon\Runner', $runner);
         $this->assertTrue($runner->isSuitable());
+
+        unset($_SERVER['argv']);
     }
 
     /**
@@ -85,5 +78,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $runner = \Savvy\Runner\Factory::getInstance();
         $this->assertInstanceOf('\Savvy\Runner\REST\Runner', $runner);
         $this->assertTrue($runner->isSuitable());
+
+        unset($_REQUEST['api']);
     }
 }

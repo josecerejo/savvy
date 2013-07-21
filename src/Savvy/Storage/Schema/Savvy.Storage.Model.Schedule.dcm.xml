@@ -7,7 +7,7 @@
     <entity name="Savvy\Storage\Model\Schedule" table="schedule">
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO" />
-            <sequence-generator sequence-name="tablename_seq" allocation-size="100" initial-value="1" />
+            <sequence-generator sequence-name="schedule_seq" allocation-size="100" initial-value="1" />
         </id>
 
         <field name="cron" column="cron" type="string" length="128" nullable="false" />

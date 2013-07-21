@@ -7,47 +7,43 @@ use Savvy\Storage\Model as Model;
 
 class DatabaseTest extends \PHPUnit_Framework_TestCase
 {
-    private $authentication;
-    private $testInstance;
-    private $testUser;
-
-    public function setup()
+    public static function setUpBeforeClass()
     {
-        $this->authentication = Base\Registry::getInstance()->get('authentication');
-        Base\Registry::getInstance()->set('authentication', 'database,database');
-        $this->testInstance = Factory::getInstance();
-        $this->testUser = new Model\User();
-        $this->testUser->setUsername('testuser');
-        $this->testUser->setPassword(md5('correctpassword'));
-        Base\Database::getInstance()->getEntityManager()->persist($this->testUser);
-        Base\Database::getInstance()->getEntityManager()->flush();
-    }
+        $em = Base\Database::getInstance()->getEntityManager();
 
-    public function teardown()
-    {
-        Base\Registry::getInstance()->set('authentication', $this->authentication);
-        Base\Database::getInstance()->getEntityManager()->remove($this->testUser);
-        Base\Database::getInstance()->getEntityManager()->flush();
+        if ($user = $em->getRepository('Savvy\Storage\Model\User')->findByUsername('testuser')) {
+        } else {
+            $user = new Model\User();
+            $user->setUsername('testuser');
+            $user->setPassword(md5('testuser'));
+
+            $em->persist($user);
+            $em->flush();
+        }
     }
 
     public function testFactoryReturnsDatabaseAuthenticator()
     {
-        $this->assertInstanceOf("Savvy\\Component\\Authenticator\\Database", $this->testInstance);
+        Base\Registry::getInstance()->set('authentication', 'database');
+        $this->assertInstanceOf("Savvy\\Component\\Authenticator\\Database", Factory::getInstance());
     }
 
     public function testDatabaseAuthenticatorWithNonExistingUser()
     {
-        $this->assertEquals(false, $this->testInstance->validate('unknownuser', 'somepassword'));
+        Base\Registry::getInstance()->set('authentication', 'database,database');
+        $this->assertEquals(false, Factory::getInstance()->validate('unknownuser', 'somepassword'));
     }
 
     public function testDatabaseAuthenticatorWithWrongPassword()
     {
-        $this->assertEquals(false, $this->testInstance->validate('testuser', 'wrongpassword'));
+        Base\Registry::getInstance()->set('authentication', 'database');
+        $this->assertEquals(false, Factory::getInstance()->validate('testuser', 'wrongpassword'));
     }
 
     public function testDatabaseAuthenticatorWithCorrectPassword()
     {
-        $password = md5(md5('correctpassword') . Base\Session::getInstance()->getApplicationSessionId());
-        $this->assertEquals(true, $this->testInstance->validate('testuser', $password));
+        Base\Registry::getInstance()->set('authentication', 'database');
+        $password = md5(md5('testuser') . Base\Session::getInstance()->getApplicationSessionId());
+        $this->assertEquals(true, Factory::getInstance()->validate('testuser', $password));
     }
 }

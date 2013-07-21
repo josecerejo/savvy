@@ -3,7 +3,7 @@
 name = "Savvy"
 version = "2013/07/21"
 languages = "en,de"
-log = "file:filename=log/core.log"
+log = "null"
 authentication = "database"
 timezone = "Europe/Berlin"
 
@@ -11,9 +11,9 @@ timezone = "Europe/Berlin"
 
 driver = "mysqli"
 host = "localhost"
-dbname = "savvy"
-user = "savvy"
-password = "savvy"
+dbname = "savvy-test"
+user = "savvy-test"
+password = "savvy-test"
 
 [cache]
 
@@ -38,8 +38,7 @@ doctrine = "Savvy\Runner\Console\Doctrine\Runner"
 heartbeat = 120
 pipe = "tmp/daemon.fifo"
 pid = "tmp/daemon.pid"
-log = "file:filename=log/daemon.log"
-;log = "syslog"
+log = "null"
 
 [utility]
 

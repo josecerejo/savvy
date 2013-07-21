@@ -78,7 +78,7 @@ abstract class AbstractRunner extends \Savvy\Runner\AbstractRunner
             $cliName === 'doctrine' ? \Doctrine\ORM\Version::VERSION : Base\Registry::getInstance()->get('version')
         );
 
-        if (Base\Registry::getInstance()->get('mode') === 'test') {
+        if (defined('APPLICATION_MODE') && constant('APPLICATION_MODE') === 'test') {
             $cli->setAutoExit(false);
         }
 

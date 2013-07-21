@@ -4,12 +4,9 @@ namespace Savvy\Base;
 
 class RegistryTest extends \PHPUnit_Framework_TestCase
 {
-    public function testRegistryInitializationHonorsTestMode()
+    public function testRegistryInitializationSucceeds()
     {
-        $registry = new Registry;
-        $registry->init();
-
-        $this->assertEquals('test', $registry->get('mode'));
+        $this->assertEquals(true, Registry::getInstance()->init());
     }
 
     public function testRegistryKeyUndefinedReturnsFalse()

@@ -17,6 +17,9 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Savvy\Runner\Console\AbstractRunner', $this->testInstance);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testApplication()
     {
         $input = new \Symfony\Component\Console\Input\ArgvInput(array('savvy', '--quiet'));
