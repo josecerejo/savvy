@@ -49,8 +49,13 @@ class Session extends AbstractSingleton
 
         $user = $em->getRepository('Savvy\Storage\Model\User')->findOneByUsername($username);
         $user->setLastLogin(new \DateTime('now', new \DateTimeZone(Registry::getInstance()->get('timezone'))));
-
         $em->persist($user);
+
+        $session = new \Savvy\Storage\Model\Session();
+        $session->setUser($user);
+        $session->setApplicationSessionId($this->getApplicationSessionId());
+        $em->persist($session);
+
         $em->flush();
     }
 
