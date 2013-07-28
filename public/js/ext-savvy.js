@@ -237,6 +237,12 @@ Ext.util.reset = function(name) {
   Ext.getCmp(name).getForm().reset();
 }
 
+/* quit current user session (logout) */
+
+Ext.util.quit = function() {
+  window.location.reload();
+}
+
 /* process remote procedure calls */
 
 Ext.util.rpc = function(cl) {

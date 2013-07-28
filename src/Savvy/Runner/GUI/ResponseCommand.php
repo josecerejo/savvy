@@ -85,7 +85,7 @@ class ResponseCommand
      * Open module view
      *
      * @param string $module module name
-     * @param string $presenter presenter name, defaults to "index"
+     * @param string $presenter optional presenter name, defaults to "index"
      * @return \Savvy\Runner\GUI\ResponseCommand
      */
     public function open($module, $presenter = 'index')
@@ -102,7 +102,7 @@ class ResponseCommand
      * Open modal module view
      *
      * @param string $module module name
-     * @param string $presenter presenter name, defaults to "index"
+     * @param string $presenter optional presenter name, defaults to "index"
      * @return \Savvy\Runner\GUI\ResponseCommand
      */
     public function modal($module, $presenter = 'index')
@@ -110,6 +110,21 @@ class ResponseCommand
         $this->response->commands[] = array(
             'command'   => 'modal',
             'parameter' => array((string)$module, (string)$presenter)
+        );
+
+        return $this;
+    }
+
+    /**
+     * Quit current user session (logout)
+     *
+     * @return \Savvy\Runner\GUI\ResponseCommand
+     */
+    public function quit()
+    {
+        $this->response->commands[] = array(
+            'command'   => 'quit',
+            'parameter' => array()
         );
 
         return $this;
