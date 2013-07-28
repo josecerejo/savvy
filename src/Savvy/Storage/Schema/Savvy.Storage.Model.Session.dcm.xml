@@ -19,5 +19,6 @@
         </many-to-one>
 
         <field name="applicationSessionId" column="application_session_id" type="string" length="40" nullable="false" unique="true" />
+        <field name="lastKeepalive" column="last_keepalive" type="datetime" nullable="false" />
     </entity>
 </doctrine-mapping>

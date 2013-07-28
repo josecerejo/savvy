@@ -26,9 +26,7 @@ class Session extends AbstractSingleton
     {
         @session_start();
 
-        if (isset($_REQUEST['api']) && isset($_SERVER['PHP_AUTH_PW'])) {
-            $this->setApplicationSessionId($_SERVER['PHP_AUTH_PW']);
-        } elseif (isset($_SERVER['HTTP_APPLICATION_SESSION'])) {
+        if (isset($_SERVER['HTTP_APPLICATION_SESSION'])) {
             $this->setApplicationSessionId($_SERVER['HTTP_APPLICATION_SESSION']);
         }
 
@@ -56,6 +54,7 @@ class Session extends AbstractSingleton
         $session = new \Savvy\Storage\Model\Session();
         $session->setUser($user);
         $session->setApplicationSessionId($this->getApplicationSessionId());
+        $session->setLastKeepalive($user->getLastLogin());
         $em->persist($session);
 
         $em->flush();
@@ -75,15 +74,6 @@ class Session extends AbstractSingleton
 
             if (is_array($applicationSession) && isset($applicationSession['username'])) {
                 $result = true;
-            }
-        } elseif (isset($_REQUEST['api'])) {
-            $em = Database::getInstance()->getEntityManager();
-            $sessions = $em->getRepository('Savvy\Storage\Model\Session');
-
-            if ($session = $sessions->findOneByApplicationSessionId($this->getApplicationSessionId())) {
-                if ($session->getUser()->getUsername() === $_SERVER['PHP_AUTH_USER']) {
-                    $result = true;
-                }
             }
         }
 

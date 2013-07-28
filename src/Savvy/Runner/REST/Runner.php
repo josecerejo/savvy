@@ -35,6 +35,7 @@ class Runner extends \Savvy\Runner\AbstractRunner
         } else {
             $result = 1;
             header('HTTP/1.1 401 Unauthorized', true, 401);
+            header(sprintf("WWW-Authenticate: Basic realm=\"%s REST API\"", Base\Registry::getInstance()->get('name')));
         }
 
         return $result;

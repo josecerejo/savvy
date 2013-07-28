@@ -25,6 +25,11 @@ class Session
     private $applicationSessionId;
 
     /**
+     * @var \DateTime
+     */
+    private $lastKeepalive;
+
+    /**
      * Get id
      *
      * @return int 
@@ -76,5 +81,28 @@ class Session
     public function getApplicationSessionId()
     {
         return $this->applicationSessionId;
+    }
+
+    /**
+     * Set lastKeepalive
+     *
+     * @param \DateTime $lastKeepalive
+     * @return Session
+     */
+    public function setLastKeepalive($lastKeepalive)
+    {
+        $this->lastKeepalive = $lastKeepalive;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastKeepalive
+     *
+     * @return \DateTime 
+     */
+    public function getLastKeepalive()
+    {
+        return $this->lastKeepalive;
     }
 }
