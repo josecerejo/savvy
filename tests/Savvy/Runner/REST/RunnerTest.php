@@ -26,6 +26,9 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $testInstance->run());
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testRunner()
     {
         $testInstance = new Runner();
