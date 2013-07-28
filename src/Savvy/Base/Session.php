@@ -77,25 +77,27 @@ class Session extends AbstractSingleton
 
             if (is_array($applicationSession) && isset($applicationSession['username'])) {
                 $result = true;
+
                 $keepalive = new \DateTime('now', new \DateTimeZone(Registry::getInstance()->get('timezone')));
                 $timeout = Registry::getInstance()->get('session.timeout');
 
-                if ($timeout > 0 && $keepalive->getTimestamp() - $applicationSession['keepalive'] > $timeout) {
+                if ($timeout > 0 && (($keepalive->getTimestamp() - $applicationSession['keepalive']) > $timeout)) {
+                    // session expired (timeout)
                     $this->quit();
                     $result = false;
-                } else {
-                    if ($keepalive->getTimestamp() - $applicationSession['keepalive'] > 60) {
-                        $em = Database::getInstance()->getEntityManager();
-                        $sessions = $em->getRepository('Savvy\Storage\Model\Session');
+                } elseif (($keepalive->getTimestamp() - $applicationSession['keepalive']) > 30) {
+                    $em = Database::getInstance()->getEntityManager();
+                    $sessions = $em->getRepository('Savvy\Storage\Model\Session');
 
-                        if ($session = $sessions->findOneByApplicationSessionId($this->getApplicationSessionId())) {
-                            $session->setLastKeepalive($keepalive);
-                            $em->persist($session);
-                            $em->flush();
-                        } else {
-                            $this->quit();
-                            $result = false;
-                        }
+                    if ($session = $sessions->findOneByApplicationSessionId($this->getApplicationSessionId())) {
+                        // update session record
+                        $session->setLastKeepalive($keepalive);
+                        $em->persist($session);
+                        $em->flush();
+                    } else {
+                        // session expired (session record has been deleted)
+                        $this->quit();
+                        $result = false;
                     }
                 }
 

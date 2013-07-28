@@ -116,17 +116,21 @@ class Presenter
                 }
                 break;
             case Request::TYPE_ACTION:
-                $method = sprintf('%sAction', $this->getRequest()->getAction());
+                if ($this->getRequest()->getRoute()[0] !== 'login' && Base\Session::getInstance()->valid() === false) {
+                    $this->setResponse(new Response());
 
-                if (method_exists($this, $method)) {
-                    $this->{$method}();
-                    $result = $this->response->render();
+                    $responseCommand = new ResponseCommand($this->getResponse());
+                    $responseCommand->quit();
                 } else {
-                    throw new Exception(
-                        $this->getRequest()->getAction(),
-                        Exception::E_RUNNER_GUI_ACTION_NOT_FOUND
-                    );
+                    $method = sprintf('%sAction', $action = $this->getRequest()->getAction());
+
+                    if (method_exists($this, $method)) {
+                        $this->{$method}();
+                    } else {
+                        throw new Exception($action, Exception::E_RUNNER_GUI_ACTION_NOT_FOUND);
+                    }
                 }
+                $result = $this->getResponse()->render();
                 break;
         }
 

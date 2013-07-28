@@ -38,7 +38,7 @@ class PresenterTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request();
         $request->setType(Request::TYPE_ACTION);
-        $request->setRoute(array('this', 'action', 'does', 'not', 'exist'));
+        $request->setRoute(array('login', 'this', 'action', 'does', 'not', 'exist'));
 
         $this->testInstance->setRequest($request);
         $this->testInstance->dispatch();
