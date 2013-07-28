@@ -1,11 +1,15 @@
 [default]
 
 name = "Savvy"
-version = "2013/07/21"
+version = "2013/07/28"
 languages = "en,de"
 log = "file:filename=log/core.log"
 authentication = "database"
 timezone = "Europe/Berlin"
+
+[session]
+
+timeout = 900
 
 [database]
 
@@ -39,7 +43,6 @@ heartbeat = 120
 pipe = "tmp/daemon.fifo"
 pid = "tmp/daemon.pid"
 log = "file:filename=log/daemon.log"
-;log = "syslog"
 
 [utility]
 

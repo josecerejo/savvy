@@ -1,11 +1,15 @@
 [default]
 
 name = "Savvy"
-version = "2013/07/21"
+version = "2013/07/28"
 languages = "en,de"
 log = "null"
 authentication = "database"
 timezone = "Europe/Berlin"
+
+[session]
+
+timeout = 900
 
 [database]
 
