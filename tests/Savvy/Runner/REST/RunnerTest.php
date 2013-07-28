@@ -26,9 +26,6 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $testInstance->run());
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testRunner()
     {
         $testInstance = new Runner();
@@ -36,7 +33,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
         $applicationSessionId = sha1(uniqid('', true));
 
         $_SERVER['HTTP_APPLICATION_SESSION'] = $applicationSessionId;
-        $_SESSION[$applicationSessionId] = array('username' => 'foobar');
+        $_SESSION[$applicationSessionId] = array('username' => 'foobar', 'keepalive' => time());
 
         $this->assertEquals(true, Base\Session::getInstance()->init());
         $this->assertEquals(0, $testInstance->run());

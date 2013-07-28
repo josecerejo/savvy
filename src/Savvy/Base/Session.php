@@ -41,20 +41,23 @@ class Session extends AbstractSingleton
      */
     public function start($username)
     {
+        $dtime = new \DateTime('now', new \DateTimeZone(Registry::getInstance()->get('timezone')));
+
         $_SESSION[$this->getApplicationSessionId()] = array(
-            'username' => (string)$username
+            'username'  => (string)$username,
+            'keepalive' => (int)$dtime->getTimestamp()
         );
 
         $em = Database::getInstance()->getEntityManager();
 
         $user = $em->getRepository('Savvy\Storage\Model\User')->findOneByUsername($username);
-        $user->setLastLogin(new \DateTime('now', new \DateTimeZone(Registry::getInstance()->get('timezone'))));
+        $user->setLastLogin($dtime);
         $em->persist($user);
 
         $session = new \Savvy\Storage\Model\Session();
         $session->setUser($user);
         $session->setApplicationSessionId($this->getApplicationSessionId());
-        $session->setLastKeepalive($user->getLastLogin());
+        $session->setLastKeepalive($dtime);
         $em->persist($session);
 
         $em->flush();
@@ -70,10 +73,37 @@ class Session extends AbstractSingleton
         $result = false;
 
         if (isset($_SESSION[$this->getApplicationSessionId()])) {
-            $applicationSession = $_SESSION[$this->getApplicationSessionId()];
+            $applicationSession = &$_SESSION[$this->getApplicationSessionId()];
 
             if (is_array($applicationSession) && isset($applicationSession['username'])) {
-                $result = true;
+                $em = Database::getInstance()->getEntityManager();
+                $keepalive = new \DateTime('now', new \DateTimeZone(Registry::getInstance()->get('timezone')));
+                $timeout = Registry::getInstance()->get('session.timeout');
+
+                if ($timeout > 0 && $keepalive->getTimestamp() - $applicationSession['keepalive'] > $timeout) {
+                    unset($_SESSION[$this->getApplicationSessionId()]);
+
+                    $sessions = $em->getRepository('Savvy\Storage\Model\Session');
+
+                    if ($session = $sessions->findOneByApplicationSessionId($this->getApplicationSessionId())) {
+                        $em->remove($session);
+                        $em->flush();
+                    }
+
+                    $result = false;
+                } else {
+                    if ($keepalive->getTimestamp() - $applicationSession['keepalive'] > 60) {
+                        $sessions = $em->getRepository('Savvy\Storage\Model\Session');
+                        $session = $sessions->findOneByApplicationSessionId($this->getApplicationSessionId());
+                        $session->setLastKeepalive($keepalive);
+
+                        $em->persist($session);
+                        $em->flush();
+                    }
+
+                    $applicationSession['keepalive'] = $keepalive->getTimestamp();
+                    $result = true;
+                }
             }
         }
 
