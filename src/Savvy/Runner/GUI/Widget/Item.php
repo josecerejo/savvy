@@ -65,7 +65,11 @@ class Item extends AbstractWidget
         'layout'          => array(
             'type'            => self::TYPE_CHILD,
             'name'            => 'layout',
-            'value'           => 'null'
+            'value'           => null
+        ),
+        'autoEl'          => array(
+            'type'            => self::TYPE_CHILD,
+            'name'            => 'element'
         ),
         'columnWidth'         => array(
             'type'            => self::TYPE_VARIABLE

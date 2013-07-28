@@ -75,7 +75,7 @@ class Request
                 }
             }
 
-            $this->route = preg_split('/\//', trim(strtolower($route), '/'));
+            $this->route = preg_split('/\//', trim($route, '/'));
         }
 
         return $this;

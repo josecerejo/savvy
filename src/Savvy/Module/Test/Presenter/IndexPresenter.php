@@ -24,13 +24,13 @@ class IndexPresenter extends GUI\Presenter
     }
 
     /**
-     * Close module
+     * Open framed window with external source
      *
      * @return void
      */
-    protected function closeAction()
+    protected function externalFrameAction()
     {
-        $this->getResponse()->addCommand()->close('testWindow');
+        $this->getResponse()->addCommand()->open('test', 'externalFrame');
     }
 
     /**

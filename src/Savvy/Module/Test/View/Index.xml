@@ -6,9 +6,15 @@
         <item type="fieldset" title="INDEX\TITLE_FIELDSET" margin="4 10 10 10" layout="inherit">
             <item type="container" padding="1 0 10 3">
                 <layout type="column" />
-
                 <item type="component" html="INDEX\SHOW_MODAL_WINDOW" width="100%" padding="3 10 0 0" />
                 <item type="button" text="\COMMON\BUTTON_SHOW" action="modal" />
+
+            </item>
+
+            <item type="container" padding="1 0 10 3">
+                <layout type="column" />
+                <item type="component" html="INDEX\SHOW_FRAMED_WINDOW_EXTERNAL" width="100%" padding="3 10 0 0" />
+                <item type="button" text="\COMMON\BUTTON_SHOW" action="externalFrame" />
             </item>
         </item>
 

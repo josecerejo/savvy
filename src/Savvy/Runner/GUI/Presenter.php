@@ -117,7 +117,7 @@ class Presenter
                 $method = '';
                 $filename = Base\Registry::getInstance()->get('root') . '/src/Savvy/Module';
 
-                foreach ($this->getRequest()->getRoute() as $i => $segment) {
+                foreach ($route = $this->getRequest()->getRoute() as $i => $segment) {
                     if ($i === 0) {
                         $filename .= sprintf('/%s/View', ucfirst($segment));
                     } else {
@@ -134,10 +134,7 @@ class Presenter
                 if (is_readable($filename)) {
                     $result = file_get_contents($filename);
                 } else {
-                    throw new Exception(
-                        implode('/', $this->getRequest()->getRoute()),
-                        Exception::E_RUNNER_GUI_VIEW_NOT_FOUND
-                    );
+                    throw new Exception(implode('/', $route), Exception::E_RUNNER_GUI_VIEW_NOT_FOUND);
                 }
                 break;
             case Request::TYPE_ACTION:

@@ -1,0 +1,7 @@
+<window width="1024" height="700" closable="1">
+    <layout type="fit" />
+
+    <item type="component">
+        <element tag="iframe" src="http://browserquest.mozilla.org" frameborder="0" />
+    </item>
+</window>
