@@ -24,15 +24,14 @@ class Presenter
      *
      * @var \Savvy\Runner\GUI\Response
      */
-    protected $response;
+    protected $response = null;
 
     /**
-     * Class constructor creates empty (unsuccessful) default response object
+     * Whether a valid session is required to generate a response
+     *
+     * @var bool
      */
-    public function __construct()
-    {
-        $this->setResponse(new Response);
-    }
+    protected $validateSession = true;
 
     /**
      * Set request object
@@ -75,7 +74,33 @@ class Presenter
      */
     protected function getResponse()
     {
+        if ($this->response === null) {
+            $this->setResponse(new Response());
+        }
+
         return $this->response;
+    }
+
+    /**
+     * Set validateSession property
+     *
+     * @param bool $validateSession true if session validation is required
+     * @return \Savvy\Runner\GUI\Presenter
+     */
+    public function setValidateSession($validateSession)
+    {
+        $this->validateSession = (bool)$validateSession;
+        return $this;
+    }
+
+    /**
+     * Get validateSession property
+     *
+     * @return bool
+     */
+    protected function getValidateSession()
+    {
+        return $this->validateSession;
     }
 
     /**
@@ -116,9 +141,7 @@ class Presenter
                 }
                 break;
             case Request::TYPE_ACTION:
-                if ($this->getRequest()->getRoute()[0] !== 'login' && Base\Session::getInstance()->valid() === false) {
-                    $this->setResponse(new Response());
-
+                if ($this->getValidateSession() && Base\Session::getInstance()->valid() === false) {
                     $responseCommand = new ResponseCommand($this->getResponse());
                     $responseCommand->quit();
                 } else {

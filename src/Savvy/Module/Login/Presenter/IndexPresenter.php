@@ -14,6 +14,14 @@ use Savvy\Component\Authenticator as Authenticator;
 class IndexPresenter extends GUI\Presenter
 {
     /**
+     * Constructor disables session validation
+     */
+    public function __construct()
+    {
+        $this->setValidateSession(false);
+    }
+
+    /**
      * Validate login and start application session on success
      *
      * @return void

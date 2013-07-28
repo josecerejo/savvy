@@ -9,6 +9,7 @@ class PresenterTest extends \PHPUnit_Framework_TestCase
     public function setup()
     {
         $this->testInstance = new Presenter();
+        $this->testInstance->setValidateSession(false);
     }
 
     public function testObjectIsInstanceOfPresenter()
