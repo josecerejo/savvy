@@ -21,4 +21,24 @@ class IndexPresenter extends GUI\Presenter
     {
         $this->getResponse()->addCommand()->modal('test', 'modal');
     }
+
+    /**
+     * Close module
+     *
+     * @return void
+     */
+    protected function closeAction()
+    {
+        $this->getResponse()->addCommand()->close('testWindow');
+    }
+
+    /**
+     * Quit session (logout)
+     *
+     * @return void
+     */
+    protected function logoutAction()
+    {
+        $this->getResponse()->addCommand()->quit();
+    }
 }

@@ -11,7 +11,7 @@
                 <item type="button" text="\COMMON\BUTTON_SHOW" action="modal" />
             </item>
         </item>
-    </item>
 
-    <button text="\COMMON\BUTTON_CLOSE" action="close" />
+        <button text="\COMMON\BUTTON_LOGOUT" action="logout" />
+    </item>
 </window>
