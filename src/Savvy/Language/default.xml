@@ -21,6 +21,7 @@
         <string key="BUTTON_CLOSE">Close</string>
         <string key="BUTTON_OPEN">Open</string>
         <string key="BUTTON_SHOW">Show</string>
+        <string key="BUTTON_LOGOUT">Logout</string>
     </strings>
 
     <strings section="DAEMON">

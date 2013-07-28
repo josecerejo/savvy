@@ -4,5 +4,6 @@
         <string key="BUTTON_CLOSE">Schließen</string>
         <string key="BUTTON_OPEN">Öffnen</string>
         <string key="BUTTON_SHOW">Anzeigen</string>
+        <string key="BUTTON_LOGOUT">Abmelden</string>
     </strings>
 </localization>
