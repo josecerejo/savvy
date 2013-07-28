@@ -159,7 +159,10 @@ class Runner extends \Savvy\Runner\AbstractRunner
     {
         $result = 0;
 
-        if ($this->getRequest()->getRoute()[0] !== 'login' && Base\Session::getInstance()->valid() === false && $this->getRequest()->getType() !== Request::TYPE_VIEW) {
+        if ($this->getRequest()->getRoute()[0] !== 'login' &&
+            Base\Session::getInstance()->valid() === false &&
+            $this->getRequest()->getType() !== Request::TYPE_VIEW) {
+
             header("Cache-Control: no-cache, must-revalidate");
             header("Expires: " . gmdate('D, d M Y H:i:s \G\M\T', time() + 365 * 24 * 60 * 60));
 
@@ -168,7 +171,7 @@ class Runner extends \Savvy\Runner\AbstractRunner
             $responseCommand->quit();
 
             echo $response->render();
-        } else if ($response = $this->getPresenter()->dispatch()) {
+        } elseif ($response = $this->getPresenter()->dispatch()) {
             header("Cache-Control: no-cache, must-revalidate");
             header("Expires: " . gmdate('D, d M Y H:i:s \G\M\T', time() + 365 * 24 * 60 * 60));
 
