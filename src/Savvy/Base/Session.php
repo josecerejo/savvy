@@ -76,13 +76,12 @@ class Session extends AbstractSingleton
             $applicationSession = &$_SESSION[$this->getApplicationSessionId()];
 
             if (is_array($applicationSession) && isset($applicationSession['username'])) {
-                $em = Database::getInstance()->getEntityManager();
+                $result = true;
                 $keepalive = new \DateTime('now', new \DateTimeZone(Registry::getInstance()->get('timezone')));
                 $timeout = Registry::getInstance()->get('session.timeout');
 
                 if ($timeout > 0 && $keepalive->getTimestamp() - $applicationSession['keepalive'] > $timeout) {
-                    unset($_SESSION[$this->getApplicationSessionId()]);
-
+                    $em = Database::getInstance()->getEntityManager();
                     $sessions = $em->getRepository('Savvy\Storage\Model\Session');
 
                     if ($session = $sessions->findOneByApplicationSessionId($this->getApplicationSessionId())) {
@@ -90,19 +89,28 @@ class Session extends AbstractSingleton
                         $em->flush();
                     }
 
+                    // session expired (timeout)
+                    unset($_SESSION[$this->getApplicationSessionId()]);
                     $result = false;
                 } else {
                     if ($keepalive->getTimestamp() - $applicationSession['keepalive'] > 60) {
+                        $em = Database::getInstance()->getEntityManager();
                         $sessions = $em->getRepository('Savvy\Storage\Model\Session');
-                        $session = $sessions->findOneByApplicationSessionId($this->getApplicationSessionId());
-                        $session->setLastKeepalive($keepalive);
 
-                        $em->persist($session);
-                        $em->flush();
+                        if ($session = $sessions->findOneByApplicationSessionId($this->getApplicationSessionId())) {
+                            $session->setLastKeepalive($keepalive);
+                            $em->persist($session);
+                            $em->flush();
+                        } else {
+                            // session expired (session record has been deleted)
+                            unset($_SESSION[$this->getApplicationSessionId()]);
+                            $result = false;
+                        }
                     }
+                }
 
+                if ($result === true) {
                     $applicationSession['keepalive'] = $keepalive->getTimestamp();
-                    $result = true;
                 }
             }
         }
