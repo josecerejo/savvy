@@ -81,16 +81,7 @@ class Session extends AbstractSingleton
                 $timeout = Registry::getInstance()->get('session.timeout');
 
                 if ($timeout > 0 && $keepalive->getTimestamp() - $applicationSession['keepalive'] > $timeout) {
-                    $em = Database::getInstance()->getEntityManager();
-                    $sessions = $em->getRepository('Savvy\Storage\Model\Session');
-
-                    if ($session = $sessions->findOneByApplicationSessionId($this->getApplicationSessionId())) {
-                        $em->remove($session);
-                        $em->flush();
-                    }
-
-                    // session expired (timeout)
-                    unset($_SESSION[$this->getApplicationSessionId()]);
+                    $this->quit();
                     $result = false;
                 } else {
                     if ($keepalive->getTimestamp() - $applicationSession['keepalive'] > 60) {
@@ -102,8 +93,7 @@ class Session extends AbstractSingleton
                             $em->persist($session);
                             $em->flush();
                         } else {
-                            // session expired (session record has been deleted)
-                            unset($_SESSION[$this->getApplicationSessionId()]);
+                            $this->quit();
                             $result = false;
                         }
                     }
@@ -116,6 +106,24 @@ class Session extends AbstractSingleton
         }
 
         return $result;
+    }
+
+    /**
+     * Quit session
+     *
+     * @return void
+     */
+    public function quit()
+    {
+        $em = Database::getInstance()->getEntityManager();
+        $sessions = $em->getRepository('Savvy\Storage\Model\Session');
+
+        if ($session = $sessions->findOneByApplicationSessionId($this->getApplicationSessionId())) {
+            $em->remove($session);
+            $em->flush();
+        }
+
+        unset($_SESSION[$this->getApplicationSessionId()]);
     }
 
     /**

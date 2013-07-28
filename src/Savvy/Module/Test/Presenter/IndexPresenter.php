@@ -2,6 +2,7 @@
 
 namespace Savvy\Module\Test\Presenter;
 
+use Savvy\Base as Base;
 use Savvy\Runner\GUI as GUI;
 
 /**
@@ -39,6 +40,7 @@ class IndexPresenter extends GUI\Presenter
      */
     protected function logoutAction()
     {
+        Base\Session::getInstance()->quit();
         $this->getResponse()->addCommand()->quit();
     }
 }
